@@ -10,7 +10,9 @@ def _(mo):
         rf"""
     # Graph RAG using Text2Cypher
 
-    This is a demo app in marimo that allows you to query the Nobel laureate graph (that's managed in Kuzu) using natural language. A language model takes in the question you enter, translates it to Cypher via a custom Text2Cypher pipeline in Kuzu that's powered by DSPy. The response retrieved from the graph database is then used as context to formulate the answer to the question.
+    This is a demo app in marimo that allows you to query the Nobel laureate graph (that's managed in Kuzu) using natural language. 
+    A language model takes in the question you enter, translates it to Cypher via a custom Text2Cypher pipeline in Kuzu that's powered by DSPy. 
+    The response retrieved from the graph database is then used as context to formulate the answer to the question.
 
     > \- Powered by Kuzu, DSPy and marimo \-
     """
