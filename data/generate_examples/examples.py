@@ -105,6 +105,63 @@ data = [
         "question": "List laureates who won a prize for chemistry before 1950.",
         "cypher": """MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) WHERE p.awardYear < 1950 RETURN s.knownName, p.awardYear"""
     },
+    {
+        "question": "In which city was the last chemistry laureate born?",
+        "cypher": """MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN s.knownName, c.name ORDER BY p.awardYear DESC LIMIT 1"""
+    },
+    {
+        "question": "Which nobel laureates were born and died in the same city?",
+        "cypher": """MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName"""
+    },
+    {
+        "question": "Which nobel laureates were born and died in the same country?",
+        "cypher": """MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc) RETURN s.knownName, cc.name, c.name, c2.name"""
+    },
+    {
+        "question": "Which nobel laureates were born and died on the same continent?",
+        "cypher": """MATCH (con:Continent)<-[:IS_COUNTRY_IN]-(cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc2:Country)-[:IS_COUNTRY_IN]->(con) RETURN s.knownName, con.name, cc.name, c.name, cc2.name, c2.name"""
+    },
+    {
+        "question": "Which Nobel laureates were born in Germany?",
+        "cypher": """MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) WHERE cc.name = "Germany" RETURN s.knownName"""
+    },
+    {
+        "question": "Which Nobel laureates died in the USA?",
+        "cypher": """MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:DIED_IN]-(s:Scholar) WHERE cc.name = "USA" RETURN s.knownName"""
+    },
+    {
+        "question": "Which country has the most Nobel laureates?",
+        "cypher": """MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1"""
+    },
+    {
+        "question": "What are the laureates associated with more than one institute?",
+        "cypher": """MATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName"""
+    },
+    {
+        "question": "What is the institution with most Nobel laureates affiliated?",
+        "cypher": """MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1"""
+    },
+    {
+        "question": "What is the total prize won by scholars affiliated with the institution with most scholars affiliated?",
+        "cypher": """MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) WITH i, SUM(p.prizeAmount) AS total_prize RETURN i.name, total_prize ORDER BY total_prize DESC LIMIT 1"""
+    },
+    {
+        "question": "What is the youngest age a scholar won a Nobel Prize?",
+        "cypher": """MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age ASC LIMIT 1"""
+    },
+    {
+        "question": "What is the oldest age a scholar won a Nobel Prize?",
+        "cypher": """MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age DESC LIMIT 1"""
+    },
+    {
+        "question": "What is the average age a scholar won a Nobel Prize?",
+        "cypher": """MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age"""
+    },
+    {
+        "question": "Give me top 10 countries by average age of scholars winning Nobel Prizes.",
+        "cypher": """MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age ORDER BY average_age ASC LIMIT 10"""
+    }
+    
 ]
 
 df = pd.DataFrame(data)
