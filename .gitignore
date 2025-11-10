@@ -1,4 +1,6 @@
 .DS_Store
 .env
 .venv
+.vscode.venv
 .vscode
+.kuzu
