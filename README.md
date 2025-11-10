@@ -84,7 +84,7 @@ To iterate on your ideas and experiment with your approach, you can work through
 notebook in the following marimo file:
 
 ```bash
-uv run marimo run demo_workflow.py
+$env:PYTHONUTF8=1;uv run marimo run demo_workflow.py
 ```
 
 The purpose of this file is to demonstrate the workflow in distinct stages, making it easier to
@@ -98,4 +98,5 @@ interactive graph visualizations via anywidget, and more. More on this in future
 
 ```bash
 uv run marimo run graph_rag.py
+$env:PYTHONUTF8=1; uv run marimo edit graph_rag.py
 ```

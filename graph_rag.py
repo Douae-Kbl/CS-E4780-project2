@@ -20,7 +20,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    text_ui = mo.ui.text(value="Which scholars won prizes in Physics and were affiliated with University of Cambridge?", full_width=True)
+    text_ui = mo.ui.text(value="Which scholars won prizes in 1990 aand in what field?", full_width=True)
     return (text_ui,)
 
 
@@ -95,6 +95,7 @@ def _(GraphSchema, Query, dspy):
 
         question: str = dspy.InputField()
         input_schema: str = dspy.InputField()
+        few_shot_examples: str = dspy.InputField()
         query: Query = dspy.OutputField()
 
 
@@ -109,7 +110,39 @@ def _(GraphSchema, Query, dspy):
         cypher_query: str = dspy.InputField()
         context: str = dspy.InputField()
         response: str = dspy.OutputField()
-    return AnswerQuestion, PruneSchema, Text2Cypher
+
+
+    class RepairQuery(dspy.Signature):
+        """
+        - Use the provided question, the failing Cypher query, the EXPLAIN results, and the error. Generate a corrected query valid for   Kuzu.
+
+        <SYNTAX>
+        - When matching on Scholar names, ALWAYS match on the `knownName` property
+        - For countries, cities, continents and institutions, you can match on the `name` property
+        - Use short, concise alphanumeric strings as names of variable bindings (e.g., `a1`, `r1`, etc.)
+        - Always strive to respect the relationship direction (FROM/TO) using the schema information.
+        - When comparing string properties, ALWAYS do the following:
+            - Lowercase the property values before comparison
+            - Use the WHERE clause
+            - Use the CONTAINS operator to check for presence of one substring in the other
+        - DO NOT use APOC as the database does not support it.
+        </SYNTAX>
+
+        <RETURN_RESULTS>
+        - If the result is an integer, return it as an integer (not a string).
+        - When returning results, return property values rather than the entire node or relationship.
+        - Do not attempt to coerce data types to number formats (e.g., integer, float) in your results.
+        - NO Cypher keywords should be returned by your query.
+        </RETURN_RESULTS>
+        """
+
+        question: str = dspy.InputField()
+        wrong_query: str = dspy.InputField()
+        input_schema: str = dspy.InputField()
+        few_shot_examples: str = dspy.InputField()
+        error: str = dspy.InputField()
+        repaired_query: Query = dspy.OutputField()
+    return AnswerQuestion, PruneSchema, RepairQuery, Text2Cypher
 
 
 @app.cell
@@ -199,12 +232,85 @@ def _(BaseModel, Field):
 
 
 @app.cell
+def _(Chroma, OPENROUTER_API_KEY, OpenAIEmbeddings, chromadb, csv):
+    class FewShotRetrieval():        
+            def __init__(self, k: int, data_path: str = "data/generate_examples/nobel_questions_queries.csv"):
+                self.k = k
+                self.data_path = data_path
+
+                self.embeddings = OpenAIEmbeddings(
+                    model = "text-embedding-3-large",
+                    api_key = OPENROUTER_API_KEY,
+                    base_url = "https://openrouter.ai/api/v1"
+                )
+                self.client = chromadb.PersistentClient(path="./chroma_langchain_db")
+
+                self.vector_store = Chroma(
+                    collection_name = "nobel_examples",
+                    embedding_function = self.embeddings,
+                    client = self.client,
+                    persist_directory = "./chroma_nobel_db"
+                )
+
+                if self.vector_store._collection.count() == 0:
+                    self.load_examples()
+
+            def load_examples(self):
+                q = []
+                metadatas = []
+                ids = []
+                with open(self.data_path, 'r', encoding='utf-8') as data:
+                    reader = csv.DictReader(data)
+                    for i, row in enumerate(reader):
+                        question = row['question']
+                        cypher = row['cypher']
+                        q.append(question)
+                        metadatas.append({'question': question, 'cypher': cypher})
+                        ids.append(f"{i}")
+
+                self.vector_store.add_texts(
+                    texts=q,
+                    metadatas=metadatas,
+                    ids=ids
+                )
+
+            def retrieve_examples(self, question: str) -> str:
+                k_shots_examples = self.vector_store.similarity_search(question, k=self.k)
+
+                formatted_examples = []
+                for example in k_shots_examples:
+                    question = example.metadata['question']
+                    query = example.metadata['cypher']
+                    formatted_examples.append(f"Question: {question}\nCypher: {query}")
+
+                return "\n\n".join(formatted_examples)
+
+    return (FewShotRetrieval,)
+
+
+@app.cell
+def _(query):
+    class RuleBasedProcessor():
+        def __init__(self, query: str):
+            self.query=query
+
+        def process_query(self):
+            return query
+
+        
+    return (RuleBasedProcessor,)
+
+
+@app.cell
 def _(
     AnswerQuestion,
     Any,
+    FewShotRetrieval,
     KuzuDatabaseManager,
     PruneSchema,
     Query,
+    RepairQuery,
+    RuleBasedProcessor,
     Text2Cypher,
     dspy,
 ):
@@ -218,13 +324,33 @@ def _(
             self.prune = dspy.Predict(PruneSchema)
             self.text2cypher = dspy.ChainOfThought(Text2Cypher)
             self.generate_answer = dspy.ChainOfThought(AnswerQuestion)
+            self.few_shots_retrieval= FewShotRetrieval(k=3)
+            self.repair_query=dspy.ChainOfThought(RepairQuery)
+            self.process_query= RuleBasedProcessor()
 
-        def get_cypher_query(self, question: str, input_schema: str) -> Query:
+        def get_cypher_query(self, question: str, input_schema: str, errors=None, wrong_query=None, mode: str="generate") -> Query:
             prune_result = self.prune(question=question, input_schema=input_schema)
+            k_shot_examples= self.few_shots_retrieval.retrieve_examples(question=question)
             schema = prune_result.pruned_schema
-            text2cypher_result = self.text2cypher(question=question, input_schema=schema)
-            cypher_query = text2cypher_result.query
+            if mode=="generate":
+                print(k_shot_examples)
+                text2cypher_result = self.text2cypher(question=question, input_schema=schema,few_shot_examples=k_shot_examples)
+                cypher_query = text2cypher_result.query
+            elif mode=="repair":
+                repair_results= self.repair_query(question=question, wrong_query=wrong_query, input_schema=schema, few_shot_examples=k_shot_examples, error=errors)
+                cypher_query=repair_results.repaired_query
             return cypher_query
+
+
+        def validate_query(self,db_manager,query):
+            try:
+                # Run the query on the database
+                result = db_manager.conn.execute(f"EXPLAIN {query}")
+                print(f"query{query}, passed explain")
+                return True, None
+            except RuntimeError as e:
+                print(f"Error running query: {e}")
+                return False, str(e)
 
         def run_query(
             self, db_manager: KuzuDatabaseManager, question: str, input_schema: str
@@ -233,7 +359,16 @@ def _(
             Run a query synchronously on the database.
             """
             result = self.get_cypher_query(question=question, input_schema=input_schema)
-            query = result.query
+            query = self.postprocess_query(result.query)
+            status,errors=self.validate_query(db_manager,query)
+            max_tries=5
+            i=0
+            while (not status) and i<max_tries:
+                print("inside repair loop")
+                query = self.get_cypher_query(question=question, input_schema=input_schema,wrong_query=query,errors=errors,mode="repair")
+                postprocessed_query = self.postprocess_query(query)
+                status,errors=self.validate_query(db_manager,postprocessed_query)
+                i+=1
             try:
                 # Run the query on the database
                 result = db_manager.conn.execute(query)
@@ -241,6 +376,7 @@ def _(
             except RuntimeError as e:
                 print(f"Error running query: {e}")
                 results = None
+
             return query, results
 
         def forward(self, db_manager: KuzuDatabaseManager, question: str, input_schema: str):
@@ -291,11 +427,6 @@ def _(
 
 @app.cell
 def _():
-    return
-
-
-@app.cell
-def _():
     import marimo as mo
     import os
     from textwrap import dedent
@@ -306,6 +437,10 @@ def _():
     from dotenv import load_dotenv
     from dspy.adapters.baml_adapter import BAMLAdapter
     from pydantic import BaseModel, Field
+    from langchain_openai import OpenAIEmbeddings
+    from langchain_chroma import Chroma
+    import chromadb
+    import csv
 
     load_dotenv()
 
@@ -314,8 +449,12 @@ def _():
         Any,
         BAMLAdapter,
         BaseModel,
+        Chroma,
         Field,
         OPENROUTER_API_KEY,
+        OpenAIEmbeddings,
+        chromadb,
+        csv,
         dspy,
         kuzu,
         mo,
