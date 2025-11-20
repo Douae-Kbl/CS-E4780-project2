@@ -1,3 +1,4 @@
+import re
 import marimo
 
 __generated_with = "0.14.17"
@@ -22,7 +23,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    text_ui = mo.ui.text(value="Which scholars won prizes in 1990 aand in what field?", full_width=True)
+    text_ui = mo.ui.text(value="Which scholars won prizes in 1990 aand in what field? Take in to account scholars who's names start with 'El'.", full_width=True)
     return (text_ui,)
 
 
@@ -296,7 +297,93 @@ def _(query):
         def __init__(self, query: str):
             self.query=query
 
+        # def process_query(self):
+        #     return self.query
+
+        def equality_repl(self,match):
+            prop = match.group(1)
+            val = match.group(2)
+            return f"lower({prop}) CONTAINS lower('{val}')"
+        
+        def lowercase_comp(self, query):
+            # Ensure lowercase on CONTAINS comparisons
+            contains_pattern = r"([a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+)\s+CONTAINS\s+['\"]([^'\"]+)['\"]"
+            query = re.sub(contains_pattern, self.equality_repl, query)
+
+            # Ensure lowercase on equality comparisons, transform to CONTAINS
+            # obj.property = 'Value'  --> lower(obj.property) CONTAINS lower('Value')
+            equality_pattern = r"([a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+)\s*=\s*['\"]([^'\"]+)['\"]"
+            query = re.sub(equality_pattern, self.equality_repl, query)
+
+
+            return query
+        
+        def get_label(self, item, query):
+            
+            # Regex pattern: (var:Label)
+            pattern = rf"\(\s*{item}\s*:\s*([A-Za-z_][A-Za-z0-9_]*)"
+            m = re.search(pattern, query)
+
+            if m:
+                return m.group(1)   # the label
+
+            return ""
+
+
+        def property_projection(self, query):
+            # Get return clause
+            m = re.search(r"RETURN\s+(.+?)(?=\s+ORDER BY|\s+LIMIT|\s+SKIP|$)", query, flags=re.IGNORECASE)
+            if not m:
+                return query
+
+            projection = m.group(1)
+            items = [i.strip() for i in projection.split(",")]
+            new_items = []
+
+            for item in items:
+                # already has a property
+                if "." in item:
+                    label = self.get_label(item.split(".")[0], query)
+                    cur_property = item.split(".")[1]
+
+                    # scholar already has property of name but isn't 'knownName'
+                    if label.lower() == "scholar" and "name" in cur_property.lower():
+                        item = item.replace(cur_property, "knownName")
+                    
+                    
+                    new_items.append(item)
+                    continue
+
+
+                # doesn' t have a property
+                label = self.get_label(item, query)
+
+                if label.lower() == "scholar":
+                    new_items.append(f"{item}.knownName")
+                elif label.lower() == "prize":
+                    new_items.append(f"{item}.category")
+                else:
+                    # default 
+                    new_items.append(f"{item}.name")
+
+            new_return = "RETURN " + ", ".join(new_items)
+            return query[:m.start()] + new_return + query[m.end():]
+            
+
         def process_query(self):
+            if not self.query:
+                return self.query
+
+            # Remove newlines and extra spaces
+            query = ' '.join(self.query.split())
+
+            # Apply lowercase transformations
+            query = self.lowercase_comp(query)
+
+            # Ensure proper property projection
+            query = self.property_projection(query)
+
+
             return query
 
         
@@ -328,7 +415,7 @@ def _(
             self.generate_answer = dspy.ChainOfThought(AnswerQuestion)
             self.few_shots_retrieval= FewShotRetrieval(k=3)
             self.repair_query=dspy.ChainOfThought(RepairQuery)
-            self.process_query= RuleBasedProcessor()
+            # self.process_query= RuleBasedProcessor()
 
         def get_cypher_query(self, question: str, input_schema: str, errors=None, wrong_query=None, mode: str="generate") -> Query:
             prune_result = self.prune(question=question, input_schema=input_schema)
@@ -361,7 +448,8 @@ def _(
             Run a query synchronously on the database.
             """
             result = self.get_cypher_query(question=question, input_schema=input_schema)
-            query = self.postprocess_query(result.query)
+            self.postprocess_query= RuleBasedProcessor(result.query)
+            query = self.postprocess_query.process_query()
             status,errors=self.validate_query(db_manager,query)
             max_tries=5
             i=0
@@ -430,6 +518,7 @@ def _(
 @app.cell
 def _():
     import marimo as mo
+    import re
     import os
     from textwrap import dedent
     from typing import Any

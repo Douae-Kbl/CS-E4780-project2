@@ -160,6 +160,9 @@ data = [
     {
         "question": "Give me top 10 countries by average age of scholars winning Nobel Prizes.",
         "cypher": """MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age ORDER BY average_age ASC LIMIT 10"""
+    },
+    {
+        
     }
     
 ]
