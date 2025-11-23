@@ -20,7 +20,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    text_ui = mo.ui.text(value="Which scholars won prizes in Physics and were affiliated with University of Cambridge?", full_width=True)
+    text_ui = mo.ui.text(value="Which scholars won prizes in Physics were affiliated with University of Oxford?", full_width=True)
     return (text_ui,)
 
 
@@ -38,10 +38,14 @@ def _(KuzuDatabaseManager, mo, run_graph_rag, text_ui):
     question = text_ui.value
 
     with mo.status.spinner(title="Generating answer...") as _spinner:
-        result = run_graph_rag([question], db_manager)[0]
+        results= run_graph_rag([question], db_manager)
+        result=results[0]
+        latencies=results[1]
 
-    query = result['query']
-    answer = result['answer'].response
+    query = result[0]['query']
+    answer = result[0]['answer'].response
+
+    print(latencies)
     return answer, query
 
 
@@ -207,6 +211,7 @@ def _(
     Query,
     Text2Cypher,
     dspy,
+    time,
 ):
     class GraphRAG(dspy.Module):
         """
@@ -218,11 +223,19 @@ def _(
             self.prune = dspy.Predict(PruneSchema)
             self.text2cypher = dspy.ChainOfThought(Text2Cypher)
             self.generate_answer = dspy.ChainOfThought(AnswerQuestion)
+            self.pipeline_latencies={}
 
         def get_cypher_query(self, question: str, input_schema: str) -> Query:
+            start_prune=time.perf_counter()
             prune_result = self.prune(question=question, input_schema=input_schema)
+            self.pipeline_latencies["prune"]=time.perf_counter()-start_prune
+        
             schema = prune_result.pruned_schema
+
+            start_t2c=time.perf_counter()
             text2cypher_result = self.text2cypher(question=question, input_schema=schema)
+            self.pipeline_latencies["gen_t2c"]=time.perf_counter()-start_t2c
+        
             cypher_query = text2cypher_result.query
             return cypher_query
 
@@ -232,31 +245,45 @@ def _(
             """
             Run a query synchronously on the database.
             """
+            start_get_query=time.perf_counter()
             result = self.get_cypher_query(question=question, input_schema=input_schema)
+            self.pipeline_latencies["get_cypher_query"]=time.perf_counter()-start_get_query
+        
             query = result.query
             try:
-                # Run the query on the database
+                # Run the query on the databas
+                start_exec_query=time.perf_counter()
                 result = db_manager.conn.execute(query)
+                self.pipeline_latencies["exec_query"]=time.perf_counter()-start_exec_query
+
                 results = [item for row in result for item in row]
             except RuntimeError as e:
                 print(f"Error running query: {e}")
+                self.pipeline_latencies["exec_query"]=time.perf_counter()-start_exec_query
                 results = None
             return query, results
 
         def forward(self, db_manager: KuzuDatabaseManager, question: str, input_schema: str):
+            start_run_query = time.perf_counter()
             final_query, final_context = self.run_query(db_manager, question, input_schema)
             if final_context is None:
                 print("Empty results obtained from the graph database. Please retry with a different question.")
+                self.pipeline_latencies["run_query_forward"]=time.perf_counter()-start_run_query
+
                 return {}
             else:
+                start_answer_gen=time.perf_counter()
                 answer = self.generate_answer(
                     question=question, cypher_query=final_query, context=str(final_context)
                 )
+                self.pipeline_latencies["answer_gen"]=time.perf_counter()-start_answer_gen
+            
                 response = {
                     "question": question,
                     "query": final_query,
                     "answer": answer,
                 }
+                self.pipeline_latencies["run_query_forward"]=time.perf_counter()-start_run_query
                 return response
 
         async def aforward(self, db_manager: KuzuDatabaseManager, question: str, input_schema: str):
@@ -277,6 +304,7 @@ def _(
 
 
     def run_graph_rag(questions: list[str], db_manager: KuzuDatabaseManager) -> list[Any]:
+        start_full_run=time.perf_counter()
         schema = str(db_manager.get_schema_dict)
         rag = GraphRAG()
         # Run pipeline
@@ -284,7 +312,9 @@ def _(
         for question in questions:
             response = rag(db_manager=db_manager, question=question, input_schema=schema)
             results.append(response)
-        return results
+        rag.pipeline_latencies["full_run"]=time.perf_counter()-start_full_run
+
+        return results,rag.pipeline_latencies
 
     return (run_graph_rag,)
 
@@ -300,6 +330,7 @@ def _():
     import os
     from textwrap import dedent
     from typing import Any
+    import time
 
     import dspy
     import kuzu
@@ -319,6 +350,7 @@ def _():
         dspy,
         kuzu,
         mo,
+        time,
     )
 
 

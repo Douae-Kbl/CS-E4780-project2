@@ -13,7 +13,7 @@ uv sync
 # Or, add them manually
 uv add marimo dspy kuzu polars pyarrow
 # Don't forget to source virtual env
-source .venv/bin/activate
+source .venv/Scripts/activate
 ```
 
 ### Start Kuzu Database

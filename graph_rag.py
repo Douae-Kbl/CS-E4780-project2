@@ -1,4 +1,3 @@
-import re
 import marimo
 
 __generated_with = "0.14.17"
@@ -22,8 +21,14 @@ def _(mo):
 
 
 @app.cell
+def _():
+    #rag_cache.clear()
+    return
+
+
+@app.cell
 def _(mo):
-    text_ui = mo.ui.text(value="Which scholars won prizes in 1990 aand in what field? Take in to account scholars who's names start with 'El'.", full_width=True)
+    text_ui = mo.ui.text(value="What category of prizes has the biggest amount of winners", full_width=True)
     return (text_ui,)
 
 
@@ -43,8 +48,9 @@ def _(KuzuDatabaseManager, mo, run_graph_rag, text_ui):
     with mo.status.spinner(title="Generating answer...") as _spinner:
         result = run_graph_rag([question], db_manager)[0]
 
-    query = result['query']
-    answer = result['answer'].response
+    if result!={}:
+        query = result['query']
+        answer = result['answer'].response
     return answer, query
 
 
@@ -292,19 +298,17 @@ def _(Chroma, OPENROUTER_API_KEY, OpenAIEmbeddings, chromadb, csv):
 
 
 @app.cell
-def _(query):
+def _(re):
     class RuleBasedProcessor():
         def __init__(self, query: str):
             self.query=query
 
-        # def process_query(self):
-        #     return self.query
 
         def equality_repl(self,match):
             prop = match.group(1)
             val = match.group(2)
             return f"lower({prop}) CONTAINS lower('{val}')"
-        
+
         def lowercase_comp(self, query):
             # Ensure lowercase on CONTAINS comparisons
             contains_pattern = r"([a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+)\s+CONTAINS\s+['\"]([^'\"]+)['\"]"
@@ -317,11 +321,12 @@ def _(query):
 
 
             return query
-        
+
         def get_label(self, item, query):
-            
+            print("item causing problem",item)
             # Regex pattern: (var:Label)
-            pattern = rf"\(\s*{item}\s*:\s*([A-Za-z_][A-Za-z0-9_]*)"
+            item_escaped=re.escape(item)
+            pattern = rf"\(\s*{item_escaped}\s*:\s*([A-Za-z_][A-Za-z0-9_]*)\)"
             m = re.search(pattern, query)
 
             if m:
@@ -335,26 +340,37 @@ def _(query):
             m = re.search(r"RETURN\s+(.+?)(?=\s+ORDER BY|\s+LIMIT|\s+SKIP|$)", query, flags=re.IGNORECASE)
             if not m:
                 return query
-
+            print("query to check",query)
             projection = m.group(1)
             items = [i.strip() for i in projection.split(",")]
             new_items = []
 
             for item in items:
                 # already has a property
+                if "(" in item or ")" in item:
+                    new_items.append(item)
+                    continue
                 if "." in item:
-                    label = self.get_label(item.split(".")[0], query)
+                    item_proprety=item.split(".")[0]
+
                     cur_property = item.split(".")[1]
+                    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", item_proprety.strip()):
+                            new_items.append(item)
+                            continue
+
+                    label = self.get_label(item_proprety, query)
 
                     # scholar already has property of name but isn't 'knownName'
                     if label.lower() == "scholar" and "name" in cur_property.lower():
                         item = item.replace(cur_property, "knownName")
-                    
-                    
+
+
                     new_items.append(item)
                     continue
 
-
+                if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", item.strip()):
+                        new_items.append(item)
+                        continue
                 # doesn' t have a property
                 label = self.get_label(item, query)
 
@@ -362,13 +378,14 @@ def _(query):
                     new_items.append(f"{item}.knownName")
                 elif label.lower() == "prize":
                     new_items.append(f"{item}.category")
-                else:
-                    # default 
+                elif label.lower=="institution" or label.lower=="continent" or label.lower=="country" or label.lower=="city":
                     new_items.append(f"{item}.name")
+                else:
+                    new_items.append(f"{item}")
 
             new_return = "RETURN " + ", ".join(new_items)
             return query[:m.start()] + new_return + query[m.end():]
-            
+
 
         def process_query(self):
             if not self.query:
@@ -386,8 +403,38 @@ def _(query):
 
             return query
 
-        
+
     return (RuleBasedProcessor,)
+
+
+@app.cell
+def _(OrderedDict):
+
+    class LRUCache:
+
+        def __init__(self, capacity):
+            self.cache = OrderedDict()
+            self.capacity = capacity
+
+        def get(self, question):
+            if question not in self.cache:
+                return None
+            else:
+                self.cache.move_to_end(question)
+                return self.cache[question]
+
+        def put(self, question , answer):
+            self.cache[question] = answer
+            self.cache.move_to_end(question)
+            if len(self.cache) > self.capacity:
+                self.cache.popitem(last = False)
+        def clear(self):
+            self.cache.clear()
+
+    rag_cache=LRUCache(capacity=100)
+
+
+    return (rag_cache,)
 
 
 @app.cell
@@ -402,6 +449,9 @@ def _(
     RuleBasedProcessor,
     Text2Cypher,
     dspy,
+    hashlib,
+    rag_cache,
+    time,
 ):
     class GraphRAG(dspy.Module):
         """
@@ -415,18 +465,30 @@ def _(
             self.generate_answer = dspy.ChainOfThought(AnswerQuestion)
             self.few_shots_retrieval= FewShotRetrieval(k=3)
             self.repair_query=dspy.ChainOfThought(RepairQuery)
-            # self.process_query= RuleBasedProcessor()
+            self.postprocess_query= None
+            self.pipeline_latencies={}
 
-        def get_cypher_query(self, question: str, input_schema: str, errors=None, wrong_query=None, mode: str="generate") -> Query:
+        def get_cypher_query(self, question: str, input_schema: str,i: int, errors=None, wrong_query=None, mode: str="generate") -> Query:
+            start_prune=time.perf_counter()
             prune_result = self.prune(question=question, input_schema=input_schema)
+            self.pipeline_latencies[f"prune_{i}"]=time.perf_counter()-start_prune
+
+            start_few_shots=time.perf_counter()
             k_shot_examples= self.few_shots_retrieval.retrieve_examples(question=question)
+            self.pipeline_latencies[f"few_shots_{i}"]=time.perf_counter()-start_few_shots
+
             schema = prune_result.pruned_schema
             if mode=="generate":
                 print(k_shot_examples)
+                start_t2c=time.perf_counter()
                 text2cypher_result = self.text2cypher(question=question, input_schema=schema,few_shot_examples=k_shot_examples)
+                self.pipeline_latencies[f"gen_t2c_{i}"]=time.perf_counter()-start_t2c
+
                 cypher_query = text2cypher_result.query
             elif mode=="repair":
+                start_rep=time.perf_counter()
                 repair_results= self.repair_query(question=question, wrong_query=wrong_query, input_schema=schema, few_shot_examples=k_shot_examples, error=errors)
+                self.pipeline_latencies[f"rep_t2c_{i}"]=time.perf_counter()-start_rep
                 cypher_query=repair_results.repaired_query
             return cypher_query
 
@@ -447,42 +509,75 @@ def _(
             """
             Run a query synchronously on the database.
             """
-            result = self.get_cypher_query(question=question, input_schema=input_schema)
+            start_get_query=time.perf_counter()
+            result = self.get_cypher_query(question=question, input_schema=input_schema,i=0)
+            self.pipeline_latencies["get_cypher_query"]=time.perf_counter()-start_get_query
+
             self.postprocess_query= RuleBasedProcessor(result.query)
+
+            start_postprocess_query=time.perf_counter()
             query = self.postprocess_query.process_query()
+            self.pipeline_latencies["postprocess_query"]=time.perf_counter()-start_postprocess_query
+
+            start_validate_query=time.perf_counter()
             status,errors=self.validate_query(db_manager,query)
-            max_tries=5
+            self.pipeline_latencies["validate_query"]=time.perf_counter()-start_validate_query
+
+            max_tries=6
             i=0
             while (not status) and i<max_tries:
                 print("inside repair loop")
-                query = self.get_cypher_query(question=question, input_schema=input_schema,wrong_query=query,errors=errors,mode="repair")
-                postprocessed_query = self.postprocess_query(query)
-                status,errors=self.validate_query(db_manager,postprocessed_query)
+            
+                start_rep_query=time.perf_counter()
+                result = self.get_cypher_query(question=question, input_schema=input_schema, wrong_query=query, errors=errors, mode="repair", i=i)
+                self.pipeline_latencies[f"rep_query_{i}"]=time.perf_counter()-start_rep_query
+            
+                self.postprocess_query= RuleBasedProcessor(result.query)
+                start_postprocess_query=time.perf_counter()
+                query = self.postprocess_query.process_query()
+                self.pipeline_latencies[f"rep_postprocess_query_{i}"]=time.perf_counter()-start_postprocess_query
+
+                start_validate_query=time.perf_counter()
+                status,errors=self.validate_query(db_manager,query)
+                self.pipeline_latencies[f"rep_validate_query_{i}"]=time.perf_counter()-start_validate_query
                 i+=1
             try:
                 # Run the query on the database
+                start_exec_query=time.perf_counter()
+                print(f"executable query{query}")
                 result = db_manager.conn.execute(query)
+                self.pipeline_latencies["exec_query"]=time.perf_counter()-start_exec_query
+            
                 results = [item for row in result for item in row]
+                print(f"final result {results}")
             except RuntimeError as e:
                 print(f"Error running query: {e}")
+                self.pipeline_latencies["exec_query"]=time.perf_counter()-start_exec_query
                 results = None
 
             return query, results
 
         def forward(self, db_manager: KuzuDatabaseManager, question: str, input_schema: str):
+            start_run_query = time.perf_counter()
             final_query, final_context = self.run_query(db_manager, question, input_schema)
             if final_context is None:
                 print("Empty results obtained from the graph database. Please retry with a different question.")
+                self.pipeline_latencies["run_query_forward"]=time.perf_counter()-start_run_query
                 return {}
             else:
+                start_answer_gen=time.perf_counter()
                 answer = self.generate_answer(
                     question=question, cypher_query=final_query, context=str(final_context)
                 )
+                self.pipeline_latencies["answer_gen"]=time.perf_counter()-start_answer_gen
+
+            
                 response = {
                     "question": question,
                     "query": final_query,
                     "answer": answer,
                 }
+                self.pipeline_latencies["run_query_forward"]=time.perf_counter()-start_run_query
                 return response
 
         async def aforward(self, db_manager: KuzuDatabaseManager, question: str, input_schema: str):
@@ -503,13 +598,30 @@ def _(
 
 
     def run_graph_rag(questions: list[str], db_manager: KuzuDatabaseManager) -> list[Any]:
+        start_full_run=time.perf_counter()
         schema = str(db_manager.get_schema_dict)
         rag = GraphRAG()
         # Run pipeline
         results = []
         for question in questions:
-            response = rag(db_manager=db_manager, question=question, input_schema=schema)
+            start_cached=time.perf_counter()
+            question_hashed = hashlib.sha256(question.encode("utf-8")).hexdigest()
+            answer_cached=rag_cache.get(question_hashed)
+        
+            rag.pipeline_latencies["cache_retrieval"]=time.perf_counter()-start_cached
+
+            if answer_cached is not None:
+                response= answer_cached
+            else:
+                response = rag(db_manager=db_manager, question=question, input_schema=schema)
+                start_caching=time.perf_counter()
+                question_hashed = hashlib.sha256(question.encode("utf-8")).hexdigest()
+                rag_cache.put(question_hashed,response)
+                rag.pipeline_latencies["caching"]=time.perf_counter()-start_caching
+            rag.pipeline_latencies["full_run"]=time.perf_counter()-start_full_run
+
             results.append(response)
+            print(rag.pipeline_latencies)
         return results
 
     return (run_graph_rag,)
@@ -522,6 +634,7 @@ def _():
     import os
     from textwrap import dedent
     from typing import Any
+    from collections import OrderedDict
 
     import dspy
     import kuzu
@@ -531,7 +644,9 @@ def _():
     from langchain_openai import OpenAIEmbeddings
     from langchain_chroma import Chroma
     import chromadb
+    import time
     import csv
+    import hashlib
 
     load_dotenv()
 
@@ -544,11 +659,15 @@ def _():
         Field,
         OPENROUTER_API_KEY,
         OpenAIEmbeddings,
+        OrderedDict,
         chromadb,
         csv,
         dspy,
+        hashlib,
         kuzu,
         mo,
+        re,
+        time,
     )
 
 
