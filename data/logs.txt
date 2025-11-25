@@ -1,0 +1,562 @@
+{'cache_retrieval': 1.570899985381402e-05, 'prune_0': 2.0348255000008066, 'few_shots_0': 0.49273899999934656, 'gen_t2c_0': 1.2901283749997674, 'get_cypher_query': 3.81784129100015, 'postprocess_query': 0.00023954199969011825, 'validate_query': 0.0015157499983615708, 'exec_query': 0.0018878749997384148, 'answer_gen': 23.610348875001364, 'run_query_forward': 27.43442391700046, 'caching': 1.8291999367647804e-05, 'full_run': 27.48116495800059}
+Question: Show top 10 Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10
+
+Question: Show Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount
+
+Question: Count the number of Nobel laureates.
+Cypher: MATCH (s:Scholar) RETURN COUNT(s) AS total_laureates
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.fullName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10
+item causing problem s
+item causing problem p
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10
+final result ['Andre Geim', 10000000, 'Christopher A. Sims', 10000000, 'David J. Gross', 10000000, 'Guido W. Imbens', 10000000, 'Harvey J. Alter', 10000000, 'Klaus Hasselmann', 10000000, 'Masatoshi Koshiba', 10000000, 'Ralph M. Steinman', 10000000, 'Robert J. Aumann', 10000000, 'Sydney Brenner', 10000000]
+{'cache_retrieval': 8.667000656714663e-06, 'prune_0': 1.9042505420002271, 'few_shots_0': 0.9227731250011857, 'gen_t2c_0': 1.2936618750009075, 'get_cypher_query': 4.1207825420005975, 'postprocess_query': 0.00022095799977250863, 'validate_query': 0.004001332999905571, 'exec_query': 0.002412833999187569, 'answer_gen': 1.3855287910009793, 'run_query_forward': 5.513089583000692, 'caching': 3.133300015178975e-05, 'full_run': 5.547667374999946}
+Question: Which laureates died before 1950?
+Cypher: MATCH (s:Scholar) WHERE s.deathDate < "1950-01-01" RETURN s.knownName, s.deathDate
+
+Question: Which Nobel laureates died in the USA?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:DIED_IN]-(s:Scholar) WHERE cc.name = "USA" RETURN s.knownName
+
+Question: Find Nobel laureates born before 1900.
+Cypher: MATCH (s:Scholar) WHERE s.birthDate < "1900-01-01" RETURN s.knownName, s.birthDate
+query to check MATCH (s:Scholar) WHERE s.deathDate < "1950-01-01" RETURN s.knownName, s.deathDate
+item causing problem s
+item causing problem s
+queryMATCH (s:Scholar) WHERE s.deathDate < "1950-01-01" RETURN s.knownName, s.deathDate, passed explain
+executable queryMATCH (s:Scholar) WHERE s.deathDate < "1950-01-01" RETURN s.knownName, s.deathDate
+final result ['Alfred Werner', '1919-11-15', 'Arthur Harden', '1940-06-17', 'Charles Nicolle', '1936-02-28', 'Ilya Mechnikov', '1916-07-15', 'Johannes Fibiger', '1928-01-30', 'Niels Ryberg Finsen', '1904-09-24', 'Otto Wallach', '1931-02-26', 'Pieter Zeeman', '1943-10-09', 'Wilhelm Conrad Röntgen', '1923-02-10', 'Allvar Gullstrand', '1930-07-28', 'Alphonse Laveran', '1922-05-18', 'Carl Bosch', '1940-04-26', 'Charles Edouard Guillaume', '1938-06-13', 'Fritz Pregl', '1930-12-13', 'Gustaf Dalén', '1937-12-09', 'Hans Spemann', '1941-09-12', 'Karl Landsteiner', '1943-06-26', 'Lord Rayleigh', '1919-06-30', 'Max Planck', '1947-10-04', 'Paul Sabatier', '1941-08-14', 'Ronald Ross', '1932-09-16', 'Albrecht Kossel', '1927-07-05', 'August Krogh', '1949-09-13', 'Charles Glover Barkla', '1944-10-23', 'Frederick G. Banting', '1941-02-21', 'Hans Fischer', '1945-03-31', 'Heike Kamerlingh Onnes', '1926-02-21', 'Hendrik A. Lorentz', '1928-02-04', 'Pierre Curie', '1906-04-19', 'Sir Frederick Hopkins', '1947-05-16', 'Adolf von Baeyer', '1917-08-20', 'Francis W. Aston', '1945-11-20', 'Henri Becquerel', '1908-08-25', 'Henri Moissan', '1907-02-20', 'Paul Ehrlich', '1915-08-20', 'Albert A. Michelson', '1931-05-09', 'Camillo Golgi', '1926-01-21', 'Ferdinand Braun', '1918-04-20', 'Jean Baptiste Perrin', '1942-04-17', 'Johannes Diderik van der Waals', '1923-03-08', 'John Macleod', '1935-03-16', 'Marie Curie', '1934-07-04', 'Richard Willstätter', '1942-08-03', 'Wilhelm Wien', '1928-08-30', 'Willem Einthoven', '1927-09-29', 'William Bragg', '1942-03-12', 'Christiaan Eijkman', '1930-11-05', 'Eduard Buchner', '1917-08-13', 'Emil von Behring', '1917-03-31', 'Julius Wagner-Jauregg', '1940-09-27', 'Robert Bárány', '1936-04-08', 'Sir William Ramsay', '1916-07-23', 'Theodor Kocher', '1917-07-27', 'Theodore W. Richards', '1928-04-02', 'Victor Grignard', '1935-12-13', 'Walther Nernst', '1941-11-18', 'Wilhelm Ostwald', '1932-04-04', 'Alexis Carrel', '1944-11-05', 'Emil Fischer', '1919-07-15', 'Ernest Rutherford', '1937-10-19', 'Friedrich Bergius', '1949-03-30', 'Gabriel Lippmann', '1921-07-13', 'J.J. Thomson', '1940-08-30', 'Philipp Lenard', '1947-05-20', 'Robert Koch', '1910-05-27', 'Thomas H. Morgan', '1945-12-04', 'Charles Richet', '1935-12-04', 'Fritz Haber', '1934-01-29', 'Guglielmo Marconi', '1937-07-20', 'Ivan Pavlov', '1936-02-27', "Jacobus H. van 't Hoff", '1911-03-01', 'Richard Zsigmondy', '1929-09-24', 'Santiago Ramón y Cajal', '1934-10-17', 'Svante Arrhenius', '1927-10-02']
+{'cache_retrieval': 1.1790998541982844e-05, 'prune_0': 1.9703696249998757, 'few_shots_0': 0.42145820800033107, 'gen_t2c_0': 1.3586278330003552, 'get_cypher_query': 3.7505154159989615, 'postprocess_query': 0.0001216670007124776, 'validate_query': 0.000983040999926743, 'exec_query': 0.0005923749995417893, 'answer_gen': 6.000437333999798, 'run_query_forward': 9.752798249999614, 'caching': 1.4125000234344043e-05, 'full_run': 9.807917457999793}
+Question: List Nobel laureates who won in Economics.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "economics"}) RETURN DISTINCT s.knownName
+
+Question: Find Nobel laureates born after 1980.
+Cypher: MATCH (s:Scholar) WHERE s.birthDate > "1980-01-01" RETURN s.knownName, s.birthDate
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS toLower("economics") RETURN DISTINCT s.knownName
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS toLower("economics") RETURN DISTINCT s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS toLower("economics") RETURN DISTINCT s.knownName
+final result ['Christopher A. Sims', 'Robert M. Solow', 'Douglas Diamond', 'William D. Nordhaus', 'Bertil Ohlin', 'Eugene F. Fama', 'Friedrich von Hayek', 'Robert J. Aumann', 'Gunnar Myrdal', 'Tjalling C. Koopmans', 'John F. Nash Jr.', 'Merton H. Miller', 'Paul Krugman', 'Amartya Sen', 'Esther Duflo', 'Thomas J. Sargent', 'Simon Kuznets', 'Gary Becker', 'Richard Stone', 'Elinor Ostrom', 'Paul A. Samuelson', 'James Tobin', 'Finn E. Kydland', 'Paul M. Romer', 'Guido W. Imbens', 'James A. Mirrlees', 'Robert C. Merton', 'John R. Hicks', 'Ben Bernanke', 'Ronald H. Coase', 'Dale T. Mortensen', 'John C. Harsanyi', 'Lloyd S. Shapley', 'Philip Dybvig', 'Robert B. Wilson', 'Angus Deaton', 'Christopher A. Pissarides', 'Sir Arthur Lewis', 'William F. Sharpe', 'Herbert Simon', 'Alvin E. Roth', 'Oliver E. Williamson', 'Paul R. Milgrom', 'George J. Stigler', 'Leonid Vitaliyevich Kantorovich', 'Jan Tinbergen', 'Roger B. Myerson', 'Gerard Debreu', 'Daniel Kahneman', 'Harry M. Markowitz', 'James E. Meade', 'Jean Tirole', 'Thomas C. Schelling', 'Joshua D. Angrist', 'Franco Modigliani', 'Vernon L. Smith', 'Daniel L. McFadden', 'Robert F. Engle III', 'William Vickrey', 'Lars Peter Hansen', 'Robert J. Shiller', 'Wassily Leontief', 'Edmund S. Phelps', 'James M. Buchanan Jr.', 'Kenneth J. Arrow', 'David Card', 'Douglass C. North', 'Maurice Allais', 'Peter A. Diamond', 'Ragnar Frisch', 'Myron Scholes', 'Clive W.J. Granger', 'Robert E. Lucas Jr.', 'Edward C. Prescott', 'Leonid Hurwicz', 'Reinhard Selten', 'Michael Kremer', 'Robert W. Fogel', 'James J. Heckman', 'Richard H. Thaler', 'Robert Mundell', 'Eric S. Maskin', 'Lawrence R. Klein', 'Bengt Holmström', 'Abhijit Banerjee', 'Oliver Hart', 'Milton Friedman', 'Trygve Haavelmo', 'Theodore W. Schultz']
+{'cache_retrieval': 9.04199987417087e-06, 'prune_0': 2.103503959000591, 'few_shots_0': 0.6201037500013626, 'gen_t2c_0': 1.487309500000265, 'get_cypher_query': 4.211115707999852, 'postprocess_query': 0.00018320799972570967, 'validate_query': 0.0027389999995648395, 'exec_query': 0.003189250001014443, 'answer_gen': 3.8322795829990355, 'run_query_forward': 8.049857416001032, 'caching': 2.7375001081964e-05, 'full_run': 8.092787042000054}
+Question: Which year had the most Nobel Prize awards?
+Cypher: MATCH (p:Prize) RETURN p.awardYear, COUNT(p) as award_count ORDER BY award_count DESC LIMIT 1
+
+Question: Which Nobel laureate received the highest prize amount?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+
+Question: Which country has the most Nobel laureates?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+query to check MATCH (p:Prize) RETURN p.awardYear, COUNT(p) AS prize_count ORDER BY prize_count DESC LIMIT 1
+item causing problem p
+queryMATCH (p:Prize) RETURN p.awardYear, COUNT(p) AS prize_count ORDER BY prize_count DESC LIMIT 1, passed explain
+executable queryMATCH (p:Prize) RETURN p.awardYear, COUNT(p) AS prize_count ORDER BY prize_count DESC LIMIT 1
+final result [2000, 5]
+{'cache_retrieval': 1.0583000403130427e-05, 'prune_0': 1.03507824999906, 'few_shots_0': 0.5455431249993126, 'gen_t2c_0': 1.433172666000246, 'get_cypher_query': 3.0139082500008954, 'postprocess_query': 0.00029508399893529713, 'validate_query': 0.0016117920004035113, 'exec_query': 0.003866541001116275, 'answer_gen': 1.08429412499936, 'run_query_forward': 4.104165583001304, 'caching': 2.0458999642869458e-05, 'full_run': 4.15541045899954}
+Question: Find Nobel laureates born after 1980.
+Cypher: MATCH (s:Scholar) WHERE s.birthDate > "1980-01-01" RETURN s.knownName, s.birthDate
+
+Question: Find Nobel laureates born before 1900.
+Cypher: MATCH (s:Scholar) WHERE s.birthDate < "1900-01-01" RETURN s.knownName, s.birthDate
+
+Question: Find laureates awarded after 2015.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName, p.awardYear, p.category
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate > "1980-01-01" RETURN s.knownName, s.birthDate
+item causing problem s
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate > "1980-01-01" RETURN s.knownName, s.birthDate, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate > "1980-01-01" RETURN s.knownName, s.birthDate
+final result []
+{'cache_retrieval': 8.875000276020728e-06, 'prune_0': 1.622704833998796, 'few_shots_0': 0.7070409169991763, 'gen_t2c_0': 1.245763666998755, 'get_cypher_query': 3.575670625001294, 'postprocess_query': 0.00025837499924818985, 'validate_query': 0.0027677090001816396, 'exec_query': 0.0020600000007107155, 'answer_gen': 0.7385217090013612, 'run_query_forward': 4.3193908339999325, 'caching': 1.929199970618356e-05, 'full_run': 4.3652586249991145}
+Question: Which Nobel laureate received the highest prize amount?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+
+Question: Show Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount
+
+Question: Which laureates won more than one Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) as prizes WHERE prizes > 1 RETURN s.knownName, prizes
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.fullName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+item causing problem s
+item causing problem p
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+final result ['Andre Geim', 10000000]
+{'cache_retrieval': 7.874999937484972e-06, 'prune_0': 1.7972927499995421, 'few_shots_0': 0.5305589170002349, 'gen_t2c_0': 1.050439541999367, 'get_cypher_query': 3.3784444159991835, 'postprocess_query': 0.0002116249997925479, 'validate_query': 0.002038916998571949, 'exec_query': 0.0027330409993737703, 'answer_gen': 1.062453042000925, 'run_query_forward': 4.4459915419993195, 'caching': 2.56669991358649e-05, 'full_run': 4.493608708000465}
+Question: Show prizes awarded in the Physics category.
+Cypher: MATCH (p:Prize {category: "physics"}) RETURN p.prize_id, p.awardYear
+
+Question: Show Nobel Prize categories.
+Cypher: MATCH (p:Prize) RETURN DISTINCT p.category
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (p:Prize) WHERE toLower(p.category) CONTAINS toLower("Physics") RETURN p.category
+item causing problem p
+queryMATCH (p:Prize) WHERE toLower(p.category) CONTAINS toLower("Physics") RETURN p.category, passed explain
+executable queryMATCH (p:Prize) WHERE toLower(p.category) CONTAINS toLower("Physics") RETURN p.category
+final result ['physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics', 'physics']
+{'cache_retrieval': 1.5790999896125868e-05, 'prune_0': 1.1660803750000923, 'few_shots_0': 1.079294958999526, 'gen_t2c_0': 1.3765572920001432, 'get_cypher_query': 3.6221982080005546, 'postprocess_query': 0.00020120900080655701, 'validate_query': 0.0017105830011132639, 'exec_query': 0.0008912909997889074, 'answer_gen': 1.1423195420011325, 'run_query_forward': 4.767684583999653, 'caching': 1.1915999493794516e-05, 'full_run': 4.813502708000669}
+Question: Which laureate won the Nobel Peace Prize in 2010?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2010, category: "peace"}) RETURN s.knownName
+
+Question: Which Nobel laureate received the highest prize amount?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+
+Question: Who won the Nobel Prize in peace in 1962?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: "peace"}) RETURN s.knownName
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2010, category: "peace"}) RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2010, category: "peace"}) RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2010, category: "peace"}) RETURN s.knownName
+final result []
+{'cache_retrieval': 7.167000148911029e-06, 'prune_0': 1.8960000409988425, 'few_shots_0': 0.43081750000055763, 'gen_t2c_0': 1.2784398750009132, 'get_cypher_query': 3.6053926669992507, 'postprocess_query': 0.00015095800154085737, 'validate_query': 0.0016163750005944166, 'exec_query': 0.0016511659996467642, 'answer_gen': 0.9305440000007366, 'run_query_forward': 4.539426332999938, 'caching': 1.7333999494439922e-05, 'full_run': 4.575635458000761}
+Question: Did Einstein win any prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.knownName CONTAINS "Einstein" RETURN count(p) > 0
+
+Question: What did Marie Curie win?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.knownName CONTAINS "Curie" AND s.knownName CONTAINS "Marie" RETURN p.category, p.awardYear
+
+Question: Which Nobel laureate received the highest prize amount?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Einstein') RETURN count(p) > 0
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Einstein') RETURN count(p) > 0, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Einstein') RETURN count(p) > 0
+final result [True]
+{'cache_retrieval': 9.999999747378752e-06, 'prune_0': 1.9839077499982523, 'few_shots_0': 0.3893469160011591, 'gen_t2c_0': 1.6166664169995784, 'get_cypher_query': 3.9900666659996205, 'postprocess_query': 0.00012445799984561745, 'validate_query': 0.0025871670004562475, 'exec_query': 0.001463000000512693, 'answer_gen': 1.0435976250009844, 'run_query_forward': 5.037932917000944, 'caching': 1.5208001059363596e-05, 'full_run': 5.07982495899887}
+Question: Count the number of Nobel laureates.
+Cypher: MATCH (s:Scholar) RETURN COUNT(s) AS total_laureates
+
+Question: Which country has the most Nobel laureates?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+
+Question: Show Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN COUNT(s)
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN COUNT(s), passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN COUNT(s)
+final result [731]
+{'cache_retrieval': 1.0416999430162832e-05, 'prune_0': 1.5819799589989998, 'few_shots_0': 1.071708834000674, 'gen_t2c_0': 1.4546403749991441, 'get_cypher_query': 4.108457917000123, 'postprocess_query': 0.00013166700045985635, 'validate_query': 0.0013834580004186137, 'exec_query': 0.0012254590001248289, 'answer_gen': 0.995300208000117, 'run_query_forward': 5.106590749999668, 'caching': 4.3416999687906355e-05, 'full_run': 5.14916812500087}
+Question: List Nobel Prizes awarded in 2022.
+Cypher: MATCH (p:Prize {awardYear: 2022}) RETURN p.category, p.prize_id
+
+Question: Show Nobel Prize categories.
+Cypher: MATCH (p:Prize) RETURN DISTINCT p.category
+
+Question: Find laureates awarded after 2015.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName, p.awardYear, p.category
+query to check MATCH (p:Prize) WHERE p.awardYear = 2022 RETURN p.category, p.prize_id
+item causing problem p
+item causing problem p
+queryMATCH (p:Prize) WHERE p.awardYear = 2022 RETURN p.category, p.prize_id, passed explain
+executable queryMATCH (p:Prize) WHERE p.awardYear = 2022 RETURN p.category, p.prize_id
+final result ['physics', '2022_physics', 'economics', '2022_economics', 'chemistry', '2022_chemistry', 'medicine', '2022_medicine']
+{'cache_retrieval': 7.124999683583155e-06, 'prune_0': 1.6789063329997589, 'few_shots_0': 0.6294936249996681, 'gen_t2c_0': 1.1592876249997062, 'get_cypher_query': 3.4678416249989823, 'postprocess_query': 0.000218999999560765, 'validate_query': 0.0023613749999640277, 'exec_query': 0.0008751250006753253, 'answer_gen': 0.8873734589997184, 'run_query_forward': 4.358791291000671, 'caching': 1.9999999494757503e-05, 'full_run': 4.395982292000554}
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+
+Question: List all Nobel laureates in Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN DISTINCT s.knownName
+
+Question: List laureates who won a prize for chemistry before 1950.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) WHERE p.awardYear < 1950 RETURN s.knownName, p.awardYear
+query to check MATCH (s:Scholar)-[:WON]->(p1:Prize) WHERE toLower(p1.category) CONTAINS 'physics' WITH s MATCH (s)-[:WON]->(p2:Prize) WHERE toLower(p2.category) CONTAINS 'chemistry' RETURN DISTINCT s.fullName
+queryMATCH (s:Scholar)-[:WON]->(p1:Prize) WHERE toLower(p1.category) CONTAINS 'physics' WITH s MATCH (s)-[:WON]->(p2:Prize) WHERE toLower(p2.category) CONTAINS 'chemistry' RETURN DISTINCT s.fullName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p1:Prize) WHERE toLower(p1.category) CONTAINS 'physics' WITH s MATCH (s)-[:WON]->(p2:Prize) WHERE toLower(p2.category) CONTAINS 'chemistry' RETURN DISTINCT s.fullName
+final result ['Marie Curie, née Skłodowska']
+{'cache_retrieval': 9.833998774411157e-06, 'prune_0': 2.0076825830001326, 'few_shots_0': 0.9490440410008887, 'gen_t2c_0': 1.51193824999973, 'get_cypher_query': 4.468799375001254, 'postprocess_query': 0.00019599999905040022, 'validate_query': 0.0071429160016123205, 'exec_query': 0.0038857079998706467, 'answer_gen': 0.9004819999991014, 'run_query_forward': 5.380595208000159, 'caching': 2.4124999981722794e-05, 'full_run': 5.421782583000095}
+Question: Show Nobel Prize categories.
+Cypher: MATCH (p:Prize) RETURN DISTINCT p.category
+
+Question: List Nobel Prizes awarded in 2022.
+Cypher: MATCH (p:Prize {awardYear: 2022}) RETURN p.category, p.prize_id
+
+Question: Show Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount
+query to check MATCH (p:Prize) RETURN DISTINCT p.category
+queryMATCH (p:Prize) RETURN DISTINCT p.category, passed explain
+executable queryMATCH (p:Prize) RETURN DISTINCT p.category
+final result ['physics', 'chemistry', 'economics', 'peace', 'medicine']
+{'cache_retrieval': 1.0582998584141023e-05, 'prune_0': 1.5412636660003045, 'few_shots_0': 0.5614798329988844, 'gen_t2c_0': 1.8848216670012334, 'get_cypher_query': 3.9876806660013244, 'postprocess_query': 0.00016266700004052836, 'validate_query': 0.001294166999286972, 'exec_query': 0.0012803329991584178, 'answer_gen': 1.1786351249993459, 'run_query_forward': 5.169161666000946, 'caching': 2.433299960102886e-05, 'full_run': 5.209772790998613}
+Question: Which laureates won in the year 2003?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2003}) RETURN s.knownName, p.category
+
+Question: Find laureates who won the Nobel Prize in Medicine in 2001.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2001, category: "medicine"}) RETURN s.knownName
+
+Question: Which laureates won more than one Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) as prizes WHERE prizes > 1 RETURN s.knownName, prizes
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2003}) RETURN s.knownName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2003}) RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2003}) RETURN s.knownName
+final result ['Anthony J. Leggett', 'Sir Peter Mansfield', 'Roderick MacKinnon', 'Vitaly L. Ginzburg', 'Alexei Abrikosov', 'Clive W.J. Granger', 'Paul C. Lauterbur', 'Peter Agre', 'Robert F. Engle III']
+{'cache_retrieval': 2.1292000383255072e-05, 'prune_0': 1.848293624998405, 'few_shots_0': 0.6163670839996485, 'gen_t2c_0': 1.636124500000733, 'get_cypher_query': 4.100930750000771, 'postprocess_query': 0.0001867909995780792, 'validate_query': 0.0019100839999737218, 'exec_query': 0.0015497910007979954, 'answer_gen': 1.581508458000826, 'run_query_forward': 5.686194082998554, 'caching': 1.9542001609806903e-05, 'full_run': 5.726652332999947}
+Question: Find laureates awarded after 2015.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName, p.awardYear, p.category
+
+Question: Find Nobel laureates born after 1980.
+Cypher: MATCH (s:Scholar) WHERE s.birthDate > "1980-01-01" RETURN s.knownName, s.birthDate
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName
+final result ['David J. Thouless', 'Esther Duflo', 'Guido W. Imbens', 'Harvey J. Alter', 'James Peebles', 'Klaus Hasselmann', 'Yoshinori Ohsumi', 'Abhijit Banerjee', 'Akira Yoshino', 'Alain Aspect', 'Barry C. Barish', 'Charles M. Rice', 'David W.C. MacMillan', 'Douglas Diamond', 'Frances H. Arnold', 'Giorgio Parisi', 'John Clauser', 'K. Barry Sharpless', 'Michael Kremer', 'Tasuku Honjo', 'William D. Nordhaus', 'Ardem Patapoutian', 'Ben Bernanke', 'Benjamin List', 'John B. Goodenough', 'Richard Henderson', 'William G. Kaelin Jr', 'Arthur Ashkin', 'Didier Queloz', 'George P. Smith', 'J. Michael Kosterlitz', 'James P. Allison', 'Michael Rosbash', 'Oliver Hart', 'Paul R. Milgrom', 'Richard H. Thaler', 'Roger Penrose', 'Sir Gregory P. Winter', 'Sir Peter J. Ratcliffe', 'Svante Pääbo', 'Donna Strickland', 'Gregg L. Semenza', 'Jennifer A. Doudna', 'Joachim Frank', 'Kip S. Thorne', 'Morten Meldal', 'Reinhard Genzel', 'Sir J. Fraser Stoddart', 'Syukuro Manabe', 'Andrea Ghez', 'Bernard L. Feringa', 'David Card', 'Jean-Pierre Sauvage', 'Michael W. Young', 'Philip Dybvig', 'Robert B. Wilson', 'Anton Zeilinger', 'Carolyn Bertozzi', 'David Julius', 'Emmanuelle Charpentier', 'Gérard Mourou', 'Jacques Dubochet', 'Jeffrey C. Hall', 'Joshua D. Angrist', 'M. Stanley Whittingham', 'Michael Houghton', 'Rainer Weiss', 'Bengt Holmström', 'F. Duncan M. Haldane', 'Michel Mayor', 'Paul M. Romer']
+{'cache_retrieval': 9.500001397100277e-06, 'prune_0': 1.681341416999203, 'few_shots_0': 2.4796302920003654, 'gen_t2c_0': 1.68416383299882, 'get_cypher_query': 5.845274208000774, 'postprocess_query': 0.00019966599938925356, 'validate_query': 0.0021303329995134845, 'exec_query': 0.0017146669997600839, 'answer_gen': 2.9514191660000506, 'run_query_forward': 8.800967999999557, 'caching': 1.1000000085914508e-05, 'full_run': 8.848194791000424}
+Question: List laureates who won a prize for chemistry before 1950.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) WHERE p.awardYear < 1950 RETURN s.knownName, p.awardYear
+
+Question: List all Nobel laureates in Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN DISTINCT s.knownName
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) WHERE p.awardYear < 1950 RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) WHERE p.awardYear < 1950 RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) WHERE p.awardYear < 1950 RETURN s.knownName
+final result ['Alfred Werner', 'Arthur Harden', 'George de Hevesy', 'James B. Sumner', 'Otto Wallach', 'Paul Karrer', 'Peter Debye', 'Carl Bosch', 'Frederick Soddy', 'Fritz Pregl', 'Paul Sabatier', 'Hans Fischer', 'Sir Robert Robinson', 'Adolf Butenandt', 'Adolf von Baeyer', 'Arne Tiselius', 'Francis W. Aston', 'Frédéric Joliot', 'Henri Moissan', 'Leopold Ruzicka', 'Wendell M. Stanley', 'Heinrich Wieland', 'Irving Langmuir', 'Marie Curie', 'Richard Willstätter', 'Artturi Virtanen', 'Eduard Buchner', 'Hans von Euler-Chelpin', 'Otto Hahn', 'Sir William Ramsay', 'The Svedberg', 'Theodore W. Richards', 'Victor Grignard', 'Walther Nernst', 'Wilhelm Ostwald', 'William F. Giauque', 'Emil Fischer', 'Ernest Rutherford', 'Friedrich Bergius', 'Irène Joliot-Curie', 'Adolf Windaus', 'Fritz Haber', 'Harold C. Urey', "Jacobus H. van 't Hoff", 'John H. Northrop', 'Norman Haworth', 'Richard Kuhn', 'Richard Zsigmondy', 'Svante Arrhenius']
+{'cache_retrieval': 9.207999028149061e-06, 'prune_0': 1.8113425840001582, 'few_shots_0': 0.48330308300137403, 'gen_t2c_0': 1.3558812920000491, 'get_cypher_query': 3.6506952500003536, 'postprocess_query': 0.000186416000360623, 'validate_query': 0.0028225829992152285, 'exec_query': 0.0023118749995774124, 'answer_gen': 2.353576624998823, 'run_query_forward': 6.009821792000366, 'caching': 1.687500116531737e-05, 'full_run': 6.054165833000297}
+Question: In which city was the last chemistry laureate born?
+Cypher: MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN s.knownName, c.name ORDER BY p.awardYear DESC LIMIT 1
+
+Question: Which nobel laureates were born and died in the same city?
+Cypher: MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN c.name ORDER BY p.awardYear DESC LIMIT 1
+item causing problem c
+queryMATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN c.name ORDER BY p.awardYear DESC LIMIT 1, passed explain
+executable queryMATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN c.name ORDER BY p.awardYear DESC LIMIT 1
+final result ['Philadelphia, PA']
+{'cache_retrieval': 1.0707999535952695e-05, 'prune_0': 2.210237541999959, 'few_shots_0': 0.6171131249993778, 'gen_t2c_0': 1.471291874999224, 'get_cypher_query': 4.2987687080003525, 'postprocess_query': 0.0003451249995123362, 'validate_query': 0.004358250000223052, 'exec_query': 0.0045375830013654195, 'answer_gen': 0.9595217080004659, 'run_query_forward': 5.267727082999045, 'caching': 1.7250000382773578e-05, 'full_run': 5.309944832999463}
+Question: Which nobel laureates were born and died in the same city?
+Cypher: MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName
+
+Question: Which nobel laureates were born and died in the same country?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc) RETURN s.knownName, cc.name, c.name, c2.name
+
+Question: Which nobel laureates were born and died on the same continent?
+Cypher: MATCH (con:Continent)<-[:IS_COUNTRY_IN]-(cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc2:Country)-[:IS_COUNTRY_IN]->(con) RETURN s.knownName, con.name, cc.name, c.name, cc2.name, c2.name
+query to check MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.fullName
+item causing problem s
+queryMATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName, passed explain
+executable queryMATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName
+final result []
+{'cache_retrieval': 1.0375000783824362e-05, 'prune_0': 2.8191959579999093, 'few_shots_0': 0.4280341250014317, 'gen_t2c_0': 1.2304920410006162, 'get_cypher_query': 4.477854374999879, 'postprocess_query': 0.00017916700016940013, 'validate_query': 0.002155209000193281, 'exec_query': 0.0029427079989545746, 'answer_gen': 0.8144219170008, 'run_query_forward': 5.297644375001255, 'caching': 1.6957999832811765e-05, 'full_run': 5.33795900000041}
+Question: Which nobel laureates were born and died in the same country?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc) RETURN s.knownName, cc.name, c.name, c2.name
+
+Question: Which nobel laureates were born and died in the same city?
+Cypher: MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName
+
+Question: Which nobel laureates were born and died on the same continent?
+Cypher: MATCH (con:Continent)<-[:IS_COUNTRY_IN]-(cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc2:Country)-[:IS_COUNTRY_IN]->(con) RETURN s.knownName, con.name, cc.name, c.name, cc2.name, c2.name
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:BORN_IN]->(c1:City)-[:IS_CITY_IN]->(country1:Country), (s)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(country2:Country) WHERE country1 = country2 RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:BORN_IN]->(c1:City)-[:IS_CITY_IN]->(country1:Country), (s)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(country2:Country) WHERE country1 = country2 RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize), (s)-[:BORN_IN]->(c1:City)-[:IS_CITY_IN]->(country1:Country), (s)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(country2:Country) WHERE country1 = country2 RETURN s.knownName
+final result []
+{'cache_retrieval': 1.5874999007792212e-05, 'prune_0': 4.463895999999295, 'few_shots_0': 0.5125575410002057, 'gen_t2c_0': 1.5352300829999876, 'get_cypher_query': 6.511808125000243, 'postprocess_query': 0.00022033299865142908, 'validate_query': 0.025329291000161902, 'exec_query': 0.015379208000013023, 'answer_gen': 0.8773872499987192, 'run_query_forward': 7.430175957999381, 'caching': 1.6541000150027685e-05, 'full_run': 7.472992541999702}
+Question: Which nobel laureates were born and died on the same continent?
+Cypher: MATCH (con:Continent)<-[:IS_COUNTRY_IN]-(cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc2:Country)-[:IS_COUNTRY_IN]->(con) RETURN s.knownName, con.name, cc.name, c.name, cc2.name, c2.name
+
+Question: Which nobel laureates were born and died in the same country?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc) RETURN s.knownName, cc.name, c.name, c2.name
+
+Question: Which nobel laureates were born and died in the same city?
+Cypher: MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName
+query to check MATCH (s:Scholar)-[:BORN_IN]->(c:City)-[:IS_CITY_IN]->(cc:Country)-[:IS_COUNTRY_IN]->(con:Continent), (s)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc2:Country)-[:IS_COUNTRY_IN]->(con) RETURN s.knownName
+item causing problem s
+queryMATCH (s:Scholar)-[:BORN_IN]->(c:City)-[:IS_CITY_IN]->(cc:Country)-[:IS_COUNTRY_IN]->(con:Continent), (s)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc2:Country)-[:IS_COUNTRY_IN]->(con) RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:BORN_IN]->(c:City)-[:IS_CITY_IN]->(cc:Country)-[:IS_COUNTRY_IN]->(con:Continent), (s)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc2:Country)-[:IS_COUNTRY_IN]->(con) RETURN s.knownName
+final result []
+{'cache_retrieval': 7.70800033933483e-06, 'prune_0': 3.570618874999127, 'few_shots_0': 0.4826269160002994, 'gen_t2c_0': 2.256485750000138, 'get_cypher_query': 6.3098473329991975, 'postprocess_query': 0.00017174999993585516, 'validate_query': 0.020627915999284596, 'exec_query': 0.01600329200118722, 'answer_gen': 0.9015300000010029, 'run_query_forward': 7.248224459000994, 'caching': 1.6291000065393746e-05, 'full_run': 7.288627957999779}
+Question: Which Nobel laureates were born in Germany?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) WHERE cc.name = "Germany" RETURN s.knownName
+
+Question: Which nobel laureates were born and died in the same city?
+Cypher: MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName
+
+Question: Which nobel laureates were born and died in the same country?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc) RETURN s.knownName, cc.name, c.name, c2.name
+query to check MATCH (cc:Country) WHERE toLower(cc.name) CONTAINS toLower("Germany") MATCH (c:City)-[:IS_CITY_IN]->(cc) MATCH (s:Scholar)-[:BORN_IN]->(c) RETURN s.fullName
+item causing problem s
+queryMATCH (cc:Country) WHERE toLower(cc.name) CONTAINS toLower("Germany") MATCH (c:City)-[:IS_CITY_IN]->(cc) MATCH (s:Scholar)-[:BORN_IN]->(c) RETURN s.knownName, passed explain
+executable queryMATCH (cc:Country) WHERE toLower(cc.name) CONTAINS toLower("Germany") MATCH (c:City)-[:IS_CITY_IN]->(cc) MATCH (s:Scholar)-[:BORN_IN]->(c) RETURN s.knownName
+final result ['Arno Penzias', 'Gerd Binnig', 'Gerhard Herzberg', 'Klaus Hasselmann', 'Max Delbrück', 'Robert Huber', 'Robert J. Aumann', 'Carl Bosch', 'Ernst B. Chain', 'Georg Wittig', 'Hans Spemann', 'John C. Polanyi', 'Max Planck', 'Benjamin List', 'Ernst Otto Fischer', 'Feodor Lynen', 'Gustav Hertz', 'J. Hans D. Jensen', 'Theodor W. Hänsch', 'Adolf von Baeyer', 'Horst L. Störmer', 'Rudolf Mössbauer', 'Thomas C. Südhof', 'Eduard Buchner', 'James Franck', 'Otto Hahn', 'Otto Loewi', 'Werner Heisenberg', 'Ernst Ruska', 'Otto Diels', 'Rainer Weiss', 'Sir Bernard Katz', 'Werner Forssmann', 'Wolfgang Ketterle', 'Adolf Windaus', 'Bert Sakmann', 'Georges J.F. Köhler']
+{'cache_retrieval': 9.082999895326793e-06, 'prune_0': 3.3392850420004834, 'few_shots_0': 0.5445808749991556, 'gen_t2c_0': 2.0547923750000336, 'get_cypher_query': 5.938753374999578, 'postprocess_query': 0.00016758399942773394, 'validate_query': 0.0025943330001609866, 'exec_query': 0.0025081669991777744, 'answer_gen': 2.051562541999374, 'run_query_forward': 7.9958545839999715, 'caching': 1.7874999684863724e-05, 'full_run': 8.042770042000484}
+Question: Which Nobel laureates died in the USA?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:DIED_IN]-(s:Scholar) WHERE cc.name = "USA" RETURN s.knownName
+
+Question: Which nobel laureates were born and died in the same country?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc) RETURN s.knownName, cc.name, c.name, c2.name
+
+Question: Which nobel laureates were born and died in the same city?
+Cypher: MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName
+query to check MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:DIED_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE toLower(cc.name) CONTAINS toLower("USA") RETURN s.fullName
+item causing problem s
+queryMATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:DIED_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE toLower(cc.name) CONTAINS toLower("USA") RETURN s.knownName, passed explain
+executable queryMATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:DIED_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE toLower(cc.name) CONTAINS toLower("USA") RETURN s.knownName
+final result []
+{'cache_retrieval': 1.304099896515254e-05, 'prune_0': 3.0268672500005778, 'few_shots_0': 0.9491478750005626, 'gen_t2c_0': 1.8144099580003967, 'get_cypher_query': 5.790561625000919, 'postprocess_query': 0.00018570799875305966, 'validate_query': 0.003939124999305932, 'exec_query': 0.004199625000183005, 'answer_gen': 1.041291707999335, 'run_query_forward': 6.840288583000074, 'caching': 1.3291999493958429e-05, 'full_run': 6.885204041998804}
+Question: Which country has the most Nobel laureates?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+
+Question: What is the institution with most Nobel laureates affiliated?
+Cypher: MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+
+Question: Count the number of Nobel laureates.
+Cypher: MATCH (s:Scholar) RETURN COUNT(s) AS total_laureates
+query to check MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+item causing problem cc
+queryMATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1, passed explain
+executable queryMATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+final result ['USA', 129]
+{'cache_retrieval': 1.0708001354942098e-05, 'prune_0': 2.97584525000093, 'few_shots_0': 0.5672470419995079, 'gen_t2c_0': 1.6528406670004188, 'get_cypher_query': 5.196024957998816, 'postprocess_query': 0.0003334580014779931, 'validate_query': 0.0019235419986216584, 'exec_query': 0.003296917000625399, 'answer_gen': 0.809653750000507, 'run_query_forward': 6.011402916001316, 'caching': 1.1750000339816324e-05, 'full_run': 6.065562707999561}
+Question: What are the laureates associated with more than one institute?
+Cypher: MATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName
+
+Question: What is the institution with most Nobel laureates affiliated?
+Cypher: MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+
+Question: Which laureates won more than one Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) as prizes WHERE prizes > 1 RETURN s.knownName, prizes
+query to check MATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName
+item causing problem s
+queryMATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName
+final result ['Peter Debye', 'Robert J. Lefkowitz', 'Carl Bosch', 'K. Barry Sharpless', 'Alvin E. Roth', 'Saul Perlmutter', 'William G. Kaelin Jr', 'James P. Allison', 'Rainer Weiss', 'Shinya Yamanaka', 'Tomas Lindahl', 'Didier Queloz', 'William P. Murphy', 'Hideki Yukawa', 'Isamu Akasaki', 'Kurt Wüthrich', 'Roger Y. Tsien', 'Friedrich Bergius', 'Barry J. Marshall', 'Thomas C. Südhof', 'Carolyn Bertozzi', 'Walther Bothe', 'Serge Haroche', 'Akira Yoshino', 'Toshihide Maskawa', 'Roderick MacKinnon', 'Sir Peter J. Ratcliffe', 'Konrad Lorenz', 'Anton Zeilinger', 'Gérard Mourou', 'Johann Deisenhofer', 'Richard Kuhn', 'Kip S. Thorne', 'Martin Karplus', 'Adam G. Riess', 'Adolf Butenandt', 'Hermann Staudinger', 'Paul Ehrlich', 'John F. Enders', 'Mario R. Capecchi', 'Reinhard Genzel', 'Richard Willstätter', 'Thomas A. Steitz', 'Osamu Shimomura', 'Claude Cohen-Tannoudji', 'Frederick Sanger', 'Fritz Lipmann', 'Michael Rosbash', 'Rudolf Mössbauer', 'Svante Pääbo', 'Günter Blobel', 'Egas Moniz', 'Finn E. Kydland', 'Stefan W. Hell', 'Randy W. Schekman', 'Igor Y. Tamm', 'Dale T. Mortensen', 'Albert Fert', 'Ardem Patapoutian', 'Christian de Duve', 'Charles K. Kao', 'Elinor Ostrom', 'Jean-Marie Lehn', 'Il´ja M. Frank', 'Barry C. Barish', 'Jack W. Szostak', 'Abdus Salam', 'Alain Aspect', 'Bruce A. Beutler', 'Theodor W. Hänsch', 'Paul Modrich', 'Ilya Prigogine', 'David J. Wineland', 'John L. Hall', 'Georges Charpak', 'Nikolay Semenov', 'Edward C. Prescott']
+{'cache_retrieval': 8.709001122042537e-06, 'prune_0': 2.0101717919988005, 'few_shots_0': 1.0141714589990443, 'gen_t2c_0': 1.3520517910001217, 'get_cypher_query': 4.376488333000452, 'postprocess_query': 0.0002144169993698597, 'validate_query': 0.0024001670008146903, 'exec_query': 0.003165749998515821, 'answer_gen': 3.5387929160006024, 'run_query_forward': 7.921321166999405, 'caching': 1.7292000848101452e-05, 'full_run': 7.963064666999344}
+Question: What is the institution with most Nobel laureates affiliated?
+Cypher: MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+
+Question: Which country has the most Nobel laureates?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+
+Question: What are the laureates associated with more than one institute?
+Cypher: MATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName
+query to check MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+item causing problem i
+queryMATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1, passed explain
+executable queryMATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+final result ['University of California', 39]
+{'cache_retrieval': 7.375001587206498e-06, 'prune_0': 2.3157741659997555, 'few_shots_0': 0.517732000000251, 'gen_t2c_0': 1.426224667000497, 'get_cypher_query': 4.2598637499995675, 'postprocess_query': 0.00039199999991978984, 'validate_query': 0.0027746249998017447, 'exec_query': 0.003963416000260622, 'answer_gen': 1.1244980419996864, 'run_query_forward': 5.391564499999731, 'caching': 1.7791999198379926e-05, 'full_run': 5.432065000000875}
+Question: What is the total prize won by scholars affiliated with the institution with most scholars affiliated?
+Cypher: MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) WITH i, SUM(p.prizeAmount) AS total_prize RETURN i.name, total_prize ORDER BY total_prize DESC LIMIT 1
+
+Question: What is the institution with most Nobel laureates affiliated?
+Cypher: MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1
+
+Question: Which Nobel laureate received the highest prize amount?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+query to check MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) WITH i, COUNT(s) AS scholar_count, SUM(p.prizeAmount) AS total_prize ORDER BY scholar_count DESC LIMIT 1 RETURN total_prize
+item causing problem total_prize
+queryMATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) WITH i, COUNT(s) AS scholar_count, SUM(p.prizeAmount) AS total_prize ORDER BY scholar_count DESC LIMIT 1 RETURN total_prize, passed explain
+executable queryMATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) WITH i, COUNT(s) AS scholar_count, SUM(p.prizeAmount) AS total_prize ORDER BY scholar_count DESC LIMIT 1 RETURN total_prize
+final result [Decimal('234573899')]
+{'cache_retrieval': 7.750000804662704e-06, 'prune_0': 2.254836083000555, 'few_shots_0': 0.5671442500006378, 'gen_t2c_0': 1.4729438750000554, 'get_cypher_query': 4.2950447909988725, 'postprocess_query': 0.00044670799979940057, 'validate_query': 0.003908040998794604, 'exec_query': 0.0036183749998599524, 'answer_gen': 0.8540487909995136, 'run_query_forward': 5.157204000001002, 'caching': 1.7750000552041456e-05, 'full_run': 5.1958736249998765}
+Question: What is the youngest age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age ASC LIMIT 1
+
+Question: What is the oldest age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age DESC LIMIT 1
+
+Question: What is the average age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age ASC LIMIT 1
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age ASC LIMIT 1, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age ASC LIMIT 1
+final result [25]
+{'cache_retrieval': 1.2541999240056612e-05, 'prune_0': 1.9889360840006702, 'few_shots_0': 0.9591317920003348, 'gen_t2c_0': 1.4804281249998894, 'get_cypher_query': 4.428628125000614, 'postprocess_query': 0.00016366700037906412, 'validate_query': 0.015390417000162415, 'exec_query': 0.004184916999292909, 'answer_gen': 0.9337376250005036, 'run_query_forward': 5.382206374999441, 'caching': 2.074999974865932e-05, 'full_run': 5.426166999999623}
+Question: What is the oldest age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age DESC LIMIT 1
+
+Question: What is the youngest age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age ASC LIMIT 1
+
+Question: What is the average age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN max(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT"))
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN max(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")), passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN max(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT"))
+final result [97]
+{'cache_retrieval': 7.5000007200287655e-06, 'prune_0': 1.8926381670007686, 'few_shots_0': 0.5533864579992951, 'gen_t2c_0': 1.4721543750001729, 'get_cypher_query': 3.9182996669987915, 'postprocess_query': 0.0001431660002708668, 'validate_query': 0.011989041999186156, 'exec_query': 0.0015117910006665625, 'answer_gen': 0.9710162909996143, 'run_query_forward': 4.903024208000716, 'caching': 1.1124999218736775e-05, 'full_run': 4.941355875000227}
+Question: What is the average age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age
+
+Question: What is the oldest age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age DESC LIMIT 1
+
+Question: What is the youngest age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT") AS age ORDER BY age ASC LIMIT 1
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT"))
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")), passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT"))
+final result [59.26812585499316]
+{'cache_retrieval': 6.708000000799075e-06, 'prune_0': 2.1973927920007554, 'few_shots_0': 0.3701736669991078, 'gen_t2c_0': 2.1006925420006155, 'get_cypher_query': 4.668408999999883, 'postprocess_query': 0.00018045800061372574, 'validate_query': 0.0030554999993910315, 'exec_query': 0.003047249998417101, 'answer_gen': 1.061423625000316, 'run_query_forward': 5.736211583000113, 'caching': 1.7709000530885532e-05, 'full_run': 5.771751084001153}
+Question: Give me top 10 countries by average age of scholars winning Nobel Prizes.
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age ORDER BY average_age ASC LIMIT 10
+
+Question: Show top 10 Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10
+
+Question: What is the average age a scholar won a Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age
+query to check MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - toInteger(substring(s.birthDate, 0, 4))) AS average_age ORDER BY average_age DESC LIMIT 10
+item causing problem cc
+Error running query: Catalog exception: function TOINTEGER does not exist.
+inside repair loop
+query to check MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age ORDER BY average_age DESC LIMIT 10
+item causing problem cc
+queryMATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age ORDER BY average_age DESC LIMIT 10, passed explain
+executable queryMATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), "INT")) AS average_age ORDER BY average_age DESC LIMIT 10
+final result ['Norway', 74.0, 'Russia', 70.0, 'Japan', 65.33333333333333, 'Sweden', 65.0, 'Israel', 63.5, 'the Netherlands', 61.8, 'Austria', 61.38461538461539, 'Finland', 61.333333333333336, 'Argentina', 60.0, 'Australia', 60.0]
+{'cache_retrieval': 7.874999937484972e-06, 'prune_0': 2.8033009999999194, 'few_shots_0': 0.437629084000946, 'gen_t2c_0': 1.9630077499987237, 'get_cypher_query': 5.247823374998916, 'postprocess_query': 0.0002614999993966194, 'validate_query': 0.0197874170007708, 'rep_t2c_0': 1.645002541001304, 'rep_query_0': 4.88597558299989, 'rep_postprocess_query_0': 0.00028208299954712857, 'rep_validate_query_0': 0.005945916998825851, 'exec_query': 0.0060967919998802245, 'answer_gen': 2.306386124999335, 'run_query_forward': 12.472789041999931, 'caching': 2.1500000002561137e-05, 'full_run': 12.522173584000484}
+2025/11/24 22:10:56 WARNING dspy.clients.lm: LM response was truncated due to exceeding max_tokens=4000. You can inspect the latest LM interactions with `dspy.inspect_history()`. To avoid truncation, consider passing a larger max_tokens when setting up dspy.LM. You may also consider increasing the temperature (currently 0.0)  if the reason for truncation is repetition.
+Question: Who won the Nobel Prize in Physics in 2020?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2020, category: "physics"}) RETURN s.knownName
+
+Question: List Nobel Prizes awarded in 2022.
+Cypher: MATCH (p:Prize {awardYear: 2022}) RETURN p.category, p.prize_id
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2020, category: "physics"}) RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2020, category: "physics"}) RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2020, category: "physics"}) RETURN s.knownName
+final result ['Roger Penrose', 'Reinhard Genzel', 'Andrea Ghez']
+{'cache_retrieval': 1.316599991696421e-05, 'prune_0': 2.2179045000011683, 'few_shots_0': 0.4416036670008907, 'gen_t2c_0': 1.0680646660002822, 'get_cypher_query': 3.727790458000527, 'postprocess_query': 0.0012418330006767064, 'validate_query': 0.01345887499883247, 'exec_query': 0.0030139170012262184, 'answer_gen': 1.0952272089998587, 'run_query_forward': 4.8408967920004216, 'caching': 5.662500007019844e-05, 'full_run': 5.298944207999739}
+Question: List all Nobel laureates in Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN DISTINCT s.knownName
+
+Question: List laureates who won a prize for chemistry before 1950.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) WHERE p.awardYear < 1950 RETURN s.knownName, p.awardYear
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'chemistry' RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'chemistry' RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'chemistry' RETURN s.knownName
+final result ['Aaron Klug', 'Ahmed Zewail', 'Alfred Werner', 'Arthur Harden', 'George de Hevesy', 'Gerhard Herzberg', 'Glenn T. Seaborg', 'James B. Sumner', 'Kurt Alder', 'Lars Onsager', 'Otto Wallach', 'Paul J. Crutzen', 'Paul Karrer', 'Peter Debye', 'Peter Mitchell', 'Richard L.M. Synge', 'Richard R. Ernst', 'Robert Huber', 'Robert J. Lefkowitz', 'Stefan W. Hell', 'Vincent du Vigneaud', 'Vladimir Prelog', 'Akira Yoshino', 'Carl Bosch', 'David W.C. MacMillan', 'Derek Barton', 'Eric Betzig', 'Frances H. Arnold', 'Frederick Soddy', 'Fritz Pregl', 'Georg Wittig', 'John B. Fenn', 'John C. Polanyi', 'K. Barry Sharpless', 'K. Barry Sharpless', 'Karl Ziegler', 'Kurt Wüthrich', 'Linus Pauling', 'Martin Karplus', 'Melvin Calvin', 'Nikolay Semenov', 'Paul J. Flory', 'Paul Sabatier', 'Richard E. Smalley', 'Roger Y. Tsien', 'Ronald G.W. Norrish', 'Rudolph A. Marcus', 'Stanford Moore', 'William H. Stein', 'Aaron Ciechanover', 'Benjamin List', 'Dan Shechtman', 'Ei-ichi Negishi', 'Elias James Corey', 'Ernst Otto Fischer', 'Hans Fischer', 'Jens C. Skou', 'Jerome Karle', 'John B. Goodenough', 'John C. Kendrew', 'Max F. Perutz', 'Richard F. Heck', 'Richard Henderson', 'Robert H. Grubbs', 'Sir Robert Robinson', 'Tomas Lindahl', 'Adolf Butenandt', 'Adolf von Baeyer', 'Alan Heeger', 'Alan MacDiarmid', 'Arne Tiselius', 'Charles J. Pedersen', 'F. Sherwood Rowland', 'Francis W. Aston', 'Frédéric Joliot', 'Geoffrey Wilkinson', 'George P. Smith', 'George Porter', 'Gerhard Ertl', 'Henri Moissan', 'Hermann Staudinger', 'Irwin Rose', 'Jaroslav Heyrovsky', 'John Cornforth', 'John Pople', 'Leopold Ruzicka', 'Lord Todd', 'Roderick MacKinnon', 'Sir Gregory P. Winter', 'Venkatraman Ramakrishnan', 'Wendell M. Stanley', 'Willard F. Libby', 'William Knowles', 'Akira Suzuki', 'Avram Hershko', 'Bruce Merrifield', 'Donald J. Cram', 'Heinrich Wieland', 'Herbert A. Hauptman', 'Herbert C. Brown', 'Irving Langmuir', 'Jennifer A. Doudna', 'Joachim Frank', 'John E. Walker', 'Marie Curie', 'Martin Chalfie', 'Morten Meldal', 'Paul D. Boyer', 'Paul Modrich', 'Richard Willstätter', 'Sidney Altman', 'Sir J. Fraser Stoddart', 'Yuan T. Lee', 'Archer J.P. Martin', 'Arieh Warshel', 'Artturi Virtanen', 'Bernard L. Feringa', 'Eduard Buchner', 'Giulio Natta', 'Hans von Euler-Chelpin', 'Ilya Prigogine', 'Jean-Pierre Sauvage', 'Kenichi Fukui', 'Koichi Tanaka', 'Luis Leloir', 'Manfred Eigen', 'Michael Smith', 'Otto Hahn', 'Peter Agre', 'Richard R. Schrock', 'Ryoji Noyori', 'Sir William Ramsay', 'The Svedberg', 'Theodore W. Richards', 'Thomas A. Steitz', 'Victor Grignard', 'Walther Nernst', 'Wilhelm Ostwald', 'William F. Giauque', 'William Lipscomb', 'Yves Chauvin', 'Aziz Sancar', 'Brian Kobilka', 'Carolyn Bertozzi', 'Dorothy Crowfoot Hodgkin', 'Dudley R. Herschbach', 'Emil Fischer', 'Emmanuelle Charpentier', 'Ernest Rutherford', 'Friedrich Bergius', 'George A. Olah', 'Irène Joliot-Curie', 'Jacques Dubochet', 'Jean-Marie Lehn', 'Johann Deisenhofer', 'M. Stanley Whittingham', 'Mario J. Molina', 'Michael Levitt', 'Odd Hassel', 'Osamu Shimomura', 'Otto Diels', 'Paul Berg', 'Roald Hoffmann', 'Robert B. Woodward', 'Robert S. Mulliken', 'Roger D. Kornberg', 'Sir Cyril Hinshelwood', 'Sir Harold Kroto', 'Thomas R. Cech', 'Walter Gilbert', 'Walter Kohn', 'William E. Moerner', 'Ada E. Yonath', 'Adolf Windaus', 'Christian Anfinsen', 'Edwin M. McMillan', 'Frederick Sanger', 'Frederick Sanger', 'Fritz Haber', 'Harold C. Urey', 'Hartmut Michel', 'Henry Taube', 'Hideki Shirakawa', "Jacobus H. van 't Hoff", 'John H. Northrop', 'Kary B. Mullis', 'Norman Haworth', 'Richard Kuhn', 'Richard Zsigmondy', 'Robert F. Curl Jr.', 'Svante Arrhenius']
+{'cache_retrieval': 2.0666999262175523e-05, 'prune_0': 1.7982556669994665, 'few_shots_0': 0.6162750409985165, 'gen_t2c_0': 1.5300147920006566, 'get_cypher_query': 3.9446796660013206, 'postprocess_query': 0.00021629200091410894, 'validate_query': 0.011140999999042833, 'exec_query': 0.003570916998796747, 'answer_gen': 5.947603792001246, 'run_query_forward': 9.907712125001126, 'caching': 3.891699998348486e-05, 'full_run': 9.954382792000615}
+Question: Which laureates won more than one Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) as prizes WHERE prizes > 1 RETURN s.knownName, prizes
+
+Question: Which Nobel laureates were born in Germany?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar) WHERE cc.name = "Germany" RETURN s.knownName
+
+Question: Which nobel laureates were born and died in the same country?
+Cypher: MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City)-[:IS_CITY_IN]->(cc) RETURN s.knownName, cc.name, c.name, c2.name
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) AS numPrizes WHERE numPrizes > 1 RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) AS numPrizes WHERE numPrizes > 1 RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) AS numPrizes WHERE numPrizes > 1 RETURN s.knownName
+final result ['Frederick Sanger', 'Linus Pauling', 'Marie Curie', 'K. Barry Sharpless', 'John Bardeen']
+{'cache_retrieval': 1.6834001144161448e-05, 'prune_0': 1.4856799170011072, 'few_shots_0': 0.4901683750013035, 'gen_t2c_0': 1.7441412080006558, 'get_cypher_query': 3.720107375000225, 'postprocess_query': 0.00021175000074435957, 'validate_query': 0.008364417000848334, 'exec_query': 0.0038600830012001097, 'answer_gen': 1.4204391249986656, 'run_query_forward': 5.15310133300045, 'caching': 2.2041998818167485e-05, 'full_run': 5.19948545799889}
+Question: Find Nobel laureates born before 1900.
+Cypher: MATCH (s:Scholar) WHERE s.birthDate < "1900-01-01" RETURN s.knownName, s.birthDate
+
+Question: Find Nobel laureates born after 1980.
+Cypher: MATCH (s:Scholar) WHERE s.birthDate > "1980-01-01" RETURN s.knownName, s.birthDate
+
+Question: Which laureates died before 1950?
+Cypher: MATCH (s:Scholar) WHERE s.deathDate < "1950-01-01" RETURN s.knownName, s.deathDate
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate < "1900-01-01" RETURN s.knownName, s.birthDate
+item causing problem s
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate < "1900-01-01" RETURN s.knownName, s.birthDate, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate < "1900-01-01" RETURN s.knownName, s.birthDate
+final result ['Alfred Werner', '1866-12-12', 'Arthur Harden', '1865-10-12', 'C.T.R. Wilson', '1869-02-14', 'Charles Nicolle', '1866-09-21', 'Dickinson W. Richards', '1895-10-30', 'Edgar Adrian', '1889-11-30', 'George de Hevesy', '1885-08-01', 'George R. Minot', '1885-12-02', 'Ilya Mechnikov', '1845-05-15', 'James B. Sumner', '1887-11-19', 'Johannes Fibiger', '1867-04-23', 'Niels Bohr', '1885-10-07', 'Niels Ryberg Finsen', '1860-12-15', 'Otto Meyerhof', '1884-04-12', 'Otto Wallach', '1847-03-27', 'Patrick M.S. Blackett', '1897-11-18', 'Paul Karrer', '1889-04-21', 'Peter Debye', '1884-03-24', 'Pieter Zeeman', '1865-05-25', 'Sir Alexander Fleming', '1881-08-06', 'Wilhelm Conrad Röntgen', '1845-03-27', 'Albert Einstein', '1879-03-14', 'Allvar Gullstrand', '1862-06-05', 'Alphonse Laveran', '1845-06-18', 'André F. Cournand', '1895-09-24', 'Carl Bosch', '1874-08-27', 'Charles Edouard Guillaume', '1861-02-15', 'Frederick Soddy', '1877-09-02', 'Frits Zernike', '1888-07-16', 'Fritz Pregl', '1869-09-03', 'Georg Wittig', '1897-06-16', 'Gerty Cori', '1896-08-15', 'Gustaf Dalén', '1869-11-30', 'Hans Spemann', '1869-06-27', 'Isidor Isaac Rabi', '1898-07-29', 'Johannes Stark', '1874-04-15', 'Karl Landsteiner', '1868-06-14', 'Karl Ziegler', '1898-11-26', 'Lord Rayleigh', '1842-11-12', 'Max Planck', '1858-04-23', 'Nikolay Semenov', '1896-04-03', 'Paul Sabatier', '1854-11-05', 'Ronald G.W. Norrish', '1897-11-09', 'Ronald Ross', '1857-05-13', 'Sir Henry Dale', '1875-06-09', 'Albrecht Kossel', '1853-09-16', 'Archibald V. Hill', '1886-09-26', 'August Krogh', '1874-11-15', 'Bertil Ohlin', '1899-04-23', 'Charles Glover Barkla', '1877-06-07', 'Edward V. Appleton', '1892-09-06', 'Frederick G. Banting', '1891-11-14', 'Gunnar Myrdal', '1898-12-06', 'Gustav Hertz', '1887-07-22', 'Hans Fischer', '1881-07-27', 'Heike Kamerlingh Onnes', '1853-09-21', 'Hendrik A. Lorentz', '1853-07-18', 'Henrik Dam', '1895-02-21', 'Herbert S. Gasser', '1888-07-05', 'Hermann J. Muller', '1890-12-21', 'Joseph Erlanger', '1874-01-05', 'Max Theiler', '1899-01-30', 'Otto Stern', '1888-02-17', 'Pierre Curie', '1859-05-15', 'Pyotr Kapitsa', '1894-07-09', 'Sir Frank Macfarlane Burnet', '1899-09-03', 'Sir Frederick Hopkins', '1861-06-20', 'Sir Robert Robinson', '1886-09-13', 'Victor F. Hess', '1883-06-24', 'Adolf von Baeyer', '1835-10-31', 'Francis W. Aston', '1877-09-01', 'Henri Becquerel', '1852-12-15', 'Henri Moissan', '1852-09-28', 'Hermann Staudinger', '1881-03-23', 'Igor Y. Tamm', '1895-07-08', 'Jaroslav Heyrovsky', '1890-12-20', 'Leopold Ruzicka', '1887-09-13', 'Owen Willans Richardson', '1879-04-26', 'Paul Ehrlich', '1854-03-14', 'Paul Müller', '1899-01-12', 'Sir Chandrasekhara Venkata Raman', '1888-11-07', 'William P. Murphy', '1892-02-06', 'Albert A. Michelson', '1852-12-19', 'Arthur H. Compton', '1892-09-10', 'Camillo Golgi', '1843-07-07', 'Clinton Davisson', '1881-10-22', 'Edward C. Kendall', '1886-03-08', 'Ferdinand Braun', '1850-06-06', 'Georg von Békésy', '1899-06-03', 'Heinrich Wieland', '1877-06-04', 'Irving Langmuir', '1881-01-31', 'James Chadwick', '1891-10-20', 'Jean Baptiste Perrin', '1870-09-30', 'Johannes Diderik van der Waals', '1837-11-23', 'John F. Enders', '1897-02-10', 'John H. Van Vleck', '1899-03-13', 'John Macleod', '1876-09-06', 'Karl von Frisch', '1886-11-20', 'Lawrence Bragg', '1890-03-31', 'Marie Curie', '1867-11-07', 'Marie Curie', '1867-11-07', 'Percy W. Bridgman', '1882-04-21', 'Richard Willstätter', '1872-08-13', 'Sir Charles Sherrington', '1857-11-27', 'Sir Howard Florey', '1898-09-24', 'Wilhelm Wien', '1864-01-13', 'Willem Einthoven', '1860-05-21', 'William Bragg', '1862-07-02', 'Albert Szent-Györgyi', '1893-09-16', 'Artturi Virtanen', '1895-01-15', 'Christiaan Eijkman', '1858-08-11', 'Eduard Buchner', '1860-05-20', 'Emil von Behring', '1854-03-15', 'Friedrich von Hayek', '1899-05-08', 'George H. Whipple', '1878-08-28', 'Hans von Euler-Chelpin', '1873-02-15', 'James Franck', '1882-08-26', 'Julius Wagner-Jauregg', '1857-03-07', 'Louis de Broglie', '1892-08-15', 'Manne Siegbahn', '1886-12-03', 'Otto Hahn', '1879-03-08', 'Otto Loewi', '1873-06-03', 'Otto Warburg', '1883-10-08', 'Robert Bárány', '1876-04-22', 'Selman A. Waksman', '1888-07-22', 'Sir William Ramsay', '1852-10-02', 'The Svedberg', '1884-08-30', 'Theodor Kocher', '1841-08-25', 'Theodore W. Richards', '1868-01-31', 'Victor Grignard', '1871-05-06', 'Walther Nernst', '1864-06-25', 'Wilhelm Ostwald', '1853-09-02', 'William F. Giauque', '1895-05-12', 'Alexis Carrel', '1873-06-28', 'Carl Cori', '1896-12-05', 'Corneille Heymans', '1892-03-28', 'Edward A. Doisy', '1893-11-13', 'Egas Moniz', '1874-11-29', 'Emil Fischer', '1852-10-09', 'Ernest Rutherford', '1871-08-30', 'Erwin Schrödinger', '1887-08-12', 'Friedrich Bergius', '1884-10-11', 'Gabriel Lippmann', '1845-08-16', 'Irène Joliot-Curie', '1897-09-12', 'J.J. Thomson', '1856-12-18', 'Max von Laue', '1879-10-09', 'Odd Hassel', '1897-05-17', 'Otto Diels', '1876-01-23', 'Philip S. Hench', '1896-02-28', 'Philipp Lenard', '1862-06-07', 'Robert Koch', '1843-12-11', 'Robert S. Mulliken', '1896-06-07', 'Sir Cyril Hinshelwood', '1897-05-19', 'Thomas H. Morgan', '1866-09-25', 'Walter Hess', '1881-03-17', 'Adolf Windaus', '1876-12-25', 'Albert Claude', '1898-08-24', 'Bernardo Houssay', '1887-04-10', 'Charles Richet', '1850-08-26', 'Fritz Haber', '1868-12-09', 'Fritz Lipmann', '1899-06-12', 'George Paget Thomson', '1892-05-03', 'Gerhard Domagk', '1895-10-30', 'Guglielmo Marconi', '1874-04-25', 'Harold C. Urey', '1893-04-29', 'Ivan Pavlov', '1849-09-14', "Jacobus H. van 't Hoff", '1852-08-30', 'John Cockcroft', '1897-05-27', 'John H. Northrop', '1891-07-05', 'Jules Bordet', '1870-06-13', 'Max Born', '1882-12-11', 'Norman Haworth', '1883-03-19', 'Peyton Rous', '1879-10-05', 'Ragnar Frisch', '1895-03-03', 'Richard Zsigmondy', '1865-04-01', 'Robert A. Millikan', '1868-03-22', 'Santiago Ramón y Cajal', '1852-05-01', 'Svante Arrhenius', '1859-02-19', 'Tadeus Reichstein', '1897-07-20', 'Walther Bothe', '1891-01-08']
+{'cache_retrieval': 1.0166999345528893e-05, 'prune_0': 2.2020677079999587, 'few_shots_0': 0.614548208000997, 'gen_t2c_0': 1.2001352500010398, 'get_cypher_query': 4.016897249999602, 'postprocess_query': 0.00018483299936633557, 'validate_query': 0.004429417000210378, 'exec_query': 0.0019022920005227206, 'answer_gen': 7.913294708001558, 'run_query_forward': 11.937159082999642, 'caching': 3.091600046900567e-05, 'full_run': 11.987177709001116}
+Question: What did Marie Curie win?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.knownName CONTAINS "Curie" AND s.knownName CONTAINS "Marie" RETURN p.category, p.awardYear
+
+Question: Did Einstein win any prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.knownName CONTAINS "Einstein" RETURN count(p) > 0
+
+Question: Which laureates won more than one Nobel Prize?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) as prizes WHERE prizes > 1 RETURN s.knownName, prizes
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Curie') AND lower(s.knownName) CONTAINS lower('Marie') RETURN p.category
+item causing problem p
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Curie') AND lower(s.knownName) CONTAINS lower('Marie') RETURN p.category, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Curie') AND lower(s.knownName) CONTAINS lower('Marie') RETURN p.category
+final result ['physics', 'chemistry']
+{'cache_retrieval': 1.5625000742147677e-05, 'prune_0': 1.7845850000012433, 'few_shots_0': 0.4924591250000958, 'gen_t2c_0': 1.5574545830004354, 'get_cypher_query': 3.834613916998933, 'postprocess_query': 0.00045333299931371585, 'validate_query': 0.009638207999159931, 'exec_query': 0.0025871249999909196, 'answer_gen': 1.1205941249991156, 'run_query_forward': 4.9680028750008205, 'caching': 1.4332999853650108e-05, 'full_run': 5.018571624999822}
+Question: Who won the Nobel Prize in peace in 1962?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: "peace"}) RETURN s.knownName
+
+Question: Which laureate won the Nobel Peace Prize in 2010?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2010, category: "peace"}) RETURN s.knownName
+
+Question: Which Nobel laureate received the highest prize amount?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: "peace"}) RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: "peace"}) RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: "peace"}) RETURN s.knownName
+final result ['Linus Pauling']
+{'cache_retrieval': 1.6250000044237822e-05, 'prune_0': 1.899406499998804, 'few_shots_0': 0.5032515410002816, 'gen_t2c_0': 1.5365144999996119, 'get_cypher_query': 3.939293416999135, 'postprocess_query': 0.0001788339995982824, 'validate_query': 0.001975999999558553, 'exec_query': 0.0017426249996788101, 'answer_gen': 1.0303000829990197, 'run_query_forward': 4.97359008300009, 'caching': 2.245900031994097e-05, 'full_run': 5.019855832999383}
+Question: List all Nobel Peace Prize winners.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "peace"}) RETURN DISTINCT s.knownName
+
+Question: List all Nobel laureates in Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {category: "chemistry"}) RETURN DISTINCT s.knownName
+
+Question: Show Nobel Prize categories.
+Cypher: MATCH (p:Prize) RETURN DISTINCT p.category
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'peace' RETURN DISTINCT s.fullName
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'peace' RETURN DISTINCT s.fullName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'peace' RETURN DISTINCT s.fullName
+final result ['Linus Carl Pauling']
+{'cache_retrieval': 1.6416999642387964e-05, 'prune_0': 1.982840374999796, 'few_shots_0': 0.6166890000004059, 'gen_t2c_0': 1.0951618749986665, 'get_cypher_query': 3.694842625000092, 'postprocess_query': 0.00013495900020643603, 'validate_query': 0.0022053749999031425, 'exec_query': 0.0024745419996179407, 'answer_gen': 0.9795288750010513, 'run_query_forward': 4.679359249999834, 'caching': 1.7374999515595846e-05, 'full_run': 4.7291778339986195}
+Question: How many laureates are female?
+Cypher: MATCH (s:Scholar) WHERE s.gender = "female" RETURN COUNT(s) AS female_laureates
+
+Question: Find laureates awarded after 2015.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName, p.awardYear, p.category
+
+Question: Count the number of Nobel laureates.
+Cypher: MATCH (s:Scholar) RETURN COUNT(s) AS total_laureates
+query to check MATCH (s:Scholar) WHERE toLower(s.gender) CONTAINS "female" RETURN COUNT(s)
+queryMATCH (s:Scholar) WHERE toLower(s.gender) CONTAINS "female" RETURN COUNT(s), passed explain
+executable queryMATCH (s:Scholar) WHERE toLower(s.gender) CONTAINS "female" RETURN COUNT(s)
+final result [25]
+{'cache_retrieval': 2.3624999812454917e-05, 'prune_0': 1.3439264169992384, 'few_shots_0': 0.7170501250002417, 'gen_t2c_0': 1.2712255420010479, 'get_cypher_query': 3.332338250000248, 'postprocess_query': 0.00014933300008124206, 'validate_query': 0.0017526669998915168, 'exec_query': 0.0013807499999529682, 'answer_gen': 1.3853732919997128, 'run_query_forward': 4.721093999998629, 'caching': 1.7749998733052053e-05, 'full_run': 4.7780712919993675}
+Question: Find laureates who won the Nobel Prize in Medicine in 2001.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2001, category: "medicine"}) RETURN s.knownName
+
+Question: Which laureates won in the year 2003?
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2003}) RETURN s.knownName, p.category
+
+Question: Find laureates who won in Physics and Chemistry.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.category in ["physics", "chemistry"] RETURN DISTINCT s.knownName
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2001, category: "medicine"}) RETURN s.fullName
+item causing problem s
+queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2001, category: "medicine"}) RETURN s.knownName, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2001, category: "medicine"}) RETURN s.knownName
+final result ['Tim Hunt', 'Leland Hartwell', 'Sir Paul Nurse']
+{'cache_retrieval': 1.4250001186155714e-05, 'prune_0': 1.781780749999598, 'few_shots_0': 0.5127954580002552, 'gen_t2c_0': 1.9476811250005994, 'get_cypher_query': 4.242370625001058, 'postprocess_query': 0.00015454200001840945, 'validate_query': 0.0020080419999430887, 'exec_query': 0.0020134160004090518, 'answer_gen': 1.1886082500004704, 'run_query_forward': 5.435284207998848, 'caching': 2.4916000256780535e-05, 'full_run': 5.497343541001101}
+Question: Show Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount
+
+Question: Show top 10 Nobel laureates along with the amount of their prize.
+Cypher: MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10
+
+Question: Show Nobel Prize categories.
+Cypher: MATCH (p:Prize) RETURN DISTINCT p.category
+query to check MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount
+item causing problem s
+item causing problem p
+queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount, passed explain
+executable queryMATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount
+final result ['Aaron Klug', 1150000, 'Ahmed Zewail', 7900000, 'Alfred D. Hershey', 375000, 'Alfred Werner', 143010, 'Amartya Sen', 7600000, 'Andre Geim', 10000000, 'Arno Penzias', 725000, 'Arthur Harden', 172760, 'Arvid Carlsson', 9000000, 'Ben R. Mottelson', 630000, 'Bertram N. Brockhouse', 7000000, 'C.T.R. Wilson', 126501, 'Charles Nicolle', 156939, 'Christopher A. Sims', 10000000, 'Daniel Nathans', 725000, 'David H. Hubel', 1000000, 'David J. Gross', 10000000, 'David J. Thouless', 8000000, 'David M. Lee', 7400000, 'Dickinson W. Richards', 200123, 'Edgar Adrian', 171753, 'Eric F. Wieschaus', 7200000, 'Ernest Lawrence', 148822, 'Esther Duflo', 9000000, 'François Jacob', 282000, 'George de Hevesy', 123691, 'George R. Minot', 162608, 'Gerard Debreu', 1500000, 'Gerd Binnig', 2000000, 'Gerhard Herzberg', 450000, 'Glenn T. Seaborg', 167612, 'Guido W. Imbens', 10000000, 'Harvey J. Alter', 10000000, 'Ilya Mechnikov', 139800, 'Jack Kilby', 9000000, 'James A. Mirrlees', 7400000, 'James B. Sumner', 121524, 'James M. Buchanan Jr.', 2000000, 'James Peebles', 9000000, 'Johannes Fibiger', 116960, 'Joseph L. Goldstein', 1800000, 'Klaus Hasselmann', 10000000, 'Klaus von Klitzing', 1800000, 'Konrad Bloch', 273000, 'Kurt Alder', 164304, 'Lars Onsager', 350000, 'Louis J. Ignarro', 7600000, 'Masatoshi Koshiba', 10000000, 'Max Delbrück', 375000, 'Murray Gell-Mann', 375000, 'Niels Bohr', 122483, 'Niels Ryberg Finsen', 141358, 'Norman F. Ramsey', 3000000, 'Otto Meyerhof', 122483, 'Otto Wallach', 140703, 'Patrick M.S. Blackett', 159773, 'Paul A.M. Dirac', 170332, 'Paul Greengard', 9000000, 'Paul J. Crutzen', 7200000, 'Paul Karrer', 158463, 'Peter Debye', 159850, 'Peter Mitchell', 725000, 'Pierre-Gilles de Gennes', 6000000, 'Pieter Zeeman', 141847, 'Ralph M. Steinman', 10000000, 'Renato Dulbecco', 630000, 'Richard L.M. Synge', 171135, 'Richard P. Feynman', 282000, 'Richard R. Ernst', 6000000, 'Robert C. Merton', 7500000, 'Robert Huber', 2500000, 'Robert J. Aumann', 10000000, 'Robert J. Lefkowitz', 8000000, 'Robert M. Solow', 2175000, 'Robert Woodrow Wilson', 725000, 'Rolf M. Zinkernagel', 7400000, 'Rosalyn Yalow', 700000, 'Serge Haroche', 8000000, 'Sir Alexander Fleming', 121333, 'Stefan W. Hell', 8000000, 'Sydney Brenner', 10000000, 'Thomas J. Sargent', 10000000, 'Tim Hunt', 10000000, 'Ulf von Euler', 400000, 'Vernon L. Smith', 10000000, 'Vincent du Vigneaud', 190214, 'Vladimir Prelog', 630000, 'Werner Arber', 725000, 'Wilhelm Conrad Röntgen', 150782, 'William F. Sharpe', 4000000, 'Willis E. Lamb', 190214, 'Wolfgang Pauli', 121333, 'Yoshinori Ohsumi', 8000000, 'Zhores Alferov', 9000000, 'Abhijit Banerjee', 9000000, 'Akira Yoshino', 9000000, 'Alain Aspect', 10000000, 'Albert Einstein', 121573, 'Allvar Gullstrand', 140695, 'Alphonse Laveran', 138796, 'André F. Cournand', 200123, 'Barry C. Barish', 9000000, 'Barry J. Marshall', 10000000, 'Bengt I. Samuelsson', 1150000, 'Brian D. Josephson', 510000, 'Carl Bosch', 173206, 'Carl Wieman', 10000000, 'Charles B. Huggins', 300000, 'Charles Edouard Guillaume', 134100, 'Charles M. Rice', 10000000, 'David W.C. MacMillan', 10000000, 'Derek Barton', 375000, 'Douglas Diamond', 10000000, 'Edvard I. Moser', 8000000, 'Enrico Fermi', 155077, 'Eric Betzig', 8000000, 'Ernest T.S. Walton', 167612, 'Ernst B. Chain', 121333, 'Frances H. Arnold', 9000000, 'Frederick Soddy', 121573, 'Frits Zernike', 175293, 'Fritz Pregl', 114935, 'Georg Wittig', 800000, 'George E. Palade', 550000, 'Georges Charpak', 6500000, 'Gerty Cori', 146115, 'Giorgio Parisi', 10000000, 'Gustaf Dalén', 140476, 'Hans Spemann', 159917, 'Harald zur Hausen', 10000000, 'Herbert Kroemer', 9000000, 'Herbert Simon', 725000, 'Isamu Akasaki', 8000000, 'Isidor Isaac Rabi', 121841, 'Ivar Giaever', 510000, 'Johannes Stark', 133127, 'John B. Fenn', 10000000, 'John C. Polanyi', 2000000, 'John Clauser', 10000000, 'John R. Hicks', 480000, 'John R. Vane', 1150000, 'K. Alex Müller', 2175000, 'K. Barry Sharpless', 10000000, 'K. Barry Sharpless', 10000000, 'Karl Landsteiner', 172947, 'Karl Ziegler', 265000, 'Kenneth G. Wilson', 1150000, 'Kurt Wüthrich', 10000000, 'Linus Pauling', 181647, 'Linus Pauling', 257220, 'Lord Rayleigh', 140859, 'Louis Néel', 400000, 'Martin Karplus', 8000000, 'Martin Ryle', 550000, 'Maurice Allais', 2500000, 'Max Planck', 138198, 'Melvin Calvin', 250233, 'Michael Kremer', 9000000, 'Nikolay Semenov', 200123, 'Owen Chamberlain', 220678, 'Paul J. Flory', 550000, 'Paul Sabatier', 140476, 'Peter C. Doherty', 7400000, 'Philip W. Anderson', 700000, 'Richard E. Smalley', 7400000, 'Robert B. Laughlin', 7600000, 'Robert W. Fogel', 6700000, 'Rodney R. Porter', 480000, 'Roger Y. Tsien', 10000000, 'Ronald G.W. Norrish', 320000, 'Ronald Ross', 141847, 'Rudolph A. Marcus', 6500000, 'Simon Kuznets', 450000, 'Sir Henry Dale', 159850, 'Sir John B. Gurdon', 8000000, 'Stanford Moore', 480000, 'Sune K. Bergström', 1150000, 'Tasuku Honjo', 9000000, 'Torsten N. Wiesel', 1000000, 'Val Fitch', 880000, 'Walter H. Brattain', 200123, 'William A. Fowler', 1500000, 'William D. Nordhaus', 9000000, 'William H. Stein', 480000, 'Aaron Ciechanover', 10000000, 'Adam G. Riess', 10000000, 'Albrecht Kossel', 140703, 'Alfred G. Gilman', 7000000, 'Alvin E. Roth', 8000000, 'André Lwoff', 282000, 'Anthony J. Leggett', 10000000, 'Archibald V. Hill', 122483, 'Ardem Patapoutian', 10000000, 'August Krogh', 134100, 'Baruj Benacerraf', 880000, 'Ben Bernanke', 10000000, 'Benjamin List', 10000000, 'Bertil Ohlin', 700000, 'Bruce A. Beutler', 10000000, 'Carl D. Anderson', 159850, 'Charles Glover Barkla', 133823, 'Charles H. Townes', 273000, 'Christian de Duve', 550000, 'Dan Shechtman', 10000000, 'Dennis Gabor', 450000, 'Edward V. Appleton', 146115, 'Ei-ichi Negishi', 10000000, 'Elias James Corey', 4000000, 'Eric Cornell', 10000000, 'Ernst Otto Fischer', 510000, 'Feodor Lynen', 273000, 'Francis Crick', 257220, 'Frank Wilczek', 10000000, 'Frederick C. Robbins', 181647, 'Frederick G. Banting', 114935, 'Frederick Reines', 7200000, 'Gerald M. Edelman', 480000, 'Gunnar Myrdal', 550000, 'Gustav Hertz', 118165, 'H. Robert Horvitz', 10000000, 'Hans Bethe', 320000, 'Hans Fischer', 172947, 'Heike Kamerlingh Onnes', 143010, 'Hendrik A. Lorentz', 141847, 'Henrik Dam', 123691, 'Herbert S. Gasser', 121841, 'Hermann J. Muller', 121524, 'J. Hans D. Jensen', 265000, 'Jack W. Szostak', 10000000, 'James J. Heckman', 9000000, 'Jens C. Skou', 7500000, 'Jerome Karle', 1800000, 'John B. Goodenough', 9000000, 'John Bardeen', 200123, 'John Bardeen', 480000, 'John C. Kendrew', 257220, "John O'Keefe", 8000000, 'Joseph Erlanger', 121841, 'Keffer Hartline', 320000, 'Kenneth J. Arrow', 480000, 'Leland Hartwell', 10000000, 'Luc Montagnier', 10000000, 'Marshall W. Nirenberg', 350000, 'Martin Rodbell', 7000000, 'Max F. Perutz', 257220, 'Max Theiler', 167612, 'Melvin Schwartz', 2500000, 'Oliver E. Williamson', 10000000, 'Otto Stern', 123691, 'Peter Grünberg', 10000000, 'Peter Medawar', 225987, 'Phillip A. Sharp', 6700000, 'Pierre Curie', 141358, 'Pyotr Kapitsa', 725000, 'Randy W. Schekman', 8000000, 'Raymond Davis Jr.', 10000000, 'Riccardo Giacconi', 10000000, 'Richard F. Heck', 10000000, 'Richard Henderson', 9000000, 'Robert F. Furchgott', 7600000, 'Robert G. Edwards', 10000000, 'Robert H. Grubbs', 10000000, 'Robert Hofstadter', 250233, 'Robert W. Holley', 350000, 'Samuel C.C. Ting', 681000, 'Saul Perlmutter', 10000000, 'Sheldon Glashow', 800000, 'Simon van der Meer', 1650000, 'Sir Frank Macfarlane Burnet', 225987, 'Sir Frederick Hopkins', 172760, 'Sir Peter Mansfield', 10000000, 'Sir Robert Robinson', 146115, 'Theodor W. Hänsch', 10000000, 'Tomas Lindahl', 8000000, 'Toshihide Maskawa', 10000000, 'Victor F. Hess', 159850, 'William C. Campbell', 8000000, 'William G. Kaelin Jr', 9000000, 'A. Michael Spence', 9000000, 'Adolf Butenandt', 148822, 'Adolf von Baeyer', 138089, 'Alan Heeger', 9000000, 'Alan Hodgkin', 265000, 'Alan MacDiarmid', 9000000, 'Arne Tiselius', 159773, 'Arthur Ashkin', 9000000, 'Arthur Kornberg', 220678, 'Carlo Rubbia', 1650000, 'Carol W. Greider', 10000000, 'Charles J. Pedersen', 2175000, 'Charles K. Kao', 10000000, 'Daniel Kahneman', 10000000, 'Daniel L. McFadden', 9000000, 'David Baltimore', 630000, 'Didier Queloz', 9000000, 'Donald A. Glaser', 225987, 'Erwin Neher', 6000000, 'Eugene F. Fama', 8000000, 'Eugene Wigner', 265000, 'F. Sherwood Rowland', 7200000, 'Francis W. Aston', 122483, 'Frédéric Joliot', 159917, 'Geoffrey Wilkinson', 510000, 'George P. Smith', 9000000, 'George Porter', 320000, "Gerardus 't Hooft", 7900000, 'Gerhard Ertl', 10000000, 'Gertrude B. Elion', 2500000, 'Hamilton O. Smith', 725000, 'Heinrich Rohrer', 2000000, 'Henri Becquerel', 141358, 'Henri Moissan', 138536, 'Hermann Staudinger', 175293, 'Horst L. Störmer', 7600000, 'Igor Y. Tamm', 214559, 'Irwin Rose', 10000000, 'J. Michael Kosterlitz', 8000000, 'James Cronin', 880000, 'James E. Rothman', 8000000, 'James P. Allison', 9000000, 'Jaroslav Heyrovsky', 220678, 'Jerome I. Friedman', 4000000, 'John Cornforth', 630000, 'John E. Sulston', 10000000, 'John Pople', 7600000, 'Leopold Ruzicka', 148822, 'Lord Todd', 208629, 'Michael Rosbash', 9000000, 'Myron Scholes', 7500000, 'Nicolaas Bloembergen', 1000000, 'Oliver Hart', 8000000, 'Owen Willans Richardson', 156939, 'Paul Ehrlich', 139800, 'Paul Müller', 159773, 'Paul R. Milgrom', 10000000, 'Peter A. Diamond', 10000000, 'Richard H. Thaler', 9000000, 'Robert Mundell', 7900000, 'Roderick MacKinnon', 10000000, 'Roger Penrose', 10000000, 'Ronald H. Coase', 6000000, 'Roy J. Glauber', 10000000, 'Rudolf Mössbauer', 250233, 'Sir Chandrasekhara Venkata Raman', 172947, 'Sir Gregory P. Winter', 9000000, 'Sir Nevill F. Mott', 700000, 'Sir Peter J. Ratcliffe', 9000000, 'Steven Chu', 7500000, 'Svante Pääbo', 10000000, 'Takaaki Kajita', 8000000, 'Tjalling C. Koopmans', 630000, 'Venkatraman Ramakrishnan', 10000000, 'Vitaly L. Ginzburg', 10000000, 'Wendell M. Stanley', 121524, 'Willard F. Libby', 225987, 'William Knowles', 10000000, 'William P. Murphy', 162608, 'Wolfgang Paul', 3000000, 'Akira Suzuki', 10000000, 'Albert A. Michelson', 138796, 'Alexei Abrikosov', 10000000, 'Arthur H. Compton', 126501, 'Arthur L. Schawlow', 1000000, 'Avram Hershko', 10000000, 'Baruch S. Blumberg', 681000, 'Brian P. Schmidt', 10000000, 'Bruce Merrifield', 1650000, 'Camillo Golgi', 138536, 'Christiane Nüsslein-Volhard', 7200000, 'Clinton Davisson', 158463, 'Clive W.J. Granger', 10000000, 'Dale T. Mortensen', 10000000, 'Daniel Bovet', 208629, 'Donald J. Cram', 2175000, 'Donna Strickland', 9000000, 'Edmond H. Fischer', 6500000, 'Edward B. Lewis', 7200000, 'Edward C. Kendall', 164304, 'Edward Tatum', 214559, 'Edwin G. Krebs', 6500000, 'Elizabeth H. Blackburn', 10000000, 'Emilio Segrè', 220678, 'Eric S. Maskin', 10000000, 'Ferdinand Braun', 139800, 'Gary Becker', 6500000, 'Georg von Békésy', 250233, 'George D. Snell', 880000, 'George E. Smith', 10000000, 'Godfrey N. Hounsfield', 800000, 'Gregg L. Semenza', 9000000, 'Harry M. Markowitz', 4000000, 'Heinrich Wieland', 126501, 'Herbert A. Hauptman', 1800000, 'Herbert C. Brown', 800000, 'Hugo Theorell', 190214, 'Irving Langmuir', 171753, 'J. Georg Bednorz', 2175000, 'James Chadwick', 159917, 'James E. Meade', 700000, 'Jean Baptiste Perrin', 116960, 'Jean Dausset', 880000, 'Jean Tirole', 8000000, 'Jennifer A. Doudna', 10000000, 'Joachim Frank', 9000000, 'Johannes Diderik van der Waals', 140703, 'John E. Walker', 7500000, 'John F. Enders', 181647, 'John H. Van Vleck', 700000, 'John Macleod', 114935, 'Joseph E. Stiglitz', 9000000, 'Julius Axelrod', 400000, 'Karl von Frisch', 510000, 'Kip S. Thorne', 9000000, 'Konrad Lorenz', 510000, 'Lawrence Bragg', 149223, 'Lawrence R. Klein', 880000, 'Lev Landau', 257220, 'Maria Goeppert Mayer', 265000, 'Marie Curie', 141358, 'Marie Curie', 140695, 'Mario R. Capecchi', 10000000, 'Martin Chalfie', 10000000, 'Martin L. Perl', 7200000, 'Michael S. Brown', 1800000, 'Milton Friedman', 681000, 'Morten Meldal', 10000000, 'Nicolay G. Basov', 273000, 'Paul D. Boyer', 7500000, 'Paul Modrich', 8000000, 'Percy W. Bridgman', 121524, 'Reinhard Genzel', 10000000, 'Richard Stone', 1650000, 'Richard Willstätter', 149223, 'Robert E. Lucas Jr.', 7200000, 'Satoshi Ōmura', 8000000, 'Shuji Nakamura', 8000000, 'Sidney Altman', 3000000, 'Sir Charles Sherrington', 171753, 'Sir Howard Florey', 121333, 'Sir J. Fraser Stoddart', 8000000, 'Sir James W. Black', 2500000, 'Sir Martin J. Evans', 10000000, 'Stanley Cohen', 2000000, 'Steven Weinberg', 800000, 'Syukuro Manabe', 10000000, 'Thomas C. Schelling', 10000000, 'Thomas C. Südhof', 8000000, 'Trygve Haavelmo', 3000000, 'Wilhelm Wien', 140695, 'Willard S. Boyle', 10000000, 'Willem Einthoven', 116719, 'William Bragg', 149223, 'William D. Phillips', 7500000, 'Yoichiro Nambu', 10000000, 'Yuan T. Lee', 2000000, 'Albert Szent-Györgyi', 158463, 'Alfred Kastler', 300000, 'Allan M. Cormack', 800000, 'Andrea Ghez', 10000000, 'Andrew Huxley', 265000, 'Andrew V. Schally', 700000, 'Archer J.P. Martin', 171135, 'Arieh Warshel', 8000000, 'Artturi Virtanen', 121333, 'Bernard L. Feringa', 8000000, 'Chen Ning Yang', 208629, 'Christiaan Eijkman', 172760, 'Clifford G. Shull', 7000000, 'David Card', 10000000, 'E. Donnall Thomas', 4000000, 'E. M. Purcell', 171135, 'Eduard Buchner', 138796, 'Edward C. Prescott', 10000000, 'Elinor Ostrom', 10000000, 'Emil von Behring', 150782, 'Friedrich von Hayek', 550000, 'George H. Whipple', 162608, 'George J. Stigler', 1150000, 'Giulio Natta', 265000, 'Günter Blobel', 7900000, 'H. David Politzer', 10000000, 'H. Gobind Khorana', 350000, 'Hans G. Dehmelt', 3000000, 'Hans von Euler-Chelpin', 172760, 'Hiroshi Amano', 8000000, 'Ilya Prigogine', 700000, 'J. Robin Warren', 10000000, 'Jack Steinberger', 2500000, 'James Franck', 118165, 'Jean-Pierre Sauvage', 8000000, 'John C. Harsanyi', 7000000, 'Jules A. Hoffmann', 10000000, 'Julius Wagner-Jauregg', 126501, 'Kai M. Siegbahn', 1000000, 'Kenichi Fukui', 1000000, 'Koichi Tanaka', 10000000, 'Konstantin Novoselov', 10000000, 'Leo Esaki', 510000, 'Leonid Vitaliyevich Kantorovich', 630000, 'Lloyd S. Shapley', 8000000, 'Louis de Broglie', 172760, 'Luis Alvarez', 350000, 'Luis Leloir', 400000, 'Manfred Eigen', 320000, 'Manne Siegbahn', 116719, 'Michael Smith', 6700000, 'Michael W. Young', 9000000, 'Otto Hahn', 121841, 'Otto Loewi', 159850, 'Otto Warburg', 173206, 'Paul A. Samuelson', 400000, 'Paul C. Lauterbur', 10000000, 'Pavel A. Cherenkov', 214559, 'Peter Agre', 10000000, 'Peter Higgs', 8000000, 'Philip Dybvig', 10000000, 'Richard Axel', 10000000, 'Richard E. Taylor', 4000000, 'Richard J. Roberts', 6700000, 'Richard R. Schrock', 10000000, 'Robert B. Wilson', 10000000, 'Robert Bárány', 146900, 'Robert F. Engle III', 10000000, 'Roger Guillemin', 700000, 'Roger W. Sperry', 1000000, 'Ryoji Noyori', 10000000, 'Selman A. Waksman', 171135, 'Severo Ochoa', 220678, 'Sin-Itiro Tomonaga', 282000, 'Sir William Ramsay', 140859, 'The Svedberg', 116960, 'Theodor Kocher', 139800, 'Theodore W. Richards', 146900, 'Theodore W. Schultz', 800000, 'Thomas A. Steitz', 10000000, 'Thomas H. Weller', 181647, 'Tu Youyou', 8000000, 'Victor Grignard', 140476, 'Walther Nernst', 134100, 'Werner Heisenberg', 171753, 'Wilhelm Ostwald', 139800, 'William F. Giauque', 156290, 'William Lipscomb', 681000, 'William Vickrey', 7400000, 'Yves Chauvin', 10000000, 'Aage N. Bohr', 630000, 'Albert Fert', 10000000, 'Aleksandr M. Prokhorov', 273000, 'Alexis Carrel', 140476, 'Angus Deaton', 8000000, 'Anton Zeilinger', 10000000, 'Antony Hewish', 550000, 'Arthur B. McDonald', 8000000, 'Aziz Sancar', 8000000, 'Barbara McClintock', 1500000, 'Brian Kobilka', 8000000, 'Burton Richter', 681000, 'Carl Cori', 146115, 'Carolyn Bertozzi', 10000000, 'Christopher A. Pissarides', 10000000, 'Corneille Heymans', 155077, 'Craig C. Mello', 10000000, 'D. Carleton Gajdusek', 681000, 'Daniel C. Tsui', 7600000, 'David J. Wineland', 8000000, 'David Julius', 10000000, 'Dorothy Crowfoot Hodgkin', 273000, 'Dudley R. Herschbach', 2000000, 'Edward A. Doisy', 123691, 'Egas Moniz', 156290, 'Emil Fischer', 141847, 'Emmanuelle Charpentier', 10000000, 'Eric Kandel', 9000000, 'Ernest Rutherford', 139800, 'Ernst Ruska', 2000000, 'Erwin Schrödinger', 170332, 'Felix Bloch', 171135, 'Ferid Murad', 7600000, 'François Englert', 8000000, 'Friedrich Bergius', 173206, 'Gabriel Lippmann', 139800, 'George A. Akerlof', 9000000, 'George A. Olah', 7000000, 'George Beadle', 214559, 'George F. Smoot', 10000000, 'Gérard Mourou', 9000000, 'Hideki Yukawa', 156290, 'Irène Joliot-Curie', 159917, 'J.J. Thomson', 138536, 'Jacques Dubochet', 9000000, 'Jacques Monod', 282000, 'James Tobin', 1000000, 'James Watson', 257220, 'Jan Tinbergen', 375000, 'Jean-Marie Lehn', 2175000, 'Jeffrey C. Hall', 9000000, 'Johann Deisenhofer', 2500000, 'John F. Nash Jr.', 7000000, 'John L. Hall', 10000000, 'Joseph E. Murray', 4000000, 'Joseph H. Taylor Jr.', 6700000, 'Joshua D. Angrist', 10000000, 'Joshua Lederberg', 214559, 'Julian Schwinger', 282000, 'Lars Peter Hansen', 8000000, 'Leon N. Cooper', 480000, 'Leonid Hurwicz', 10000000, 'M. Stanley Whittingham', 9000000, 'Makoto Kobayashi', 10000000, 'Mario J. Molina', 7200000, 'Martinus J.G. Veltman', 7900000, 'Maurice Wilkins', 257220, 'Max von Laue', 146900, 'May-Britt Moser', 8000000, 'Michael Houghton', 10000000, 'Michael Levitt', 8000000, 'Niels K. Jerne', 1650000, 'Nikolaas Tinbergen', 510000, 'Odd Hassel', 375000, 'Osamu Shimomura', 10000000, 'Otto Diels', 164304, 'Paul Berg', 880000, 'Philip S. Hench', 164304, 'Philipp Lenard', 138089, 'Polykarp Kusch', 190214, 'Ragnar Granit', 320000, 'Rainer Weiss', 9000000, 'Rita Levi-Montalcini', 2000000, 'Roald Hoffmann', 1000000, 'Robert B. Woodward', 282000, 'Robert C. Richardson', 7400000, 'Robert J. Shiller', 8000000, 'Robert Koch', 138089, 'Robert S. Mulliken', 300000, 'Robert Schrieffer', 480000, 'Roger D. Kornberg', 10000000, 'Russell A. Hulse', 6700000, 'Shinya Yamanaka', 8000000, 'Sir Bernard Katz', 400000, 'Sir Cyril Hinshelwood', 200123, 'Sir Harold Kroto', 7400000, 'Sir John Eccles', 265000, 'Stanley B. Prusiner', 7500000, 'Subrahmanyan Chandrasekhar', 1500000, 'Thomas H. Morgan', 170332, 'Thomas R. Cech', 3000000, 'Tsung-Dao Lee', 208629, 'Walter Gilbert', 880000, 'Walter Hess', 156290, 'Walter Kohn', 7600000, 'Wassily Leontief', 510000, 'Werner Forssmann', 200123, 'William E. Moerner', 8000000, 'Wolfgang Ketterle', 10000000, 'Abdus Salam', 800000, 'Ada E. Yonath', 10000000, 'Adolf Windaus', 156939, 'Albert Claude', 550000, 'Andrew Z. Fire', 10000000, 'Bengt Holmström', 8000000, 'Bernardo Houssay', 146115, 'Bert Sakmann', 6000000, 'Cecil Powell', 164304, 'César Milstein', 1650000, 'Charles Richet', 143010, 'Christian Anfinsen', 480000, 'Claude Cohen-Tannoudji', 7500000, 'Douglas D. Osheroff', 7400000, 'Douglass C. North', 6700000, 'Earl W. Sutherland, Jr.', 450000, 'Edmund S. Phelps', 10000000, 'Edwin M. McMillan', 167612, 'F. Duncan M. Haldane', 8000000, 'Finn E. Kydland', 10000000, 'Franco Modigliani', 1800000, 'Françoise Barré-Sinoussi', 10000000, 'Frederick Sanger', 214559, 'Frederick Sanger', 880000, 'Fritz Haber', 138198, 'Fritz Lipmann', 175293, 'George H. Hitchings', 2500000, 'George Paget Thomson', 158463, 'George Wald', 320000, 'Georges J.F. Köhler', 1650000, 'Gerhard Domagk', 148822, 'Guglielmo Marconi', 139800, 'Hannes Alfvén', 400000, 'Hans Krebs', 175293, 'Harold C. Urey', 162608, 'Harold E. Varmus', 3000000, 'Hartmut Michel', 2500000, 'Henry Taube', 1500000, 'Henry W. Kendall', 4000000, 'Hideki Shirakawa', 9000000, 'Howard M. Temin', 630000, 'Il´ja M. Frank', 214559, 'Ivan Pavlov', 140859, 'J. Michael Bishop', 3000000, "Jacobus H. van 't Hoff", 150782, 'James Rainwater', 630000, 'John C. Mather', 10000000, 'John Cockcroft', 167612, 'John H. Northrop', 121524, 'Jules Bordet', 133127, 'Kary B. Mullis', 6700000, 'Leon M. Lederman', 2500000, 'Linda B. Buck', 10000000, 'Max Born', 181647, 'Merton H. Miller', 4000000, 'Michel Mayor', 9000000, 'Norman Haworth', 158463, 'Oliver Smithies', 10000000, 'Paul Krugman', 10000000, 'Paul M. Romer', 9000000, 'Peyton Rous', 300000, 'Ragnar Frisch', 375000, 'Reinhard Selten', 7000000, 'Richard Kuhn', 155077, 'Richard Zsigmondy', 118165, 'Robert A. Millikan', 114935, 'Robert F. Curl Jr.', 7400000, 'Roger B. Myerson', 10000000, 'Salvador E. Luria', 375000, 'Santiago Ramón y Cajal', 138536, 'Sir Arthur Lewis', 800000, 'Sir Paul Nurse', 10000000, 'Susumu Tonegawa', 2175000, 'Svante Arrhenius', 141358, 'Tadeus Reichstein', 164304, 'Walther Bothe', 181647, 'William B. Shockley', 200123]

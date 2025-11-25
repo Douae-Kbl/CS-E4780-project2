@@ -1,0 +1,779 @@
+question,generated_query,generated_answer,latencies
+Who won the Nobel Prize in Physics in 2020?,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2020, category: ""physics""}) RETURN s.knownName","Roger Penrose, Reinhard Genzel, and Andrea Ghez won the Nobel Prize in Physics in 2020.","[{'cache_retrieval': 2.1207999452599324e-05, 'prune_0': 2.6662915410015557, 'few_shots_0': 0.7423247499991703, 'gen_t2c_0': 1.1501905409986648, 'get_cypher_query': 4.559049708999737, 'postprocess_query': 0.0014517090003209887, 'validate_query': 0.01229133400011051, 'exec_query': 0.002638915999341407, 'answer_gen': 0.02681045799909043, 'run_query_forward': 4.6023625419984455, 'caching': 1.3958000636193901e-05, 'full_run': 4.961821541999598}]"
+List all Nobel laureates in Chemistry.,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS toLower(""chemistry"") RETURN DISTINCT s.fullName","The Nobel laureates in Chemistry are: Otto Wallach, Fritz Pregl, Kurt Wüthrich, Martin Karplus, Benjamin List, John Cowdery Kendrew, Alan G. MacDiarmid, Geoffrey Wilkinson, Arieh Warshel, Otto Hahn, Sir William Ramsay, Ernest Rutherford, Irène Joliot-Curie, M. Stanley Whittingham, Osamu Shimomura, Roald Hoffmann, Robert S. Mulliken, Edwin Mattison McMillan, Harold Clayton Urey, Hartmut Michel, Jacobus Henricus van 't Hoff, John Howard Northrop, Robert F. Curl Jr., Ahmed H. Zewail, Frances H. Arnold, Georg Wittig, Ronald George Wreyford Norrish, Gerhard Ertl, Peter Agre, Yves Chauvin, Michael Levitt, Frederick Sanger, Paul J. Crutzen, Richard Laurence Millington Synge, Vincent du Vigneaud, John B. Fenn, K. Barry Sharpless, Hans Fischer, John A. Pople, Sir Harold W. Kroto, William E. Moerner, George de Hevesy, Glenn Theodore Seaborg, Petrus (Peter) Josephus Wilhelmus Debye, David W.C. MacMillan, Derek H. R. Barton, Frederick Soddy, John C. Polanyi, Nikolay Nikolaevich Semenov, Paul J. Flory, Paul Sabatier, Rudolph A. Marcus, Ernst Otto Fischer, Arne Wilhelm Kaurin Tiselius, F. Sherwood Rowland, Irwin Rose, Jaroslav Heyrovsky, Sir Gregory P. Winter, Akira Suzuki, Paul Modrich, Artturi Ilmari Virtanen, Emmanuelle Charpentier, Friedrich Bergius, Jean-Marie Lehn, Paul Berg, Robert Burns Woodward, Gerhard Herzberg, James Batcheller Sumner, Vladimir Prelog, Akira Yoshino, Eric Betzig, Karl Ziegler, Richard E. Smalley, Roger Y. Tsien, William H. Stein, Max Ferdinand Perutz, Charles J. Pedersen, Henri Moissan, Leopold Ruzicka, William S. Knowles, Avram Hershko, Herbert A. Hauptman, Irving Langmuir, Marie Curie, née Skłodowska, Yuan T. Lee, Eduard Buchner, Giulio Natta, Ilya Romanovich Prigogine, Koichi Tanaka, Theodore William Richards, Thomas A. Steitz, Walther Hermann Nernst, William N. Lipscomb, Dudley R. Herschbach, Mario J. Molina, Roger D. Kornberg, Hideki Shirakawa, Aaron Klug, Peter D. Mitchell, Richard R. Ernst, Stefan W. Hell, Linus Carl Pauling, Stanford Moore, Richard F. Heck, Robert H. Grubbs, Frédéric Joliot, Roderick MacKinnon, Wendell Meredith Stanley, Robert Bruce Merrifield, Herbert C. Brown, Morten Meldal, Paul D. Boyer, Luis F. Leloir, Richard R. Schrock, Ryoji Noyori, William Francis Giauque, Carolyn R. Bertozzi, Hermann Emil Fischer, Walter Gilbert, Henry Taube, Richard Adolf Zsigmondy, Lars Onsager, Richard Henderson, George P. Smith, Venkatraman Ramakrishnan, Sir J. Fraser Stoddart, The (Theodor) Svedberg, Brian K. Kobilka, Dorothy Crowfoot Hodgkin, Johann Deisenhofer, Sir Cyril Norman Hinshelwood, Kurt Alder, Elias James Corey, Jens C. Skou, Jerome Karle, Adolf Friedrich Johann Butenandt, John Warcup Cornforth, Donald J. Cram, Jennifer A. Doudna, Kenichi Fukui, Jacques Dubochet, Kary B. Mullis, Svante August Arrhenius, Alfred Werner, Paul Karrer, Carl Bosch, Melvin Calvin, Dan Shechtman, Ei-ichi Negishi, Sir Robert Robinson, Lord (Alexander R.) Todd, Joachim Frank, Richard Martin Willstätter, Jean-Pierre Sauvage, Wilhelm Ostwald, Walter Kohn, Ada E. Yonath, Fritz Haber, Aaron Ciechanover, John B. Goodenough, Tomas Lindahl, Alan J. Heeger, Francis William Aston, Hermann Staudinger, Willard Frank Libby, Heinrich Otto Wieland, John E. Walker, Bernard L. Feringa, Victor Grignard, Aziz Sancar, George A. Olah, Martin Chalfie, Archer John Porter Martin, Manfred Eigen, Michael Smith, Otto Paul Hermann Diels, Thomas R. Cech, Richard Kuhn, Arthur Harden, Robert Huber, Robert J. Lefkowitz, Johann Friedrich Wilhelm Adolf von Baeyer, George Porter, Sidney Altman, Hans Karl August Simon von Euler-Chelpin, Odd Hassel, Adolf Otto Reinhold Windaus, Christian B. Anfinsen, and Walter Norman Haworth.","[{'cache_retrieval': 1.8374999854131602e-05, 'prune_0': 2.407855333000043, 'few_shots_0': 0.8134510830004729, 'gen_t2c_0': 1.1292894580001303, 'get_cypher_query': 4.350735833000726, 'postprocess_query': 0.00016066699936345685, 'validate_query': 0.013834708999638679, 'exec_query': 0.003419291999307461, 'answer_gen': 6.379124707998926, 'run_query_forward': 10.747689666999577, 'caching': 2.1458999981405213e-05, 'full_run': 10.78422537500046}]"
+Which laureates won more than one Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) AS numPrizes WHERE numPrizes > 1 RETURN s.knownName","Based on the provided information, the laureates who won more than one Nobel Prize are Linus Pauling, Frederick Sanger, Marie Curie, John Bardeen, and K. Barry Sharpless.","[{'cache_retrieval': 9.792000128072686e-06, 'prune_0': 2.2093645830009336, 'few_shots_0': 0.5110718329997326, 'gen_t2c_0': 1.8913431669989222, 'get_cypher_query': 4.611991249999846, 'postprocess_query': 0.00016220900033658836, 'validate_query': 0.009233749999111751, 'exec_query': 0.002010041998801171, 'answer_gen': 1.9018487499997718, 'run_query_forward': 6.525320582999484, 'caching': 2.5875000574160367e-05, 'full_run': 6.567711207999309}]"
+Find Nobel laureates born before 1900.,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate < ""1900-01-01"" RETURN s.knownName, s.birthDate","Based on the provided data, the Nobel laureates born before 1900 are:
+Alfred Werner, born December 12, 1866
+Arthur Harden, born October 12, 1865
+C.T.R. Wilson, born February 14, 1869
+Charles Nicolle, born September 21, 1866
+Ilya Mechnikov, born May 15, 1845
+Johannes Fibiger, born April 23, 1867
+Niels Ryberg Finsen, born December 15, 1860
+Otto Wallach, born March 27, 1847
+Pieter Zeeman, born May 25, 1865
+Wilhelm Conrad Röntgen, born March 27, 1845
+Albert Einstein, born March 14, 1879
+Allvar Gullstrand, born June 5, 1862
+Alphonse Laveran, born June 18, 1845
+Carl Bosch, born August 27, 1874
+Charles Edouard Guillaume, born February 15, 1861
+Frederick Soddy, born September 2, 1877
+Fritz Pregl, born September 3, 1869
+Gustaf Dalén, born November 30, 1869
+Hans Spemann, born June 27, 1869
+Karl Landsteiner, born June 14, 1868
+Lord Rayleigh, born November 12, 1842
+Max Planck, born April 23, 1858
+Paul Sabatier, born November 5, 1854
+Ronald Ross, born May 13, 1857
+Albrecht Kossel, born September 16, 1853
+August Krogh, born November 15, 1874
+Heike Kamerlingh Onnes, born September 21, 1853
+Hendrik A. Lorentz, born July 18, 1853
+Joseph Erlanger, born January 5, 1874
+Pierre Curie, born May 15, 1859
+Adolf von Baeyer, born October 31, 1835
+Henri Becquerel, born December 15, 1852
+Henri Moissan, born September 28, 1852
+Paul Ehrlich, born March 14, 1854
+Albert A. Michelson, born December 19, 1852
+Camillo Golgi, born July 7, 1843
+Ferdinand Braun, born June 6, 1850
+Jean Baptiste Perrin, born September 30, 1870
+Johannes Diderik van der Waals, born November 23, 1837
+Marie Curie, born November 7, 1867
+Sir Charles Sherrington, born November 27, 1857
+Wilhelm Wien, born January 13, 1864
+Willem Einthoven, born May 21, 1860
+William Bragg, born July 2, 1862
+Christiaan Eijkman, born August 11, 1858
+Eduard Buchner, born May 20, 1860
+Emil von Behring, born March 15, 1854
+Julius Wagner-Jauregg, born March 7, 1857
+Sir William Ramsay, born October 2, 1852
+Theodor Kocher, born August 25, 1841
+Theodore W. Richards, born January 31, 1868
+Walther Nernst, born June 25, 1864
+Wilhelm Ostwald, born September 2, 1853
+Emil Fischer, born October 9, 1852
+Gabriel Lippmann, born August 16, 1845
+J.J. Thomson, born December 18, 1856
+Philipp Lenard, born June 7, 1862
+Robert Koch, born December 11, 1843
+Charles Richet, born August 26, 1850
+Fritz Haber, born December 9, 1868
+Ivan Pavlov, born September 14, 1849
+Jacobus H. van 't Hoff, born August 30, 1852
+Richard Zsigmondy, born April 1, 1865
+Robert A. Millikan, born March 22, 1868
+Santiago Ramón y Cajal, born May 1, 1852
+Svante Arrhenius, born February 19, 1859","[{'cache_retrieval': 8.625000191386789e-06, 'prune_0': 2.22100595899974, 'few_shots_0': 0.4834588329995313, 'gen_t2c_0': 1.3559779170009278, 'get_cypher_query': 4.060580083001696, 'postprocess_query': 0.00020037500144098885, 'validate_query': 0.004046666999784065, 'exec_query': 0.0010357920000387821, 'answer_gen': 0.02437741699941398, 'run_query_forward': 4.090628833000665, 'caching': 4.749999789055437e-06, 'full_run': 4.131919707999259}]"
+What did Marie Curie win?,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Curie') AND lower(s.knownName) CONTAINS lower('Marie') RETURN p.category, p.awardYear",Marie Curie won the physics prize in 1903 and the chemistry prize in 1911.,"[{'cache_retrieval': 5.666001015924849e-06, 'prune_0': 3.297035416999279, 'few_shots_0': 0.7540274579987454, 'gen_t2c_0': 1.4964784590010822, 'get_cypher_query': 5.5476442920007685, 'postprocess_query': 0.0006544160005432786, 'validate_query': 0.007653208998817718, 'exec_query': 0.0021479589995578863, 'answer_gen': 0.02217045900033554, 'run_query_forward': 5.580338874999143, 'caching': 3.99999953515362e-06, 'full_run': 5.608633666999594}]"
+Who won the Nobel Prize in peace in 1962?,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: ""peace""}) RETURN s.knownName",Linus Pauling won the Nobel Prize in peace in 1962.,"[{'cache_retrieval': 4.625000656233169e-06, 'prune_0': 3.1144629169994005, 'few_shots_0': 0.47155491699959384, 'gen_t2c_0': 1.474181416000647, 'get_cypher_query': 5.060330875001455, 'postprocess_query': 0.0001571669999975711, 'validate_query': 0.0018758339992928086, 'exec_query': 0.0012627920004888438, 'answer_gen': 0.0254645420009183, 'run_query_forward': 5.089144833000319, 'caching': 4.499999704421498e-06, 'full_run': 5.117116334000457}]"
+List all Nobel Peace Prize winners.,"MATCH (s:Scholar)-[:WON]->(p:Prize {category: ""peace""}) RETURN DISTINCT s.fullName",The Nobel Peace Prize winner is Linus Carl Pauling.,"[{'cache_retrieval': 4.7909998102113605e-06, 'prune_0': 2.296608250000645, 'few_shots_0': 0.822441374999471, 'gen_t2c_0': 1.5354067080006644, 'get_cypher_query': 4.654602792001242, 'postprocess_query': 0.00015670799984945916, 'validate_query': 0.0023715829993307125, 'exec_query': 0.001973500000531203, 'answer_gen': 1.2173161249993427, 'run_query_forward': 5.876531083000373, 'caching': 1.754100048856344e-05, 'full_run': 5.904457707998517}]"
+How many laureates are female?,"MATCH (s:Scholar) WHERE toLower(s.gender) CONTAINS ""female"" RETURN COUNT(s)",There are 25 female laureates.,"[{'cache_retrieval': 1.7084001228795387e-05, 'prune_0': 1.291916083000615, 'few_shots_0': 1.0108022080003138, 'gen_t2c_0': 0.03519116700044833, 'get_cypher_query': 2.338026624998747, 'postprocess_query': 4.2499999835854396e-05, 'validate_query': 0.001148334000390605, 'exec_query': 0.001367124999887892, 'answer_gen': 0.01389125000059721, 'run_query_forward': 2.3545166250005423, 'caching': 3.3340002119075507e-06, 'full_run': 2.398044832998494}]"
+Find laureates who won the Nobel Prize in Medicine in 2001.,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2001, category: ""medicine""}) RETURN s.knownName","The laureates who won the Nobel Prize in Medicine in 2001 are Tim Hunt, Leland Hartwell, and Sir Paul Nurse.","[{'cache_retrieval': 4.166000508121215e-06, 'prune_0': 2.7018261660014105, 'few_shots_0': 0.65047337499891, 'gen_t2c_0': 1.341572625000481, 'get_cypher_query': 4.693984333000117, 'postprocess_query': 0.00022524999985762406, 'validate_query': 0.002214459000242641, 'exec_query': 0.0021516249998967396, 'answer_gen': 0.02759074999994482, 'run_query_forward': 4.726269875000071, 'caching': 4.208000973449089e-06, 'full_run': 4.75276545899942}]"
+Show Nobel laureates along with the amount of their prize.,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount","Here are some Nobel laureates and their prize amounts:
+Aaron Klug: 1150000
+Ahmed Zewail: 7900000
+Alfred D. Hershey: 375000
+Alfred Werner: 143010
+Amartya Sen: 7600000
+Andre Geim: 10000000
+Arno Penzias: 725000
+Arthur Harden: 172760
+Arvid Carlsson: 9000000
+Ben R. Mottelson: 630000
+Bertram N. Brockhouse: 7000000
+C.T.R. Wilson: 126501
+Charles Nicolle: 156939
+Christopher A. Sims: 10000000
+Daniel Nathans: 725000
+David H. Hubel: 1000000
+David J. Gross: 10000000
+David J. Thouless: 8000000
+David M. Lee: 7400000
+Dickinson W. Richards: 200123
+Edgar Adrian: 171753
+Eric F. Wieschaus: 7200000
+Ernest Lawrence: 148822
+Esther Duflo: 9000000
+François Jacob: 282000
+George de Hevesy: 123691
+George R. Minot: 162608
+Gerard Debreu: 1500000
+Gerd Binnig: 2000000
+Gerhard Herzberg: 450000
+Glenn T. Seaborg: 167612
+Guido W. Imbens: 10000000
+Harvey J. Alter: 10000000
+Ilya Mechnikov: 139800
+Jack Kilby: 9000000
+James A. Mirrlees: 7400000
+James B. Sumner: 121524
+James M. Buchanan Jr.: 2000000
+James Peebles: 9000000
+Johannes Fibiger: 116960
+Joseph L. Goldstein: 1800000
+Klaus Hasselmann: 10000000
+Klaus von Klitzing: 1800000
+Konrad Bloch: 273000
+Kurt Alder: 164304
+Lars Onsager: 350000
+Louis J. Ignarro: 7600000
+Masatoshi Koshiba: 10000000
+Max Delbrück: 375000
+Murray Gell-Mann: 375000
+Niels Bohr: 122483
+Niels Ryberg Finsen: 141358
+Norman F. Ramsey: 3000000
+Otto Meyerhof: 122483
+Otto Wallach: 140703
+Patrick M.S. Blackett: 159773
+Paul A.M. Dirac: 170332
+Paul Greengard: 9000000
+Paul J. Crutzen: 7200000
+Paul Karrer: 158463
+Peter Debye: 159850
+Peter Mitchell: 725000
+Pierre-Gilles de Gennes: 6000000
+Pieter Zeeman: 141847
+Ralph M. Steinman: 10000000
+Renato Dulbecco: 630000
+Richard L.M. Synge: 171135
+Richard P. Feynman: 282000
+Richard R. Ernst: 6000000
+Robert C. Merton: 7500000
+Robert Huber: 2500000
+Robert J. Aumann: 10000000
+Robert J. Lefkowitz: 8000000
+Robert M. Solow: 2175000
+Robert Woodrow Wilson: 725000
+Rolf M. Zinkernagel: 7400000
+Rosalyn Yalow: 700000
+Serge Haroche: 8000000
+Sir Alexander Fleming: 121333
+Stefan W. Hell: 8000000
+Sydney Brenner: 10000000
+Thomas J. Sargent: 10000000
+Tim Hunt: 10000000
+Ulf von Euler: 400000
+Vernon L. Smith: 10000000
+Vincent du Vigneaud: 190214
+Vladimir Prelog: 630000
+Werner Arber: 725000
+Wilhelm Conrad Röntgen: 150782
+William F. Sharpe: 4000000
+Willis E. Lamb: 190214
+Wolfgang Pauli: 121333
+Yoshinori Ohsumi: 8000000
+Zhores Alferov: 9000000
+Abhijit Banerjee: 9000000
+Akira Yoshino: 9000000
+Alain Aspect: 10000000
+Albert Einstein: 121573
+Allvar Gullstrand: 140695
+Alphonse Laveran: 138796
+André F. Cournand: 200123
+Barry C. Barish: 9000000
+Barry J. Marshall: 10000000
+Bengt I. Samuelsson: 1150000
+Brian D. Josephson: 510000
+Carl Bosch: 173206
+Carl Wieman: 10000000
+Charles B. Huggins: 300000
+Charles Edouard Guillaume: 134100
+Charles M. Rice: 10000000
+David W.C. MacMillan: 10000000
+Derek Barton: 375000
+Douglas Diamond: 10000000
+Edvard I. Moser: 8000000
+Enrico Fermi: 155077
+Eric Betzig: 8000000
+Ernest T.S. Walton: 167612
+Ernst B. Chain: 121333
+Frances H. Arnold: 9000000
+Frederick Soddy: 121573
+Frits Zernike: 175293
+Fritz Pregl: 114935
+Georg Wittig: 800000
+George E. Palade: 550000
+Georges Charpak: 6500000
+Gerty Cori: 146115
+Giorgio Parisi: 10000000
+Gustaf Dalén: 140476
+Hans Spemann: 159917
+Harald zur Hausen: 10000000
+Herbert Kroemer: 9000000
+Herbert Simon: 725000
+Isamu Akasaki: 8000000
+Isidor Isaac Rabi: 121841
+Ivar Giaever: 510000
+Johannes Stark: 133127
+John B. Fenn: 10000000
+John C. Polanyi: 2000000
+John Clauser: 10000000
+John R. Hicks: 480000
+John R. Vane: 1150000
+K. Alex Müller: 2175000
+K. Barry Sharpless: 10000000
+K. Barry Sharpless: 10000000
+Karl Landsteiner: 172947
+Karl Ziegler: 265000
+Kenneth G. Wilson: 1150000
+Kurt Wüthrich: 10000000
+Linus Pauling: 181647
+Linus Pauling: 257220
+Lord Rayleigh: 140859
+Louis Néel: 400000
+Martin Karplus: 8000000
+Martin Ryle: 550000
+Maurice Allais: 2500000
+Max Planck: 138198
+Melvin Calvin: 250233
+Michael Kremer: 9000000
+Nikolay Semenov: 200123
+Owen Chamberlain: 220678
+Paul J. Flory: 550000
+Paul Sabatier: 140476
+Peter C. Doherty: 7400000
+Philip W. Anderson: 700000
+Richard E. Smalley: 7400000
+Robert B. Laughlin: 7600000
+Robert W. Fogel: 6700000
+Rodney R. Porter: 480000
+Roger Y. Tsien: 10000000
+Ronald G.W. Norrish: 320000
+Ronald Ross: 141847
+Rudolph A. Marcus: 6500000
+Simon Kuznets: 450000
+Sir Henry Dale: 159850
+Sir John B. Gurdon: 8000000
+Stanford Moore: 480000
+Sune K. Bergström: 1150000
+Tasuku Honjo: 9000000
+Torsten N. Wiesel: 1000000
+Val Fitch: 880000
+Walter H. Brattain: 200123
+William A. Fowler: 1500000
+William D. Nordhaus: 9000000
+William H. Stein: 480000
+Aaron Ciechanover: 10000000
+Adam G. Riess: 10000000
+Albrecht Kossel: 140703
+Alfred G. Gilman: 7000000
+Alvin E. Roth: 8000000
+André Lwoff: 282000
+Anthony J. Leggett: 10000000
+Archibald V. Hill: 122483
+Ardem Patapoutian: 10000000
+August Krogh: 134100
+Baruj Benacerraf: 880000
+Ben Bernanke: 10000000
+Benjamin List: 10000000
+Bertil Ohlin: 700000
+Bruce A. Beutler: 10000000
+Carl D. Anderson: 159850
+Charles Glover Barkla: 133823
+Charles H. Townes: 273000
+Christian de Duve: 550000
+Dan Shechtman: 10000000
+Dennis Gabor: 450000
+Edward V. Appleton: 146115
+Ei-ichi Negishi: 10000000
+Elias James Corey: 4000000
+Eric Cornell: 10000000
+Ernst Otto Fischer: 510000
+Feodor Lynen: 273000
+Francis Crick: 257220
+Frank Wilczek: 10000000
+Frederick C. Robbins: 181647
+Frederick G. Banting: 114935
+Frederick Reines: 7200000
+Gerald M. Edelman: 480000
+Gunnar Myrdal: 550000
+Gustav Hertz: 118165
+H. Robert Horvitz: 10000000
+Hans Bethe: 320000
+Hans Fischer: 172947
+Heike Kamerlingh Onnes: 143010
+Hendrik A. Lorentz: 141847
+Henrik Dam: 123691
+Herbert S. Gasser: 121841
+Hermann J. Muller: 121524
+J. Hans D. Jensen: 265000
+Jack W. Szostak: 10000000
+James J. Heckman: 9000000
+Jens C. Skou: 7500000
+Jerome Karle: 1800000
+John B. Goodenough: 9000000
+John Bardeen: 200123
+John Bardeen: 480000
+John C. Kendrew: 257220
+John O'Keefe: 8000000
+Joseph Erlanger: 121841
+Keffer Hartline: 320000
+Kenneth J. Arrow: 480000
+Leland Hartwell: 10000000
+Luc Montagnier: 10000000
+Marshall W. Nirenberg: 350000
+Martin Rodbell: 7000000
+Max F. Perutz: 257220
+Max Theiler: 167612
+Melvin Schwartz: 2500000
+Oliver E. Williamson: 10000000
+Otto Stern: 123691
+Peter Grünberg: 10000000
+Peter Medawar: 225987
+Phillip A. Sharp: 6700000
+Pierre Curie: 141358
+Pyotr Kapitsa: 725000
+Randy W. Schekman: 8000000
+Raymond Davis Jr.: 10000000
+Riccardo Giacconi: 10000000
+Richard F. Heck: 10000000
+Richard Henderson: 9000000
+Robert F. Furchgott: 7600000
+Robert G. Edwards: 10000000
+Robert H. Grubbs: 10000000
+Robert Hofstadter: 250233
+Robert W. Holley: 350000
+Samuel C.C. Ting: 681000
+Saul Perlmutter: 10000000
+Sheldon Glashow: 800000
+Simon van der Meer: 1650000\","[{'cache_retrieval': 6.457999916165136e-06, 'prune_0': 2.245574459000636, 'few_shots_0': 0.5138749170000665, 'gen_t2c_0': 1.3909228749998874, 'get_cypher_query': 4.150502124999548, 'postprocess_query': 0.00020075000065844506, 'validate_query': 0.0015599590005876962, 'exec_query': 0.002689999999347492, 'answer_gen': 0.024713832999623264, 'run_query_forward': 4.181518249999499, 'caching': 4.499999704421498e-06, 'full_run': 4.210327875000075}]"
+Show top 10 Nobel laureates along with the amount of their prize.,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10","The top 10 Nobel laureates along with their prize amount are: Andre Geim, Christopher A. Sims, David J. Gross, Guido W. Imbens, Harvey J. Alter, Klaus Hasselmann, Masatoshi Koshiba, Ralph M. Steinman, Robert J. Aumann, and Sydney Brenner. Each of them won 10,000,000.","[{'cache_retrieval': 4.875000740867108e-06, 'prune_0': 2.200516167000387, 'few_shots_0': 0.5683112910010095, 'gen_t2c_0': 1.5700369999995019, 'get_cypher_query': 4.338977291999981, 'postprocess_query': 0.00024495799880241975, 'validate_query': 0.004785207998793339, 'exec_query': 0.00234387499949662, 'answer_gen': 0.02701120900019305, 'run_query_forward': 4.373470250000537, 'caching': 6.7089986259816214e-06, 'full_run': 4.401154332999795}]"
+Which laureates died before 1950?,"MATCH (s:Scholar) WHERE s.deathDate < ""1950-01-01"" RETURN s.knownName, s.deathDate","The laureates who died before 1950 are: Alfred Werner (November 15, 1919), Arthur Harden (June 17, 1940), Charles Nicolle (February 28, 1936), Ilya Mechnikov (July 15, 1916), Johannes Fibiger (January 30, 1928), Niels Ryberg Finsen (September 24, 1904), Otto Wallach (February 26, 1931), Wilhelm Conrad R
+ntgen (February 10, 1923), Allvar Gullstrand (July 28, 1930), Alphonse Laveran (May 18, 1922), Carl Bosch (April 26, 1940), Charles Edouard Guillaume (June 13, 1938), Fritz Pregl (December 13, 1930), Gustaf Dal
+én (December 9, 1937), Hans Spemann (September 12, 1941), Karl Landsteiner (June 26, 1943), Lord Rayleigh (June 30, 1919), Max Planck (October 4, 1947), Paul Sabatier (August 14, 1941), Ronald Ross (September 16, 1932), Albrecht Kossel (July 5, 1927), August Krogh (September 13, 1949), Charles Glover Barkla (October 23, 1944), Frederick G. Banting (February 21, 1941), Hans Fischer (March 31, 1945), Heike Kamerlingh Onnes (February 21, 1926), Hendrik A. Lorentz (February 4, 1928), Pierre Curie (April 19, 1906), Sir Frederick Hopkins (May 16, 1947), Adolf von Baeyer (August 20, 1917), Francis W. Aston (November 20, 1945), Henri Becquerel (August 25, 1908), Henri Moissan (February 20, 1907), Paul Ehrlich (August 20, 1915), Albert A. Michelson (May 9, 1931), Camillo Golgi (January 21, 1926), Ferdinand Braun (April 20, 1918), Jean Baptiste Perrin (April 17, 1942), Johannes Diderik van der Waals (March 8, 1923), John Macleod (March 16, 1935), Marie Curie (July 4, 1934), Richard Willst
+ätter (August 3, 1942), Wilhelm Wien (August 30, 1928), Willem Einthoven (September 29, 1927), William Bragg (March 12, 1942), Christiaan Eijkman (November 5, 1930), Eduard Buchner (August 13, 1917), Emil von Behring (March 31, 1917), Julius Wagner-Jauregg (September 27, 1940), Robert B
+árány (April 8, 1936), Sir William Ramsay (July 23, 1916), Theodor Kocher (July 27, 1917), Theodore W. Richards (April 2, 1928), Victor Grignard (December 13, 1935), Walther Nernst (November 18, 1941), Wilhelm Ostwald (April 4, 1932), Alexis Carrel (November 5, 1944), Emil Fischer (July 15, 1919), Ernest Rutherford (October 19, 1937), Friedrich Bergius (March 30, 1949), Gabriel Lippmann (July 13, 1921), J.J. Thomson (August 30, 1940), Philipp Lenard (May 20, 1947), Robert Koch (May 27, 1910), Thomas H. Morgan (December 4, 1945), Charles Richet (December 4, 1935), Fritz Haber (January 29, 1934), Guglielmo Marconi (July 20, 1937), Ivan Pavlov (February 27, 1936), Jacobus H. van 't Hoff (March 1, 1911), Richard Zsigmondy (September 24, 1929), Santiago Ram
+ón y Cajal (October 17, 1934), and Svante Arrhenius (October 2, 1927).","[{'cache_retrieval': 6.250000296859071e-06, 'prune_0': 1.3954515419991367, 'few_shots_0': 0.9560217919988645, 'gen_t2c_0': 1.4211038329995063, 'get_cypher_query': 3.77270425000097, 'postprocess_query': 0.00019829200027743354, 'validate_query': 0.001404833999913535, 'exec_query': 0.0007444170005328488, 'answer_gen': 0.04081616700023005, 'run_query_forward': 3.8160713329998543, 'caching': 5.83300061407499e-06, 'full_run': 3.845101249999061}]"
+List Nobel laureates who won in Economics.,MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'economics' RETURN DISTINCT s.fullName,"The Nobel laureates who won in Economics are: Guido W. Imbens, James A. Mirrlees, Robert C. Merton, Herbert A. Simon, John R. Hicks, Ronald H. Coase, Dale T. Mortensen, John C. Harsanyi, Lloyd S. Shapley, Robert B. Wilson, Angus Deaton, Christopher A. Pissarides, Sir Arthur Lewis, Robert J. Aumann, Ben S. Bernanke, Gunnar Myrdal, Tjalling C. Koopmans, John F. Nash Jr., Wassily Wassilyevich Leontief, Merton H. Miller, Paul Krugman, Amartya Sen, Esther Duflo, Thomas J. Sargent, Douglas W. Diamond, Simon Kuznets, Richard Stone, Elinor Ostrom, Paul A. Samuelson, James Tobin, Finn E. Kydland, Paul M. Romer, William F. Sharpe, Alvin E. Roth, Oliver E. Williamson, Paul R. Milgrom, Gary S. Becker, Friedrich August von Hayek, George J. Stigler, Leonid Vitaliyevich Kantorovich, Jan Tinbergen, Roger B. Myerson, Gerard Debreu, Daniel Kahneman, Harry M. Markowitz, James E. Meade, Jean Tirole, Thomas C. Schelling, Joshua D. Angrist, Franco Modigliani, Christopher A. Sims, Robert M. Solow, William D. Nordhaus, Bertil Ohlin, Eugene F. Fama, Robert A. Mundell, Vernon L. Smith, Daniel L. McFadden, Robert F. Engle III, William Vickrey, Lars Peter Hansen, Robert J. Shiller, Edmund S. Phelps, James M. Buchanan Jr., Kenneth J. Arrow, David Card, Douglass C. North, Maurice Allais, Peter A. Diamond, Ragnar Frisch, Clive W.J. Granger, Robert E. Lucas Jr., Edward C. Prescott, Leonid Hurwicz, Reinhard Selten, Michael Kremer, Robert W. Fogel, James J. Heckman, Richard H. Thaler, Eric S. Maskin, Lawrence R. Klein, Philip H. Dybvig, Bengt Holmström, Abhijit Banerjee, Myron S. Scholes, Oliver Hart, Milton Friedman, and Trygve Haavelmo, Theodore W. Schultz.","[{'cache_retrieval': 1.8832999558071606e-05, 'prune_0': 2.0408716250003636, 'few_shots_0': 0.5145149580002908, 'gen_t2c_0': 1.8765723329997854, 'get_cypher_query': 4.432104499999696, 'postprocess_query': 0.00018941700000141282, 'validate_query': 0.0025429170000279555, 'exec_query': 0.002635041000758065, 'answer_gen': 3.585186958000122, 'run_query_forward': 8.022968041999775, 'caching': 1.991600038309116e-05, 'full_run': 8.058925957999236}]"
+Which year had the most Nobel Prize awards?,"MATCH (p:Prize) RETURN p.awardYear, COUNT(p) AS prize_count ORDER BY prize_count DESC LIMIT 1","The year 2000 had the most Nobel Prize awards, with a total of 5 prizes awarded.","[{'cache_retrieval': 1.1915999493794516e-05, 'prune_0': 1.3431271250010468, 'few_shots_0': 0.5380801669998618, 'gen_t2c_0': 0.03969354100081546, 'get_cypher_query': 1.9210345829997095, 'postprocess_query': 7.2750000981614e-05, 'validate_query': 0.0008612499987066258, 'exec_query': 0.0016285000001516892, 'answer_gen': 0.01756054199904611, 'run_query_forward': 1.9412098329994478, 'caching': 5.666999641107395e-06, 'full_run': 1.9908037920013157}]"
+Find Nobel laureates born after 1980.,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate > ""1980-01-01"" RETURN s.knownName, s.birthDate","I am sorry, I cannot answer this question because I lack the necessary information.","[{'cache_retrieval': 7.667000318178907e-06, 'prune_0': 1.7002011669992498, 'few_shots_0': 0.5611165829996025, 'gen_t2c_0': 1.9076087919984275, 'get_cypher_query': 4.169043625000995, 'postprocess_query': 0.00014737499986949842, 'validate_query': 0.0023760000003676396, 'exec_query': 0.0020928339999954915, 'answer_gen': 0.025690832999316626, 'run_query_forward': 4.199424000000363, 'caching': 1.6874999346327968e-05, 'full_run': 4.230595250000988}]"
+Which Nobel laureate received the highest prize amount?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1",Andre Geim received the highest prize amount of 10000000.,"[{'cache_retrieval': 8.083001375780441e-06, 'prune_0': 2.332526207999763, 'few_shots_0': 1.1462979160005489, 'gen_t2c_0': 1.1185975419994065, 'get_cypher_query': 4.597580249999737, 'postprocess_query': 0.00021112499962328002, 'validate_query': 0.0018640830003278097, 'exec_query': 0.0025902079996740213, 'answer_gen': 0.030607541999415844, 'run_query_forward': 4.632983999999851, 'caching': 4.5409997255774215e-06, 'full_run': 4.665550959000029}]"
+Show prizes awarded in the Physics category.,"MATCH (p:Prize) WHERE toLower(p.category) CONTAINS toLower(""Physics"") RETURN p.category",Prizes have been awarded in the Physics category.,"[{'cache_retrieval': 1.554200025566388e-05, 'prune_0': 1.342934874999628, 'few_shots_0': 0.7199132919995463, 'gen_t2c_0': 0.041958125000746804, 'get_cypher_query': 2.1049059159995522, 'postprocess_query': 6.90830001985887e-05, 'validate_query': 0.0006794170003558975, 'exec_query': 0.0003892500008078059, 'answer_gen': 0.016807499998321873, 'run_query_forward': 2.122982458999104, 'caching': 4.999999873689376e-06, 'full_run': 2.1637400839990732}]"
+Which laureate won the Nobel Peace Prize in 2010?,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2010, category: ""peace""}) RETURN s.knownName","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 1.0375000783824362e-05, 'prune_0': 2.347383082998931, 'few_shots_0': 0.527758291000282, 'gen_t2c_0': 1.2690298330016958, 'get_cypher_query': 4.144309541001348, 'postprocess_query': 0.00019141699885949492, 'validate_query': 0.0018506670003262116, 'exec_query': 0.001516250000349828, 'answer_gen': 0.03411733299981279, 'run_query_forward': 4.182103041999653, 'caching': 4.707999323727563e-06, 'full_run': 4.21444270900065}]"
+Did Einstein win any prize?,MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Einstein') RETURN count(p) > 0,"Yes, Einstein won at least one prize.","[{'cache_retrieval': 1.3625000065076165e-05, 'prune_0': 2.8743778750013007, 'few_shots_0': 0.5941135419998318, 'gen_t2c_0': 1.7436684590011282, 'get_cypher_query': 5.212287542000922, 'postprocess_query': 0.00014729199938301463, 'validate_query': 0.0028492920009739464, 'exec_query': 0.0018447919992468087, 'answer_gen': 0.03051762500035693, 'run_query_forward': 5.247740000000704, 'caching': 4.917001206194982e-06, 'full_run': 5.283539000000019}]"
+Count the number of Nobel laureates.,MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN COUNT(s),There are 731 Nobel laureates.,"[{'cache_retrieval': 1.1750000339816324e-05, 'prune_0': 1.3688666660000308, 'few_shots_0': 0.6495224999998754, 'gen_t2c_0': 1.5095987089989649, 'get_cypher_query': 3.5281267080008547, 'postprocess_query': 0.00016908299949136563, 'validate_query': 0.0016422080007032491, 'exec_query': 0.001537583000754239, 'answer_gen': 0.030489790999126853, 'run_query_forward': 3.5620559170001798, 'caching': 4.292000085115433e-06, 'full_run': 3.5926450830011163}]"
+List Nobel Prizes awarded in 2022.,"MATCH (p:Prize {awardYear: 2022}) RETURN p.category, p.prize_id","The Nobel Prizes awarded in 2022 were in the categories of physics, economics, chemistry, and medicine.","[{'cache_retrieval': 1.2291999155422673e-05, 'prune_0': 1.9480837499995687, 'few_shots_0': 0.8234625000004598, 'gen_t2c_0': 1.1218917080004758, 'get_cypher_query': 3.8935752090001188, 'postprocess_query': 0.00023291700017580297, 'validate_query': 0.004033458000776591, 'exec_query': 0.0011882079998031259, 'answer_gen': 1.3472107910001796, 'run_query_forward': 5.246359208000285, 'caching': 2.0707999283331446e-05, 'full_run': 5.277078625000286}]"
+Find laureates who won in Physics and Chemistry.,MATCH (s:Scholar)-[:WON]->(p1:Prize) WHERE toLower(p1.category) CONTAINS 'physics' WITH s MATCH (s)-[:WON]->(p2:Prize) WHERE toLower(p2.category) CONTAINS 'chemistry' RETURN DISTINCT s.fullName,"Marie Curie, née Skłodowska won Nobel Prizes in both Physics and Chemistry.","[{'cache_retrieval': 9.332999979960732e-06, 'prune_0': 1.924913666998691, 'few_shots_0': 0.5013385839993134, 'gen_t2c_0': 1.9524102920004225, 'get_cypher_query': 4.378830708999885, 'postprocess_query': 0.00019145799888065085, 'validate_query': 0.00833233299999847, 'exec_query': 0.004231709001032868, 'answer_gen': 0.02568749999954889, 'run_query_forward': 4.417378457999803, 'caching': 7.041999197099358e-06, 'full_run': 4.46219525000015}]"
+Show Nobel Prize categories.,MATCH (p:Prize) RETURN DISTINCT p.category,"The Nobel Prize categories are physics, chemistry, economics, peace, and medicine.","[{'cache_retrieval': 9.499999578110874e-06, 'prune_0': 1.082367749999321, 'few_shots_0': 0.7640586669986078, 'gen_t2c_0': 0.03832699999838951, 'get_cypher_query': 1.8848950829997193, 'postprocess_query': 5.3499999921768904e-05, 'validate_query': 0.0005442500005301554, 'exec_query': 0.0007347909995587543, 'answer_gen': 0.014835542000582791, 'run_query_forward': 1.9011042080001062, 'caching': 3.5829998523695394e-06, 'full_run': 1.9393447500006005}]"
+Which laureates won in the year 2003?,MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2003}) RETURN s.knownName,"The laureates who won in the year 2003 are Anthony J. Leggett, Sir Peter Mansfield, Roderick MacKinnon, Vitaly L. Ginzburg, Alexei Abrikosov, Clive W.J. Granger, Paul C. Lauterbur, Peter Agre, and Robert F. Engle III.","[{'cache_retrieval': 6.8329991336213425e-06, 'prune_0': 2.456125750000865, 'few_shots_0': 0.9417309170003136, 'gen_t2c_0': 1.3320890420000069, 'get_cypher_query': 4.730078124999636, 'postprocess_query': 0.00020349999977042899, 'validate_query': 0.0018120410004485166, 'exec_query': 0.0016325410015269881, 'answer_gen': 0.027610791999904905, 'run_query_forward': 4.76143166699876, 'caching': 5.750000127591193e-06, 'full_run': 4.791443457999776}]"
+Find laureates awarded after 2015.,MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName,"The laureates awarded after 2015 are: David J. Thouless, Esther Duflo, Guido W. Imbens, Harvey J. Alter, James Peebles, Klaus Hasselmann, Yoshinori Ohsumi, Abhijit Banerjee, Akira Yoshino, Alain Aspect, Barry C. Barish, Charles M. Rice, David W.C. MacMillan, Douglas Diamond, Frances H. Arnold, Giorgio Parisi, John Clauser, K. Barry Sharpless, Michael Kremer, Tasuku Honjo, William D. Nordhaus, Ardem Patapoutian, Ben Bernanke, Benjamin List, John B. Goodenough, Richard Henderson, William G. Kaelin Jr, Arthur Ashkin, Didier Queloz, George P. Smith, J. Michael Kosterlitz, James P. Allison, Michael Rosbash, Oliver Hart, Paul R. Milgrom, Richard H. Thaler, Roger Penrose, Sir Gregory P. Winter, Sir Peter J. Ratcliffe, Svante Pääbo, Donna Strickland, Gregg L. Semenza, Jennifer A. Doudna, Joachim Frank, Kip S. Thorne, Morten Meldal, Reinhard Genzel, Sir J. Fraser Stoddart, Syukuro Manabe, Andrea Ghez, Bernard L. Feringa, David Card, Jean-Pierre Sauvage, Michael W. Young, Philip Dybvig, Robert B. Wilson, Anton Zeilinger, Carolyn Bertozzi, David Julius, Emmanuelle Charpentier, Gérard Mourou, Jacques Dubochet, Jeffrey C. Hall, Joshua D. Angrist, M. Stanley Whittingham, Michael Houghton, Rainer Weiss, Bengt Holmström, F. Duncan M. Haldane, Michel Mayor, and Paul M. Romer.","[{'cache_retrieval': 1.1207999705220573e-05, 'prune_0': 2.264952624998841, 'few_shots_0': 0.6309840829999303, 'gen_t2c_0': 1.3281767499993293, 'get_cypher_query': 4.22425737499907, 'postprocess_query': 0.0001388750006299233, 'validate_query': 0.0014809589993092231, 'exec_query': 0.001071791000867961, 'answer_gen': 0.028947792001417838, 'run_query_forward': 4.256079000000682, 'caching': 3.6250003176974133e-06, 'full_run': 4.295579792000353}]"
+List laureates who won a prize for chemistry before 1950.,"MATCH (s:Scholar)-[:WON]->(p:Prize {category: ""chemistry""}) WHERE p.awardYear < 1950 RETURN s.knownName","The laureates who won a prize for chemistry before 1950 are: Alfred Werner, Arthur Harden, George de Hevesy, James B. Sumner, Otto Wallach, Paul Karrer, Peter Debye, Carl Bosch, Frederick Soddy, Fritz Pregl, Paul Sabatier, Hans Fischer, Sir Robert Robinson, Adolf Butenandt, Adolf von Baeyer, Arne Tiselius, Francis W. Aston, Frédéric Joliot, Henri Moissan, Leopold Ruzicka, Wendell M. Stanley, Heinrich Wieland, Irving Langmuir, Marie Curie, Richard Willstätter, Artturi Virtanen, Eduard Buchner, Hans von Euler-Chelpin, Otto Hahn, Sir William Ramsay, The Svedberg, Theodore W. Richards, Victor Grignard, Walther Nernst, Wilhelm Ostwald, William F. Giauque, Emil Fischer, Ernest Rutherford, Friedrich Bergius, Irène Joliot-Curie, Adolf Windaus, Fritz Haber, Harold C. Urey, Jacobus H. van 't Hoff, John H. Northrop, Norman Haworth, Richard Kuhn, Richard Zsigmondy, Svante Arrhenius.","[{'cache_retrieval': 1.0332998499507084e-05, 'prune_0': 2.2880929579987423, 'few_shots_0': 0.5200198330003332, 'gen_t2c_0': 1.5995707079982822, 'get_cypher_query': 4.407833833000041, 'postprocess_query': 0.0002074999993055826, 'validate_query': 0.002451332999044098, 'exec_query': 0.0025179160002153367, 'answer_gen': 0.02912174999983108, 'run_query_forward': 4.442344958999456, 'caching': 4.5840006350772455e-06, 'full_run': 4.474542083000415}]"
+In which city was the last chemistry laureate born?,"MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize {category: ""chemistry""}) RETURN c.name ORDER BY p.awardYear DESC LIMIT 1","The most recent chemistry laureate was born in Philadelphia, PA.","[{'cache_retrieval': 8.041000910452567e-06, 'prune_0': 3.136360083000909, 'few_shots_0': 0.4176460409998981, 'gen_t2c_0': 1.646056541998405, 'get_cypher_query': 5.200215332999505, 'postprocess_query': 0.0005583330002991715, 'validate_query': 0.006728416999976616, 'exec_query': 0.004824208001082297, 'answer_gen': 0.02505787500012957, 'run_query_forward': 5.237475084000835, 'caching': 4.41599877376575e-06, 'full_run': 5.2792567090000375}]"
+Which nobel laureates were born and died in the same city?,MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName,"I am sorry, I cannot answer this question because I lack the necessary information.","[{'cache_retrieval': 7.874999937484972e-06, 'prune_0': 3.5558729999993375, 'few_shots_0': 0.5205126660002861, 'gen_t2c_0': 1.5353719579998142, 'get_cypher_query': 5.6118942920002155, 'postprocess_query': 0.00020691700046882033, 'validate_query': 0.0025160830009554047, 'exec_query': 0.0030423330008488847, 'answer_gen': 0.02937187499992433, 'run_query_forward': 5.647105624999313, 'caching': 4.4169992179377005e-06, 'full_run': 5.677458916999967}]"
+Which nobel laureates were born and died in the same country?,"MATCH (c1:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City), (c1)-[:IS_CITY_IN]->(country:Country), (c2)-[:IS_CITY_IN]->(country) RETURN s.knownName","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 8.708999303053133e-06, 'prune_0': 3.759849625001152, 'few_shots_0': 0.4930622499996389, 'gen_t2c_0': 2.153950875001101, 'get_cypher_query': 6.406988292001188, 'postprocess_query': 0.0002314590001333272, 'validate_query': 0.011412709000069299, 'exec_query': 0.008691582999745151, 'answer_gen': 1.2418031670003984, 'run_query_forward': 7.669208458000867, 'caching': 3.4500000765547156e-05, 'full_run': 7.699183166998409}]"
+Which nobel laureates were born and died on the same continent?,MATCH (a1:Continent)<-[:IS_COUNTRY_IN]-(a2:Country)<-[:IS_CITY_IN]-(a3:City)<-[:BORN_IN]-(a4:Scholar)-[:DIED_IN]->(a5:City)-[:IS_CITY_IN]->(a6:Country)-[:IS_COUNTRY_IN]->(a1) RETURN a4.knownName,I do not have enough information to answer the question.,"[{'cache_retrieval': 8.332999641424976e-06, 'prune_0': 3.584321624999575, 'few_shots_0': 0.6708188749998953, 'gen_t2c_0': 1.5608403749993158, 'get_cypher_query': 5.816135333998318, 'postprocess_query': 0.0005606249997072155, 'validate_query': 0.03205537499889033, 'exec_query': 0.01666329100044095, 'answer_gen': 1.2172163340001134, 'run_query_forward': 7.0826945419994445, 'caching': 2.262499947391916e-05, 'full_run': 7.127157791999707}]"
+Which Nobel laureates were born in Germany?,MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE lower(cc.name) CONTAINS lower('Germany') RETURN s.knownName,"The Nobel laureates born in Germany are: Arno Penzias, Gerd Binnig, Gerhard Herzberg, Klaus Hasselmann, Max Delbrück, Robert Huber, Robert J. Aumann, Carl Bosch, Ernst B. Chain, Georg Wittig, Hans Spemann, John C. Polanyi, Max Planck, Benjamin List, Ernst Otto Fischer, Feodor Lynen, Gustav Hertz, J. Hans D. Jensen, Theodor W. Hänsch, Adolf von Baeyer, Horst L. Störmer, Rudolf Mössbauer, Thomas C. Südhof, Eduard Buchner, James Franck, Otto Hahn, Otto Loewi, Werner Heisenberg, Ernst Ruska, Otto Diels, Rainer Weiss, Sir Bernard Katz, Werner Forssmann, Wolfgang Ketterle, Adolf Windaus, Bert Sakmann, and Georges J.F. Köhler.","[{'cache_retrieval': 1.1374999303370714e-05, 'prune_0': 4.605436125000779, 'few_shots_0': 0.7053689999993367, 'gen_t2c_0': 1.7791957079989515, 'get_cypher_query': 7.090160834000926, 'postprocess_query': 0.0002799580015562242, 'validate_query': 0.004505875000177184, 'exec_query': 0.004085457998371567, 'answer_gen': 1.9455864170013228, 'run_query_forward': 9.04479899999933, 'caching': 2.1458999981405213e-05, 'full_run': 9.090227916000003}]"
+Which Nobel laureates died in the USA?,"MATCH (c:Country)<-[:IS_CITY_IN]-(city:City)<-[:DIED_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE toLower(c.name) CONTAINS toLower(""USA"") RETURN s.knownName","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 8.582999726058915e-06, 'prune_0': 4.564984041999196, 'few_shots_0': 0.6581045000002632, 'gen_t2c_0': 1.5773134589999245, 'get_cypher_query': 6.800514499998826, 'postprocess_query': 0.00022208299924386665, 'validate_query': 0.006161708000945509, 'exec_query': 0.0038327910006046295, 'answer_gen': 1.04394662499908, 'run_query_forward': 7.854759583000487, 'caching': 1.1500000255182385e-05, 'full_run': 7.902529875000255}]"
+Which country has the most Nobel laureates?,"MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE lower(p.category) CONTAINS lower('Nobel') RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 1.129100019170437e-05, 'prune_0': 3.282720999999583, 'few_shots_0': 0.3783187499993801, 'gen_t2c_0': 1.8564456659987627, 'get_cypher_query': 5.517644040999585, 'postprocess_query': 0.0005504170003405306, 'validate_query': 0.006102041999838548, 'exec_query': 0.005612208000457031, 'answer_gen': 1.0620437079996918, 'run_query_forward': 6.592138125000929, 'caching': 2.2000000171829015e-05, 'full_run': 6.629897082999378}]"
+What are the laureates associated with more than one institute?,"MATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName","Martin Karplus, Adam G. Riess, Adolf Butenandt, Hermann Staudinger, Paul Ehrlich, John F. Enders, Mario R. Capecchi, Reinhard Genzel, Richard Willstätter, Thomas A. Steitz, Osamu Shimomura, Claude Cohen-Tannoudji, Frederick Sanger, Fritz Lipmann, Serge Haroche, Akira Yoshino, Toshihide Maskawa, Roderick MacKinnon, Sir Peter J. Ratcliffe, Konrad Lorenz, Anton Zeilinger, Gérard Mourou, Johann Deisenhofer, Richard Kuhn, Kip S. Thorne, Alain Aspect, Bruce A. Beutler, Theodor W. Hänsch, Paul Modrich, Ilya Prigogine, David J. Wineland, John L. Hall, Michael Rosbash, Rudolf Mössbauer, Svante Pääbo, Günter Blobel, Egas Moniz, Finn E. Kydland, Stefan W. Hell, Randy W. Schekman, Igor Y. Tamm, Dale T. Mortensen, Albert Fert, Isamu Akasaki, Kurt Wüthrich, Roger Y. Tsien, Friedrich Bergius, Barry J. Marshall, Thomas C. Südhof, Carolyn Bertozzi, Walther Bothe, Barry C. Barish, Jack W. Szostak, Abdus Salam, Peter Debye, Robert J. Lefkowitz, Carl Bosch, K. Barry Sharpless, Alvin E. Roth, Saul Perlmutter, William G. Kaelin Jr, James P. Allison, Rainer Weiss, Shinya Yamanaka, Tomas Lindahl, Didier Queloz, William P. Murphy, Hideki Yukawa, Georges Charpak, Nikolay Semenov, Edward C. Prescott, Ardem Patapoutian, Christian de Duve, Charles K. Kao, Elinor Ostrom, Jean-Marie Lehn, Il´ja M. Frank","[{'cache_retrieval': 9.0000012278324e-06, 'prune_0': 2.296453291999569, 'few_shots_0': 1.2942532910001319, 'gen_t2c_0': 1.6394922500003304, 'get_cypher_query': 5.2303190829989035, 'postprocess_query': 0.0002242499995190883, 'validate_query': 0.0029446670014294796, 'exec_query': 0.004270916999303154, 'answer_gen': 2.707621334000578, 'run_query_forward': 7.94567570900108, 'caching': 2.470800063747447e-05, 'full_run': 7.991683500000363}]"
+What is the institution with most Nobel laureates affiliated?,"MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1","The institution with the most Nobel laureates affiliated is the University of California, with 39 laureates.","[{'cache_retrieval': 1.158299892267678e-05, 'prune_0': 3.1402004999999917, 'few_shots_0': 0.9526618330000929, 'gen_t2c_0': 1.8456152500002645, 'get_cypher_query': 5.938606249999793, 'postprocess_query': 0.00033033299951057415, 'validate_query': 0.002149665999240824, 'exec_query': 0.004069665999850258, 'answer_gen': 0.029389875000561005, 'run_query_forward': 5.9746923339989735, 'caching': 4.792000254383311e-06, 'full_run': 6.022095833999629}]"
+What is the total prize won by scholars affiliated with the institution with most scholars affiliated?,"MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) WITH i, COUNT(s) AS scholar_count, SUM(p.prizeAmount) AS total_prize ORDER BY scholar_count DESC LIMIT 1 RETURN total_prize",The total prize won by scholars affiliated with the institution with the most scholars affiliated is 234573899.,"[{'cache_retrieval': 8.541999704902992e-06, 'prune_0': 2.8172440830003325, 'few_shots_0': 0.49346125000010943, 'gen_t2c_0': 1.529006250000748, 'get_cypher_query': 4.839840750000803, 'postprocess_query': 0.0004090000002179295, 'validate_query': 0.004111209000257077, 'exec_query': 0.004212292000374873, 'answer_gen': 0.028481916999226087, 'run_query_forward': 4.8774596660005045, 'caching': 4.917001206194982e-06, 'full_run': 4.908283374999883}]"
+What is the youngest age a scholar won a Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT"") AS age ORDER BY age ASC LIMIT 1",The youngest age a scholar won a Nobel Prize is 25.,"[{'cache_retrieval': 9.332999979960732e-06, 'prune_0': 1.962102749999758, 'few_shots_0': 0.5006611660010094, 'gen_t2c_0': 1.4712036670007365, 'get_cypher_query': 3.9341030410014355, 'postprocess_query': 0.00016754100033722352, 'validate_query': 0.01506883399997605, 'exec_query': 0.004175874999418738, 'answer_gen': 0.021633666998241097, 'run_query_forward': 3.9752128339987394, 'caching': 5.8749992604134604e-06, 'full_run': 4.007014291000814}]"
+What is the oldest age a scholar won a Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT"") AS age ORDER BY age DESC LIMIT 1",The oldest age a scholar won a Nobel Prize is 97.,"[{'cache_retrieval': 1.2042000889778137e-05, 'prune_0': 2.0717477910002344, 'few_shots_0': 1.1346955409990187, 'gen_t2c_0': 1.4224613749993296, 'get_cypher_query': 4.629010999999082, 'postprocess_query': 0.0001867079990915954, 'validate_query': 0.0025320409986306913, 'exec_query': 0.003949957999793696, 'answer_gen': 1.7271662080001988, 'run_query_forward': 6.362967125000068, 'caching': 1.612499909242615e-05, 'full_run': 6.392074833000152}]"
+What is the average age a scholar won a Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT""))",The average age a scholar won a Nobel Prize is approximately 59.27 years.,"[{'cache_retrieval': 1.2333999620750546e-05, 'prune_0': 2.3231012080013898, 'few_shots_0': 1.9108843750000233, 'gen_t2c_0': 1.9108662090002326, 'get_cypher_query': 6.144909000000553, 'postprocess_query': 0.00015558300037810113, 'validate_query': 0.012122374999307794, 'exec_query': 0.002605499999845051, 'answer_gen': 0.04046783299963863, 'run_query_forward': 6.200353833999543, 'caching': 5.709000106435269e-06, 'full_run': 6.29207445800057}]"
+Give me top 10 countries by average age of scholars winning Nobel Prizes.,"MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT"")) AS average_age ORDER BY average_age DESC LIMIT 10","The top 10 countries by average age of Nobel Prize winning scholars are:
+1. Norway with an average age of 74.0
+2. Russia with an average age of 70.0
+3. Japan with an average age of 65.33
+4. Sweden with an average age of 65.0
+5. Israel with an average age of 63.5
+6. the Netherlands with an average age of 61.8
+7. Austria with an average age of 61.38
+8. Finland with an average age of 61.33
+9. Argentina with an average age of 60.0
+10. Australia with an average age of 60.0","[{'cache_retrieval': 1.1791998986154795e-05, 'prune_0': 4.113011082999947, 'few_shots_0': 0.462907584000277, 'gen_t2c_0': 1.7478289589998894, 'get_cypher_query': 6.324017416998686, 'postprocess_query': 0.00019895799960067961, 'validate_query': 0.005032999999457388, 'exec_query': 0.0073529999990569195, 'answer_gen': 0.03006166599880089, 'run_query_forward': 6.366839209000318, 'caching': 1.7083000784623437e-05, 'full_run': 6.405474291999781}]"
+Who won the Nobel Prize in Physics in 2020?,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2020, category: ""physics""}) RETURN s.knownName","Roger Penrose, Reinhard Genzel, and Andrea Ghez won the Nobel Prize in Physics in 2020.","[{'cache_retrieval': 1.9750001229112968e-05, 'full_run': 0.02555074999872886}]"
+List all Nobel laureates in Chemistry.,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS toLower(""chemistry"") RETURN DISTINCT s.fullName","The Nobel laureates in Chemistry are: Otto Wallach, Fritz Pregl, Kurt Wüthrich, Martin Karplus, Benjamin List, John Cowdery Kendrew, Alan G. MacDiarmid, Geoffrey Wilkinson, Arieh Warshel, Otto Hahn, Sir William Ramsay, Ernest Rutherford, Irène Joliot-Curie, M. Stanley Whittingham, Osamu Shimomura, Roald Hoffmann, Robert S. Mulliken, Edwin Mattison McMillan, Harold Clayton Urey, Hartmut Michel, Jacobus Henricus van 't Hoff, John Howard Northrop, Robert F. Curl Jr., Ahmed H. Zewail, Frances H. Arnold, Georg Wittig, Ronald George Wreyford Norrish, Gerhard Ertl, Peter Agre, Yves Chauvin, Michael Levitt, Frederick Sanger, Paul J. Crutzen, Richard Laurence Millington Synge, Vincent du Vigneaud, John B. Fenn, K. Barry Sharpless, Hans Fischer, John A. Pople, Sir Harold W. Kroto, William E. Moerner, George de Hevesy, Glenn Theodore Seaborg, Petrus (Peter) Josephus Wilhelmus Debye, David W.C. MacMillan, Derek H. R. Barton, Frederick Soddy, John C. Polanyi, Nikolay Nikolaevich Semenov, Paul J. Flory, Paul Sabatier, Rudolph A. Marcus, Ernst Otto Fischer, Arne Wilhelm Kaurin Tiselius, F. Sherwood Rowland, Irwin Rose, Jaroslav Heyrovsky, Sir Gregory P. Winter, Akira Suzuki, Paul Modrich, Artturi Ilmari Virtanen, Emmanuelle Charpentier, Friedrich Bergius, Jean-Marie Lehn, Paul Berg, Robert Burns Woodward, Gerhard Herzberg, James Batcheller Sumner, Vladimir Prelog, Akira Yoshino, Eric Betzig, Karl Ziegler, Richard E. Smalley, Roger Y. Tsien, William H. Stein, Max Ferdinand Perutz, Charles J. Pedersen, Henri Moissan, Leopold Ruzicka, William S. Knowles, Avram Hershko, Herbert A. Hauptman, Irving Langmuir, Marie Curie, née Skłodowska, Yuan T. Lee, Eduard Buchner, Giulio Natta, Ilya Romanovich Prigogine, Koichi Tanaka, Theodore William Richards, Thomas A. Steitz, Walther Hermann Nernst, William N. Lipscomb, Dudley R. Herschbach, Mario J. Molina, Roger D. Kornberg, Hideki Shirakawa, Aaron Klug, Peter D. Mitchell, Richard R. Ernst, Stefan W. Hell, Linus Carl Pauling, Stanford Moore, Richard F. Heck, Robert H. Grubbs, Frédéric Joliot, Roderick MacKinnon, Wendell Meredith Stanley, Robert Bruce Merrifield, Herbert C. Brown, Morten Meldal, Paul D. Boyer, Luis F. Leloir, Richard R. Schrock, Ryoji Noyori, William Francis Giauque, Carolyn R. Bertozzi, Hermann Emil Fischer, Walter Gilbert, Henry Taube, Richard Adolf Zsigmondy, Lars Onsager, Richard Henderson, George P. Smith, Venkatraman Ramakrishnan, Sir J. Fraser Stoddart, The (Theodor) Svedberg, Brian K. Kobilka, Dorothy Crowfoot Hodgkin, Johann Deisenhofer, Sir Cyril Norman Hinshelwood, Kurt Alder, Elias James Corey, Jens C. Skou, Jerome Karle, Adolf Friedrich Johann Butenandt, John Warcup Cornforth, Donald J. Cram, Jennifer A. Doudna, Kenichi Fukui, Jacques Dubochet, Kary B. Mullis, Svante August Arrhenius, Alfred Werner, Paul Karrer, Carl Bosch, Melvin Calvin, Dan Shechtman, Ei-ichi Negishi, Sir Robert Robinson, Lord (Alexander R.) Todd, Joachim Frank, Richard Martin Willstätter, Jean-Pierre Sauvage, Wilhelm Ostwald, Walter Kohn, Ada E. Yonath, Fritz Haber, Aaron Ciechanover, John B. Goodenough, Tomas Lindahl, Alan J. Heeger, Francis William Aston, Hermann Staudinger, Willard Frank Libby, Heinrich Otto Wieland, John E. Walker, Bernard L. Feringa, Victor Grignard, Aziz Sancar, George A. Olah, Martin Chalfie, Archer John Porter Martin, Manfred Eigen, Michael Smith, Otto Paul Hermann Diels, Thomas R. Cech, Richard Kuhn, Arthur Harden, Robert Huber, Robert J. Lefkowitz, Johann Friedrich Wilhelm Adolf von Baeyer, George Porter, Sidney Altman, Hans Karl August Simon von Euler-Chelpin, Odd Hassel, Adolf Otto Reinhold Windaus, Christian B. Anfinsen, and Walter Norman Haworth.","[{'cache_retrieval': 1.1916999937966466e-05, 'full_run': 0.026066374999572872}]"
+Which laureates won more than one Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) AS numPrizes WHERE numPrizes > 1 RETURN s.knownName","Based on the provided information, the laureates who won more than one Nobel Prize are Linus Pauling, Frederick Sanger, Marie Curie, John Bardeen, and K. Barry Sharpless.","[{'cache_retrieval': 1.2333999620750546e-05, 'full_run': 0.024428458000329556}]"
+Find Nobel laureates born before 1900.,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate < ""1900-01-01"" RETURN s.knownName, s.birthDate","Based on the provided data, the Nobel laureates born before 1900 are:
+Alfred Werner, born December 12, 1866
+Arthur Harden, born October 12, 1865
+C.T.R. Wilson, born February 14, 1869
+Charles Nicolle, born September 21, 1866
+Ilya Mechnikov, born May 15, 1845
+Johannes Fibiger, born April 23, 1867
+Niels Ryberg Finsen, born December 15, 1860
+Otto Wallach, born March 27, 1847
+Pieter Zeeman, born May 25, 1865
+Wilhelm Conrad Röntgen, born March 27, 1845
+Albert Einstein, born March 14, 1879
+Allvar Gullstrand, born June 5, 1862
+Alphonse Laveran, born June 18, 1845
+Carl Bosch, born August 27, 1874
+Charles Edouard Guillaume, born February 15, 1861
+Frederick Soddy, born September 2, 1877
+Fritz Pregl, born September 3, 1869
+Gustaf Dalén, born November 30, 1869
+Hans Spemann, born June 27, 1869
+Karl Landsteiner, born June 14, 1868
+Lord Rayleigh, born November 12, 1842
+Max Planck, born April 23, 1858
+Paul Sabatier, born November 5, 1854
+Ronald Ross, born May 13, 1857
+Albrecht Kossel, born September 16, 1853
+August Krogh, born November 15, 1874
+Heike Kamerlingh Onnes, born September 21, 1853
+Hendrik A. Lorentz, born July 18, 1853
+Joseph Erlanger, born January 5, 1874
+Pierre Curie, born May 15, 1859
+Adolf von Baeyer, born October 31, 1835
+Henri Becquerel, born December 15, 1852
+Henri Moissan, born September 28, 1852
+Paul Ehrlich, born March 14, 1854
+Albert A. Michelson, born December 19, 1852
+Camillo Golgi, born July 7, 1843
+Ferdinand Braun, born June 6, 1850
+Jean Baptiste Perrin, born September 30, 1870
+Johannes Diderik van der Waals, born November 23, 1837
+Marie Curie, born November 7, 1867
+Sir Charles Sherrington, born November 27, 1857
+Wilhelm Wien, born January 13, 1864
+Willem Einthoven, born May 21, 1860
+William Bragg, born July 2, 1862
+Christiaan Eijkman, born August 11, 1858
+Eduard Buchner, born May 20, 1860
+Emil von Behring, born March 15, 1854
+Julius Wagner-Jauregg, born March 7, 1857
+Sir William Ramsay, born October 2, 1852
+Theodor Kocher, born August 25, 1841
+Theodore W. Richards, born January 31, 1868
+Walther Nernst, born June 25, 1864
+Wilhelm Ostwald, born September 2, 1853
+Emil Fischer, born October 9, 1852
+Gabriel Lippmann, born August 16, 1845
+J.J. Thomson, born December 18, 1856
+Philipp Lenard, born June 7, 1862
+Robert Koch, born December 11, 1843
+Charles Richet, born August 26, 1850
+Fritz Haber, born December 9, 1868
+Ivan Pavlov, born September 14, 1849
+Jacobus H. van 't Hoff, born August 30, 1852
+Richard Zsigmondy, born April 1, 1865
+Robert A. Millikan, born March 22, 1868
+Santiago Ramón y Cajal, born May 1, 1852
+Svante Arrhenius, born February 19, 1859","[{'cache_retrieval': 1.0584000847302377e-05, 'full_run': 0.025044292000529822}]"
+What did Marie Curie win?,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Curie') AND lower(s.knownName) CONTAINS lower('Marie') RETURN p.category, p.awardYear",Marie Curie won the physics prize in 1903 and the chemistry prize in 1911.,"[{'cache_retrieval': 1.5042000086396001e-05, 'full_run': 0.023693457998888334}]"
+Who won the Nobel Prize in peace in 1962?,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: ""peace""}) RETURN s.knownName",Linus Pauling won the Nobel Prize in peace in 1962.,"[{'cache_retrieval': 1.0416999430162832e-05, 'full_run': 0.04118979199847672}]"
+List all Nobel Peace Prize winners.,"MATCH (s:Scholar)-[:WON]->(p:Prize {category: ""peace""}) RETURN DISTINCT s.fullName",The Nobel Peace Prize winner is Linus Carl Pauling.,"[{'cache_retrieval': 2.0790999769815244e-05, 'full_run': 0.023866040999564575}]"
+How many laureates are female?,"MATCH (s:Scholar) WHERE toLower(s.gender) CONTAINS ""female"" RETURN COUNT(s)",There are 25 female laureates.,"[{'cache_retrieval': 1.9958000848419033e-05, 'full_run': 0.024841083000865183}]"
+Find laureates who won the Nobel Prize in Medicine in 2001.,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2001, category: ""medicine""}) RETURN s.knownName","The laureates who won the Nobel Prize in Medicine in 2001 are Tim Hunt, Leland Hartwell, and Sir Paul Nurse.","[{'cache_retrieval': 1.4959001418901607e-05, 'full_run': 0.023000458000751678}]"
+Show Nobel laureates along with the amount of their prize.,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount","Here are some Nobel laureates and their prize amounts:
+Aaron Klug: 1150000
+Ahmed Zewail: 7900000
+Alfred D. Hershey: 375000
+Alfred Werner: 143010
+Amartya Sen: 7600000
+Andre Geim: 10000000
+Arno Penzias: 725000
+Arthur Harden: 172760
+Arvid Carlsson: 9000000
+Ben R. Mottelson: 630000
+Bertram N. Brockhouse: 7000000
+C.T.R. Wilson: 126501
+Charles Nicolle: 156939
+Christopher A. Sims: 10000000
+Daniel Nathans: 725000
+David H. Hubel: 1000000
+David J. Gross: 10000000
+David J. Thouless: 8000000
+David M. Lee: 7400000
+Dickinson W. Richards: 200123
+Edgar Adrian: 171753
+Eric F. Wieschaus: 7200000
+Ernest Lawrence: 148822
+Esther Duflo: 9000000
+François Jacob: 282000
+George de Hevesy: 123691
+George R. Minot: 162608
+Gerard Debreu: 1500000
+Gerd Binnig: 2000000
+Gerhard Herzberg: 450000
+Glenn T. Seaborg: 167612
+Guido W. Imbens: 10000000
+Harvey J. Alter: 10000000
+Ilya Mechnikov: 139800
+Jack Kilby: 9000000
+James A. Mirrlees: 7400000
+James B. Sumner: 121524
+James M. Buchanan Jr.: 2000000
+James Peebles: 9000000
+Johannes Fibiger: 116960
+Joseph L. Goldstein: 1800000
+Klaus Hasselmann: 10000000
+Klaus von Klitzing: 1800000
+Konrad Bloch: 273000
+Kurt Alder: 164304
+Lars Onsager: 350000
+Louis J. Ignarro: 7600000
+Masatoshi Koshiba: 10000000
+Max Delbrück: 375000
+Murray Gell-Mann: 375000
+Niels Bohr: 122483
+Niels Ryberg Finsen: 141358
+Norman F. Ramsey: 3000000
+Otto Meyerhof: 122483
+Otto Wallach: 140703
+Patrick M.S. Blackett: 159773
+Paul A.M. Dirac: 170332
+Paul Greengard: 9000000
+Paul J. Crutzen: 7200000
+Paul Karrer: 158463
+Peter Debye: 159850
+Peter Mitchell: 725000
+Pierre-Gilles de Gennes: 6000000
+Pieter Zeeman: 141847
+Ralph M. Steinman: 10000000
+Renato Dulbecco: 630000
+Richard L.M. Synge: 171135
+Richard P. Feynman: 282000
+Richard R. Ernst: 6000000
+Robert C. Merton: 7500000
+Robert Huber: 2500000
+Robert J. Aumann: 10000000
+Robert J. Lefkowitz: 8000000
+Robert M. Solow: 2175000
+Robert Woodrow Wilson: 725000
+Rolf M. Zinkernagel: 7400000
+Rosalyn Yalow: 700000
+Serge Haroche: 8000000
+Sir Alexander Fleming: 121333
+Stefan W. Hell: 8000000
+Sydney Brenner: 10000000
+Thomas J. Sargent: 10000000
+Tim Hunt: 10000000
+Ulf von Euler: 400000
+Vernon L. Smith: 10000000
+Vincent du Vigneaud: 190214
+Vladimir Prelog: 630000
+Werner Arber: 725000
+Wilhelm Conrad Röntgen: 150782
+William F. Sharpe: 4000000
+Willis E. Lamb: 190214
+Wolfgang Pauli: 121333
+Yoshinori Ohsumi: 8000000
+Zhores Alferov: 9000000
+Abhijit Banerjee: 9000000
+Akira Yoshino: 9000000
+Alain Aspect: 10000000
+Albert Einstein: 121573
+Allvar Gullstrand: 140695
+Alphonse Laveran: 138796
+André F. Cournand: 200123
+Barry C. Barish: 9000000
+Barry J. Marshall: 10000000
+Bengt I. Samuelsson: 1150000
+Brian D. Josephson: 510000
+Carl Bosch: 173206
+Carl Wieman: 10000000
+Charles B. Huggins: 300000
+Charles Edouard Guillaume: 134100
+Charles M. Rice: 10000000
+David W.C. MacMillan: 10000000
+Derek Barton: 375000
+Douglas Diamond: 10000000
+Edvard I. Moser: 8000000
+Enrico Fermi: 155077
+Eric Betzig: 8000000
+Ernest T.S. Walton: 167612
+Ernst B. Chain: 121333
+Frances H. Arnold: 9000000
+Frederick Soddy: 121573
+Frits Zernike: 175293
+Fritz Pregl: 114935
+Georg Wittig: 800000
+George E. Palade: 550000
+Georges Charpak: 6500000
+Gerty Cori: 146115
+Giorgio Parisi: 10000000
+Gustaf Dalén: 140476
+Hans Spemann: 159917
+Harald zur Hausen: 10000000
+Herbert Kroemer: 9000000
+Herbert Simon: 725000
+Isamu Akasaki: 8000000
+Isidor Isaac Rabi: 121841
+Ivar Giaever: 510000
+Johannes Stark: 133127
+John B. Fenn: 10000000
+John C. Polanyi: 2000000
+John Clauser: 10000000
+John R. Hicks: 480000
+John R. Vane: 1150000
+K. Alex Müller: 2175000
+K. Barry Sharpless: 10000000
+K. Barry Sharpless: 10000000
+Karl Landsteiner: 172947
+Karl Ziegler: 265000
+Kenneth G. Wilson: 1150000
+Kurt Wüthrich: 10000000
+Linus Pauling: 181647
+Linus Pauling: 257220
+Lord Rayleigh: 140859
+Louis Néel: 400000
+Martin Karplus: 8000000
+Martin Ryle: 550000
+Maurice Allais: 2500000
+Max Planck: 138198
+Melvin Calvin: 250233
+Michael Kremer: 9000000
+Nikolay Semenov: 200123
+Owen Chamberlain: 220678
+Paul J. Flory: 550000
+Paul Sabatier: 140476
+Peter C. Doherty: 7400000
+Philip W. Anderson: 700000
+Richard E. Smalley: 7400000
+Robert B. Laughlin: 7600000
+Robert W. Fogel: 6700000
+Rodney R. Porter: 480000
+Roger Y. Tsien: 10000000
+Ronald G.W. Norrish: 320000
+Ronald Ross: 141847
+Rudolph A. Marcus: 6500000
+Simon Kuznets: 450000
+Sir Henry Dale: 159850
+Sir John B. Gurdon: 8000000
+Stanford Moore: 480000
+Sune K. Bergström: 1150000
+Tasuku Honjo: 9000000
+Torsten N. Wiesel: 1000000
+Val Fitch: 880000
+Walter H. Brattain: 200123
+William A. Fowler: 1500000
+William D. Nordhaus: 9000000
+William H. Stein: 480000
+Aaron Ciechanover: 10000000
+Adam G. Riess: 10000000
+Albrecht Kossel: 140703
+Alfred G. Gilman: 7000000
+Alvin E. Roth: 8000000
+André Lwoff: 282000
+Anthony J. Leggett: 10000000
+Archibald V. Hill: 122483
+Ardem Patapoutian: 10000000
+August Krogh: 134100
+Baruj Benacerraf: 880000
+Ben Bernanke: 10000000
+Benjamin List: 10000000
+Bertil Ohlin: 700000
+Bruce A. Beutler: 10000000
+Carl D. Anderson: 159850
+Charles Glover Barkla: 133823
+Charles H. Townes: 273000
+Christian de Duve: 550000
+Dan Shechtman: 10000000
+Dennis Gabor: 450000
+Edward V. Appleton: 146115
+Ei-ichi Negishi: 10000000
+Elias James Corey: 4000000
+Eric Cornell: 10000000
+Ernst Otto Fischer: 510000
+Feodor Lynen: 273000
+Francis Crick: 257220
+Frank Wilczek: 10000000
+Frederick C. Robbins: 181647
+Frederick G. Banting: 114935
+Frederick Reines: 7200000
+Gerald M. Edelman: 480000
+Gunnar Myrdal: 550000
+Gustav Hertz: 118165
+H. Robert Horvitz: 10000000
+Hans Bethe: 320000
+Hans Fischer: 172947
+Heike Kamerlingh Onnes: 143010
+Hendrik A. Lorentz: 141847
+Henrik Dam: 123691
+Herbert S. Gasser: 121841
+Hermann J. Muller: 121524
+J. Hans D. Jensen: 265000
+Jack W. Szostak: 10000000
+James J. Heckman: 9000000
+Jens C. Skou: 7500000
+Jerome Karle: 1800000
+John B. Goodenough: 9000000
+John Bardeen: 200123
+John Bardeen: 480000
+John C. Kendrew: 257220
+John O'Keefe: 8000000
+Joseph Erlanger: 121841
+Keffer Hartline: 320000
+Kenneth J. Arrow: 480000
+Leland Hartwell: 10000000
+Luc Montagnier: 10000000
+Marshall W. Nirenberg: 350000
+Martin Rodbell: 7000000
+Max F. Perutz: 257220
+Max Theiler: 167612
+Melvin Schwartz: 2500000
+Oliver E. Williamson: 10000000
+Otto Stern: 123691
+Peter Grünberg: 10000000
+Peter Medawar: 225987
+Phillip A. Sharp: 6700000
+Pierre Curie: 141358
+Pyotr Kapitsa: 725000
+Randy W. Schekman: 8000000
+Raymond Davis Jr.: 10000000
+Riccardo Giacconi: 10000000
+Richard F. Heck: 10000000
+Richard Henderson: 9000000
+Robert F. Furchgott: 7600000
+Robert G. Edwards: 10000000
+Robert H. Grubbs: 10000000
+Robert Hofstadter: 250233
+Robert W. Holley: 350000
+Samuel C.C. Ting: 681000
+Saul Perlmutter: 10000000
+Sheldon Glashow: 800000
+Simon van der Meer: 1650000\","[{'cache_retrieval': 1.2499998774728738e-05, 'full_run': 0.025220125000487315}]"
+Show top 10 Nobel laureates along with the amount of their prize.,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 10","The top 10 Nobel laureates along with their prize amount are: Andre Geim, Christopher A. Sims, David J. Gross, Guido W. Imbens, Harvey J. Alter, Klaus Hasselmann, Masatoshi Koshiba, Ralph M. Steinman, Robert J. Aumann, and Sydney Brenner. Each of them won 10,000,000.","[{'cache_retrieval': 2.3208000129670836e-05, 'full_run': 0.030006582999703824}]"
+Which laureates died before 1950?,"MATCH (s:Scholar) WHERE s.deathDate < ""1950-01-01"" RETURN s.knownName, s.deathDate","The laureates who died before 1950 are: Alfred Werner (November 15, 1919), Arthur Harden (June 17, 1940), Charles Nicolle (February 28, 1936), Ilya Mechnikov (July 15, 1916), Johannes Fibiger (January 30, 1928), Niels Ryberg Finsen (September 24, 1904), Otto Wallach (February 26, 1931), Wilhelm Conrad R
+ntgen (February 10, 1923), Allvar Gullstrand (July 28, 1930), Alphonse Laveran (May 18, 1922), Carl Bosch (April 26, 1940), Charles Edouard Guillaume (June 13, 1938), Fritz Pregl (December 13, 1930), Gustaf Dal
+én (December 9, 1937), Hans Spemann (September 12, 1941), Karl Landsteiner (June 26, 1943), Lord Rayleigh (June 30, 1919), Max Planck (October 4, 1947), Paul Sabatier (August 14, 1941), Ronald Ross (September 16, 1932), Albrecht Kossel (July 5, 1927), August Krogh (September 13, 1949), Charles Glover Barkla (October 23, 1944), Frederick G. Banting (February 21, 1941), Hans Fischer (March 31, 1945), Heike Kamerlingh Onnes (February 21, 1926), Hendrik A. Lorentz (February 4, 1928), Pierre Curie (April 19, 1906), Sir Frederick Hopkins (May 16, 1947), Adolf von Baeyer (August 20, 1917), Francis W. Aston (November 20, 1945), Henri Becquerel (August 25, 1908), Henri Moissan (February 20, 1907), Paul Ehrlich (August 20, 1915), Albert A. Michelson (May 9, 1931), Camillo Golgi (January 21, 1926), Ferdinand Braun (April 20, 1918), Jean Baptiste Perrin (April 17, 1942), Johannes Diderik van der Waals (March 8, 1923), John Macleod (March 16, 1935), Marie Curie (July 4, 1934), Richard Willst
+ätter (August 3, 1942), Wilhelm Wien (August 30, 1928), Willem Einthoven (September 29, 1927), William Bragg (March 12, 1942), Christiaan Eijkman (November 5, 1930), Eduard Buchner (August 13, 1917), Emil von Behring (March 31, 1917), Julius Wagner-Jauregg (September 27, 1940), Robert B
+árány (April 8, 1936), Sir William Ramsay (July 23, 1916), Theodor Kocher (July 27, 1917), Theodore W. Richards (April 2, 1928), Victor Grignard (December 13, 1935), Walther Nernst (November 18, 1941), Wilhelm Ostwald (April 4, 1932), Alexis Carrel (November 5, 1944), Emil Fischer (July 15, 1919), Ernest Rutherford (October 19, 1937), Friedrich Bergius (March 30, 1949), Gabriel Lippmann (July 13, 1921), J.J. Thomson (August 30, 1940), Philipp Lenard (May 20, 1947), Robert Koch (May 27, 1910), Thomas H. Morgan (December 4, 1945), Charles Richet (December 4, 1935), Fritz Haber (January 29, 1934), Guglielmo Marconi (July 20, 1937), Ivan Pavlov (February 27, 1936), Jacobus H. van 't Hoff (March 1, 1911), Richard Zsigmondy (September 24, 1929), Santiago Ram
+ón y Cajal (October 17, 1934), and Svante Arrhenius (October 2, 1927).","[{'cache_retrieval': 1.8500000805943273e-05, 'full_run': 0.02527683400148817}]"
+List Nobel laureates who won in Economics.,MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE toLower(p.category) CONTAINS 'economics' RETURN DISTINCT s.fullName,"The Nobel laureates who won in Economics are: Guido W. Imbens, James A. Mirrlees, Robert C. Merton, Herbert A. Simon, John R. Hicks, Ronald H. Coase, Dale T. Mortensen, John C. Harsanyi, Lloyd S. Shapley, Robert B. Wilson, Angus Deaton, Christopher A. Pissarides, Sir Arthur Lewis, Robert J. Aumann, Ben S. Bernanke, Gunnar Myrdal, Tjalling C. Koopmans, John F. Nash Jr., Wassily Wassilyevich Leontief, Merton H. Miller, Paul Krugman, Amartya Sen, Esther Duflo, Thomas J. Sargent, Douglas W. Diamond, Simon Kuznets, Richard Stone, Elinor Ostrom, Paul A. Samuelson, James Tobin, Finn E. Kydland, Paul M. Romer, William F. Sharpe, Alvin E. Roth, Oliver E. Williamson, Paul R. Milgrom, Gary S. Becker, Friedrich August von Hayek, George J. Stigler, Leonid Vitaliyevich Kantorovich, Jan Tinbergen, Roger B. Myerson, Gerard Debreu, Daniel Kahneman, Harry M. Markowitz, James E. Meade, Jean Tirole, Thomas C. Schelling, Joshua D. Angrist, Franco Modigliani, Christopher A. Sims, Robert M. Solow, William D. Nordhaus, Bertil Ohlin, Eugene F. Fama, Robert A. Mundell, Vernon L. Smith, Daniel L. McFadden, Robert F. Engle III, William Vickrey, Lars Peter Hansen, Robert J. Shiller, Edmund S. Phelps, James M. Buchanan Jr., Kenneth J. Arrow, David Card, Douglass C. North, Maurice Allais, Peter A. Diamond, Ragnar Frisch, Clive W.J. Granger, Robert E. Lucas Jr., Edward C. Prescott, Leonid Hurwicz, Reinhard Selten, Michael Kremer, Robert W. Fogel, James J. Heckman, Richard H. Thaler, Eric S. Maskin, Lawrence R. Klein, Philip H. Dybvig, Bengt Holmström, Abhijit Banerjee, Myron S. Scholes, Oliver Hart, Milton Friedman, and Trygve Haavelmo, Theodore W. Schultz.","[{'cache_retrieval': 1.412499841535464e-05, 'full_run': 0.02451979199940979}]"
+Which year had the most Nobel Prize awards?,"MATCH (p:Prize) RETURN p.awardYear, COUNT(p) AS prize_count ORDER BY prize_count DESC LIMIT 1","The year 2000 had the most Nobel Prize awards, with a total of 5 prizes awarded.","[{'cache_retrieval': 1.4624998584622517e-05, 'full_run': 0.026043584000944975}]"
+Find Nobel laureates born after 1980.,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate > ""1980-01-01"" RETURN s.knownName, s.birthDate","I am sorry, I cannot answer this question because I lack the necessary information.","[{'cache_retrieval': 1.3625000065076165e-05, 'full_run': 0.025708499999382184}]"
+Which Nobel laureate received the highest prize amount?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN s.knownName, p.prizeAmount ORDER BY p.prizeAmount DESC LIMIT 1",Andre Geim received the highest prize amount of 10000000.,"[{'cache_retrieval': 1.491699913458433e-05, 'full_run': 0.024206292000599205}]"
+Show prizes awarded in the Physics category.,"MATCH (p:Prize) WHERE toLower(p.category) CONTAINS toLower(""Physics"") RETURN p.category",Prizes have been awarded in the Physics category.,"[{'cache_retrieval': 2.3958000383572653e-05, 'full_run': 0.057665459000418196}]"
+Which laureate won the Nobel Peace Prize in 2010?,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2010, category: ""peace""}) RETURN s.knownName","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 1.7624999600229785e-05, 'full_run': 0.04139750000103959}]"
+Did Einstein win any prize?,MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE lower(s.knownName) CONTAINS lower('Einstein') RETURN count(p) > 0,"Yes, Einstein won at least one prize.","[{'cache_retrieval': 1.95419997908175e-05, 'full_run': 0.029125583001587074}]"
+Count the number of Nobel laureates.,MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN COUNT(s),There are 731 Nobel laureates.,"[{'cache_retrieval': 1.4749999536434188e-05, 'full_run': 0.02528304199950071}]"
+List Nobel Prizes awarded in 2022.,"MATCH (p:Prize {awardYear: 2022}) RETURN p.category, p.prize_id","The Nobel Prizes awarded in 2022 were in the categories of physics, economics, chemistry, and medicine.","[{'cache_retrieval': 1.4416998965316452e-05, 'full_run': 0.024311375000252156}]"
+Find laureates who won in Physics and Chemistry.,MATCH (s:Scholar)-[:WON]->(p1:Prize) WHERE toLower(p1.category) CONTAINS 'physics' WITH s MATCH (s)-[:WON]->(p2:Prize) WHERE toLower(p2.category) CONTAINS 'chemistry' RETURN DISTINCT s.fullName,"Marie Curie, née Skłodowska won Nobel Prizes in both Physics and Chemistry.","[{'cache_retrieval': 1.2165999578428455e-05, 'full_run': 0.0328362920008658}]"
+Show Nobel Prize categories.,MATCH (p:Prize) RETURN DISTINCT p.category,"The Nobel Prize categories are physics, chemistry, economics, peace, and medicine.","[{'cache_retrieval': 2.1750000087195076e-05, 'full_run': 0.0420959999992192}]"
+Which laureates won in the year 2003?,MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 2003}) RETURN s.knownName,"The laureates who won in the year 2003 are Anthony J. Leggett, Sir Peter Mansfield, Roderick MacKinnon, Vitaly L. Ginzburg, Alexei Abrikosov, Clive W.J. Granger, Paul C. Lauterbur, Peter Agre, and Robert F. Engle III.","[{'cache_retrieval': 2.1334000848582946e-05, 'full_run': 0.02552224999999453}]"
+Find laureates awarded after 2015.,MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE p.awardYear > 2015 RETURN s.knownName,"The laureates awarded after 2015 are: David J. Thouless, Esther Duflo, Guido W. Imbens, Harvey J. Alter, James Peebles, Klaus Hasselmann, Yoshinori Ohsumi, Abhijit Banerjee, Akira Yoshino, Alain Aspect, Barry C. Barish, Charles M. Rice, David W.C. MacMillan, Douglas Diamond, Frances H. Arnold, Giorgio Parisi, John Clauser, K. Barry Sharpless, Michael Kremer, Tasuku Honjo, William D. Nordhaus, Ardem Patapoutian, Ben Bernanke, Benjamin List, John B. Goodenough, Richard Henderson, William G. Kaelin Jr, Arthur Ashkin, Didier Queloz, George P. Smith, J. Michael Kosterlitz, James P. Allison, Michael Rosbash, Oliver Hart, Paul R. Milgrom, Richard H. Thaler, Roger Penrose, Sir Gregory P. Winter, Sir Peter J. Ratcliffe, Svante Pääbo, Donna Strickland, Gregg L. Semenza, Jennifer A. Doudna, Joachim Frank, Kip S. Thorne, Morten Meldal, Reinhard Genzel, Sir J. Fraser Stoddart, Syukuro Manabe, Andrea Ghez, Bernard L. Feringa, David Card, Jean-Pierre Sauvage, Michael W. Young, Philip Dybvig, Robert B. Wilson, Anton Zeilinger, Carolyn Bertozzi, David Julius, Emmanuelle Charpentier, Gérard Mourou, Jacques Dubochet, Jeffrey C. Hall, Joshua D. Angrist, M. Stanley Whittingham, Michael Houghton, Rainer Weiss, Bengt Holmström, F. Duncan M. Haldane, Michel Mayor, and Paul M. Romer.","[{'cache_retrieval': 1.4416000340133905e-05, 'full_run': 0.024907999999413732}]"
+List laureates who won a prize for chemistry before 1950.,"MATCH (s:Scholar)-[:WON]->(p:Prize {category: ""chemistry""}) WHERE p.awardYear < 1950 RETURN s.knownName","The laureates who won a prize for chemistry before 1950 are: Alfred Werner, Arthur Harden, George de Hevesy, James B. Sumner, Otto Wallach, Paul Karrer, Peter Debye, Carl Bosch, Frederick Soddy, Fritz Pregl, Paul Sabatier, Hans Fischer, Sir Robert Robinson, Adolf Butenandt, Adolf von Baeyer, Arne Tiselius, Francis W. Aston, Frédéric Joliot, Henri Moissan, Leopold Ruzicka, Wendell M. Stanley, Heinrich Wieland, Irving Langmuir, Marie Curie, Richard Willstätter, Artturi Virtanen, Eduard Buchner, Hans von Euler-Chelpin, Otto Hahn, Sir William Ramsay, The Svedberg, Theodore W. Richards, Victor Grignard, Walther Nernst, Wilhelm Ostwald, William F. Giauque, Emil Fischer, Ernest Rutherford, Friedrich Bergius, Irène Joliot-Curie, Adolf Windaus, Fritz Haber, Harold C. Urey, Jacobus H. van 't Hoff, John H. Northrop, Norman Haworth, Richard Kuhn, Richard Zsigmondy, Svante Arrhenius.","[{'cache_retrieval': 1.2208000043756329e-05, 'full_run': 0.023712625001280685}]"
+In which city was the last chemistry laureate born?,"MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize {category: ""chemistry""}) RETURN c.name ORDER BY p.awardYear DESC LIMIT 1","The most recent chemistry laureate was born in Philadelphia, PA.","[{'cache_retrieval': 1.3666998711414635e-05, 'full_run': 0.023787957999957143}]"
+Which nobel laureates were born and died in the same city?,MATCH (c:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c) RETURN s.knownName,"I am sorry, I cannot answer this question because I lack the necessary information.","[{'cache_retrieval': 1.5666999388486147e-05, 'full_run': 0.02363425000112329}]"
+Which nobel laureates were born and died in the same country?,"MATCH (c1:City)<-[:BORN_IN]-(s:Scholar)-[:DIED_IN]->(c2:City), (c1)-[:IS_CITY_IN]->(country:Country), (c2)-[:IS_CITY_IN]->(country) RETURN s.knownName","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 2.1042000298621133e-05, 'full_run': 0.02912145800110011}]"
+Which nobel laureates were born and died on the same continent?,MATCH (a1:Continent)<-[:IS_COUNTRY_IN]-(a2:Country)<-[:IS_CITY_IN]-(a3:City)<-[:BORN_IN]-(a4:Scholar)-[:DIED_IN]->(a5:City)-[:IS_CITY_IN]->(a6:Country)-[:IS_COUNTRY_IN]->(a1) RETURN a4.knownName,I do not have enough information to answer the question.,"[{'cache_retrieval': 1.7874999684863724e-05, 'full_run': 0.02432454100016912}]"
+Which Nobel laureates were born in Germany?,MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE lower(cc.name) CONTAINS lower('Germany') RETURN s.knownName,"The Nobel laureates born in Germany are: Arno Penzias, Gerd Binnig, Gerhard Herzberg, Klaus Hasselmann, Max Delbrück, Robert Huber, Robert J. Aumann, Carl Bosch, Ernst B. Chain, Georg Wittig, Hans Spemann, John C. Polanyi, Max Planck, Benjamin List, Ernst Otto Fischer, Feodor Lynen, Gustav Hertz, J. Hans D. Jensen, Theodor W. Hänsch, Adolf von Baeyer, Horst L. Störmer, Rudolf Mössbauer, Thomas C. Südhof, Eduard Buchner, James Franck, Otto Hahn, Otto Loewi, Werner Heisenberg, Ernst Ruska, Otto Diels, Rainer Weiss, Sir Bernard Katz, Werner Forssmann, Wolfgang Ketterle, Adolf Windaus, Bert Sakmann, and Georges J.F. Köhler.","[{'cache_retrieval': 1.758399957907386e-05, 'full_run': 0.023831750000681495}]"
+Which Nobel laureates died in the USA?,"MATCH (c:Country)<-[:IS_CITY_IN]-(city:City)<-[:DIED_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE toLower(c.name) CONTAINS toLower(""USA"") RETURN s.knownName","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 1.9749999410123564e-05, 'full_run': 0.02387500000077125}]"
+Which country has the most Nobel laureates?,"MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) WHERE lower(p.category) CONTAINS lower('Nobel') RETURN cc.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1","I am sorry, I cannot answer this question with the information I have.","[{'cache_retrieval': 1.1166999684064649e-05, 'full_run': 0.024809250000544125}]"
+What are the laureates associated with more than one institute?,"MATCH (s:Scholar)-[:AFFILIATED_WITH]->(i:Institution) WITH s, COUNT(i) AS institute_count WHERE institute_count > 1 RETURN s.knownName","Martin Karplus, Adam G. Riess, Adolf Butenandt, Hermann Staudinger, Paul Ehrlich, John F. Enders, Mario R. Capecchi, Reinhard Genzel, Richard Willstätter, Thomas A. Steitz, Osamu Shimomura, Claude Cohen-Tannoudji, Frederick Sanger, Fritz Lipmann, Serge Haroche, Akira Yoshino, Toshihide Maskawa, Roderick MacKinnon, Sir Peter J. Ratcliffe, Konrad Lorenz, Anton Zeilinger, Gérard Mourou, Johann Deisenhofer, Richard Kuhn, Kip S. Thorne, Alain Aspect, Bruce A. Beutler, Theodor W. Hänsch, Paul Modrich, Ilya Prigogine, David J. Wineland, John L. Hall, Michael Rosbash, Rudolf Mössbauer, Svante Pääbo, Günter Blobel, Egas Moniz, Finn E. Kydland, Stefan W. Hell, Randy W. Schekman, Igor Y. Tamm, Dale T. Mortensen, Albert Fert, Isamu Akasaki, Kurt Wüthrich, Roger Y. Tsien, Friedrich Bergius, Barry J. Marshall, Thomas C. Südhof, Carolyn Bertozzi, Walther Bothe, Barry C. Barish, Jack W. Szostak, Abdus Salam, Peter Debye, Robert J. Lefkowitz, Carl Bosch, K. Barry Sharpless, Alvin E. Roth, Saul Perlmutter, William G. Kaelin Jr, James P. Allison, Rainer Weiss, Shinya Yamanaka, Tomas Lindahl, Didier Queloz, William P. Murphy, Hideki Yukawa, Georges Charpak, Nikolay Semenov, Edward C. Prescott, Ardem Patapoutian, Christian de Duve, Charles K. Kao, Elinor Ostrom, Jean-Marie Lehn, Il´ja M. Frank","[{'cache_retrieval': 1.087500095309224e-05, 'full_run': 0.02881850000085251}]"
+What is the institution with most Nobel laureates affiliated?,"MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) RETURN i.name, COUNT(s) AS laureate_count ORDER BY laureate_count DESC LIMIT 1","The institution with the most Nobel laureates affiliated is the University of California, with 39 laureates.","[{'cache_retrieval': 2.241600122943055e-05, 'full_run': 0.025178541998684523}]"
+What is the total prize won by scholars affiliated with the institution with most scholars affiliated?,"MATCH (i:Institution)<-[:AFFILIATED_WITH]-(s:Scholar)-[:WON]->(p:Prize) WITH i, COUNT(s) AS scholar_count, SUM(p.prizeAmount) AS total_prize ORDER BY scholar_count DESC LIMIT 1 RETURN total_prize",The total prize won by scholars affiliated with the institution with the most scholars affiliated is 234573899.,"[{'cache_retrieval': 1.3750001016887836e-05, 'full_run': 0.027203625000765896}]"
+What is the youngest age a scholar won a Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT"") AS age ORDER BY age ASC LIMIT 1",The youngest age a scholar won a Nobel Prize is 25.,"[{'cache_retrieval': 1.2915999832330272e-05, 'full_run': 0.023018624999167514}]"
+What is the oldest age a scholar won a Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT"") AS age ORDER BY age DESC LIMIT 1",The oldest age a scholar won a Nobel Prize is 97.,"[{'cache_retrieval': 1.4457998986472376e-05, 'full_run': 0.026244541999403737}]"
+What is the average age a scholar won a Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) RETURN AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT""))",The average age a scholar won a Nobel Prize is approximately 59.27 years.,"[{'cache_retrieval': 1.133299883804284e-05, 'full_run': 0.02436370800023724}]"
+Give me top 10 countries by average age of scholars winning Nobel Prizes.,"MATCH (cc:Country)<-[:IS_CITY_IN]-(c:City)<-[:BORN_IN]-(s:Scholar)-[:WON]->(p:Prize) RETURN cc.name, AVG(p.awardYear - CAST(substring(s.birthDate, 1, 4), ""INT"")) AS average_age ORDER BY average_age DESC LIMIT 10","The top 10 countries by average age of Nobel Prize winning scholars are:
+1. Norway with an average age of 74.0
+2. Russia with an average age of 70.0
+3. Japan with an average age of 65.33
+4. Sweden with an average age of 65.0
+5. Israel with an average age of 63.5
+6. the Netherlands with an average age of 61.8
+7. Austria with an average age of 61.38
+8. Finland with an average age of 61.33
+9. Argentina with an average age of 60.0
+10. Australia with an average age of 60.0","[{'cache_retrieval': 1.6542000594199635e-05, 'full_run': 0.02812150000136171}]"
