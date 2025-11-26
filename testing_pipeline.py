@@ -22,7 +22,7 @@ def _(mo):
 
 @app.cell
 def _():
-    #rag_cache.clear()
+    rag_cache.clear()
     return
 
 
@@ -63,7 +63,7 @@ def _(KuzuDatabaseManager, mo, pd, run_graph_rag):
         if result != {}:
             queries.append(result["query"])
             answers.append(result["answer"].response)
-            latencies.append([latencie])
+            latencies.append(latencie)
 
     return answers, latencies, queries, questions
 
@@ -235,6 +235,7 @@ def _(BAMLAdapter, OPENROUTER_API_KEY, dspy):
         model="openrouter/google/gemini-2.0-flash-001",
         api_base="https://openrouter.ai/api/v1",
         api_key=OPENROUTER_API_KEY,
+        cache=False,
     )
     dspy.configure(lm=lm, adapter=BAMLAdapter())
     return

@@ -3,7 +3,7 @@ Who won the Nobel Prize in Physics in 2020?,"MATCH (s:Scholar)-[:WON]->(p:Prize 
 List all Nobel laureates in Chemistry.,"MATCH (s:Scholar)-[:WON]->(p:Prize {category: ""chemistry""}) RETURN DISTINCT s.knownName"
 Which laureates won more than one Nobel Prize?,"MATCH (s:Scholar)-[:WON]->(p:Prize) WITH s, COUNT(p) as prizes WHERE prizes > 1 RETURN s.knownName"
 Find Nobel laureates born before 1900.,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.birthDate < ""1900-01-01"" RETURN s.knownName, s.birthDate"
-What did Marie Curie win?,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.knownName CONTAINS ""Curie"" AND s.knownName CONTAINS ""Marie"" RETURN p.category"
+What did Marie Curie win?,"MATCH (s:Scholar)-[:WON]->(p:Prize) WHERE s.knownName CONTAINS ""Curie"" AND s.knownName CONTAINS ""Marie"" RETURN p.category, p.awardYear"
 Who won the Nobel Prize in peace in 1962?,"MATCH (s:Scholar)-[:WON]->(p:Prize {awardYear: 1962, category: ""peace""}) RETURN s.knownName"
 List all Nobel Peace Prize winners.,"MATCH (s:Scholar)-[:WON]->(p:Prize {category: ""peace""}) RETURN DISTINCT s.knownName"
 How many laureates are female?,"MATCH (s:Scholar) WHERE s.gender = ""female"" RETURN COUNT(s) AS female_laureates"

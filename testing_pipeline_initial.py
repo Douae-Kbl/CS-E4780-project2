@@ -86,7 +86,7 @@ def _(answers, latencies, pd, queries, questions):
         "generated_answer": answers,
         "latencies": latencies
     })
-    df_out.to_csv("data/test_results_initial_pipeline.csv", index=False)
+    df_out.to_csv("data/test_results_initial_pipeline2.csv", index=False)
     return
 
 
@@ -158,6 +158,7 @@ def _(BAMLAdapter, OPENROUTER_API_KEY, dspy):
         model="openrouter/google/gemini-2.0-flash-001",
         api_base="https://openrouter.ai/api/v1",
         api_key=OPENROUTER_API_KEY,
+        cache=False,
     )
     dspy.configure(lm=lm, adapter=BAMLAdapter())
     return
