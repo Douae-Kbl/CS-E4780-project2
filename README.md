@@ -4,7 +4,7 @@ This project implements a robust **Graph Retrieval-Augmented Generation (GraphRA
 
 The system was developed for the **CS-E4780 Scalable Systems and Data Management** course at Aalto University.
 
-## 🚀 Key Features
+##Key Features
 
 ### Task 1: Robust Text2Cypher Pipeline
 * **Dynamic Schema Pruning:** Reduces token usage and hallucinations by filtering the graph schema to only relevant node/edge types before query generation.
@@ -16,7 +16,7 @@ The system was developed for the **CS-E4780 Scalable Systems and Data Management
 * **LRU Caching:** Implements a Least Recently Used cache to store question/answer pairs, reducing latency for repeated queries to ~0.02s.
 * **End-to-End Latency Tracking:** Detailed breakdown of execution time per component (Pruning, Generation, Execution, etc.).
 
-## 🛠️ Architecture
+## Architecture
 
 The pipeline leverages a separation of concerns:
 1.  **Graph Construction:** Ingests JSON data into KuzuDB.
@@ -26,7 +26,7 @@ The pipeline leverages a separation of concerns:
 5.  **Execution:** Runs query on Kuzu.
 6.  **Response:** LLM generates natural language answer from graph results.
 
-## 📦 Tech Stack
+## Tech Stack
 
 * **Database:** [Kuzu](https://kuzudb.com/) (Embedded Graph DB)
 * **Orchestration:** [DSPy](https://dspy.ai/)
@@ -35,7 +35,7 @@ The pipeline leverages a separation of concerns:
 * **Vector Store:** [ChromaDB](https://www.trychroma.com/)
 * **Frontend/Runtime:** Marimo Notebook
 
-## ⚙️ Setup & Installation
+## Setup & Installation
 
 We recommend using the `uv` package manager
 to manage dependencies.
@@ -82,22 +82,21 @@ marimo edit testing_pipeline.py
 uv run marimo edit testing_pipeline.py
 ```
 
-## 💡 Other relevant files
-[dataset](./data/generate_examples/nobel_questions_queries.csv) - Dataset .csv file.
+### Other relevant files
+[dataset](./data/generate_examples/nobel_questions_queries.csv) : Dataset .csv file.
 
-[result_analysis.ipynb](result_analysis.ipynb) - A notebook that analyses the results of running the pipeline on our dataset : latency evaluation, caching metrics, accuracy computations, list of queries - generated queries and their correctness.
+[result_analysis.ipynb](result_analysis.ipynb) : A notebook that analyses the results of running the pipeline on our dataset.
 
-[testing pipeline notebook output](./data/test_results_with_caching) - A csv file containing the predicted Cypher queries and the generated answers.
+[testing pipeline notebook output](./data/test_results_with_caching) : A csv file containing the predicted Cypher queries and the generated answers.
 
 
-## 📊 Evaluation Results
+### Evaluation Results
 
 | Metric | Baseline | **Ours** |
 | :--- | :--- | :--- |
 | **Accuracy** (N=40) | 30% (12/40) | **90% (36/40)** |
 
-## 👥 Contributors
-
-* **Douae Kabelma** (Aalto University)
-* **Cristiana Cocheci** (Aalto University)
+### Contributors
+**Douae Kabelma** (Aalto University)
+**Cristiana Cocheci** (Aalto University)
 
