@@ -19,12 +19,12 @@ The system was developed for the CS-E4780 Scalable Systems and Data Management c
 ## Architecture
 
 The pipeline leverages a separation of concerns:
-**Graph Construction:** Ingests JSON data into KuzuDB.
-**Retrieval:** Embeds user query -> Fetches few-shot examples (ChromaDB).
-**Generation:** DSPy Chain-of-Thought generates Cypher.
-**Validation:** `EXPLAIN` check -> Refinement Loop if error.
-**Execution:** Runs query on Kuzu.
-**Response:** LLM generates natural language answer from graph results.
+- **Graph Construction:** Ingests JSON data into KuzuDB.
+- **Retrieval:** Embeds user query -> Fetches few-shot examples (ChromaDB).
+- **Generation:** DSPy Chain-of-Thought generates Cypher.
+- **Validation:** `EXPLAIN` check -> Refinement Loop if error.
+- **Execution:** Runs query on Kuzu.
+- **Response:** LLM generates natural language answer from graph results.
 
 ## Tech Stack
 
