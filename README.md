@@ -83,7 +83,7 @@ uv run marimo edit testing_pipeline.py
 ```
 
 ### Other relevant files
-[dataset](./data/generate_examples/nobel_questions_queries.csv) : Dataset .csv file.
+[test dataset](./data/generate_examples/test_dataset.csv) : Test dataset .csv file.
 
 [result_analysis.ipynb](result_analysis.ipynb) : A notebook that analyses the results of running the pipeline on our dataset.
 
