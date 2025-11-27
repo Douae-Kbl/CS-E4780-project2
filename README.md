@@ -6,34 +6,12 @@ The system was developed for the CS-E4780 Scalable Systems and Data Management c
 
 ## Key Features
 
-### Task 1: Robust Text2Cypher Pipeline
-- **Dynamic Schema Pruning:** Reduces token usage and hallucinations by filtering the graph schema to only relevant node/edge types before query generation.
-- **Few-Shot Retrieval (RAG-on-RAG):** Uses ChromaDB to retrieve the top-3 most similar valid Cypher examples based on the user's question to guide the LLM.
+- **Schema Pruning:** Reduces token usage and hallucinations by filtering the graph schema to only relevant node/edge types before query generation.
+- **Few-Shot Retrieval:** Uses ChromaDB to retrieve the top-3 most similar valid Cypher examples based on the user's question to guide the LLM.
 - **Self-Refinement Loop:** An iterative repair mechanism that uses Kuzu's `EXPLAIN` output to catch syntax errors and auto-correct queries before execution.
-- **Post-Processing:** Rule-based enforcement of lowercase comparisons and correct property projections.
-
-### Task 2: Performance Optimization
-- **LRU Caching:** Implements a Least Recently Used cache to store question/answer pairs, reducing latency for repeated queries to ~0.02s.
-- **End-to-End Latency Tracking:** Detailed breakdown of execution time per component (pruning, generation, execution, etc.).
-
-## Architecture
-
-The pipeline leverages a separation of concerns:
-- **Graph Construction:** Ingests JSON data into KuzuDB.
-- **Retrieval:** Embeds user query -> Fetches few-shot examples (ChromaDB).
-- **Generation:** DSPy Chain-of-Thought generates Cypher.
-- **Validation:** `EXPLAIN` check -> Refinement Loop if error.
-- **Execution:** Runs query on Kuzu.
-- **Response:** LLM generates natural language answer from graph results.
-
-## Tech Stack
-
-- **Database:** [Kuzu](https://kuzudb.com/) (Embedded Graph DB)
-- **Orchestration:** [DSPy](https://dspy.ai/)
-- **LLM Provider:** Gemini (via OpenRouter)
-- **Embeddings:** OpenAI `text-embedding-large`
-- **Vector Store:** [ChromaDB](https://www.trychroma.com/)
-- **Frontend/Runtime:** Marimo Notebook
+- **Query Post-Processing:** Rule-based enforcement of lowercase comparisons and correct property projections.
+- **LRU Caching:** Implements a least recently used cache to store question/answer pairs, reducing latency for repeated queries to ~0.02s.
+- **Evaluation:** Detailed breakdown of execution time per component (pruning, generation, execution, etc.).
 
 ## Setup & Installation
 
@@ -89,7 +67,6 @@ uv run marimo edit testing_pipeline.py
 
 [testing pipeline notebook output](./data/test_results_with_caching) : A csv file containing the predicted Cypher queries and the generated answers.
 
-
 ### Evaluation Results
 
 | Metric | Baseline | **Ours** |
@@ -99,4 +76,3 @@ uv run marimo edit testing_pipeline.py
 #### Contributors
 **Douae Kabelma** (Aalto University)
 **Cristiana Cocheci** (Aalto University)
-
