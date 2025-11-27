@@ -141,6 +141,6 @@ def main(csv_path: str = "data/comparison_queries.csv", db_path: str = "../nobel
 
 
 if __name__ == "__main__":
-    csv_path = sys.argv[1] if len(sys.argv) > 1 else "data/comparison_queries.csv"
+    csv_path = sys.argv[1] if len(sys.argv) > 1 else "data/comparison_queries_NEW.csv"
     db_path = sys.argv[2] if len(sys.argv) > 2 else "../nobel.kuzu"
     raise SystemExit(main(csv_path=csv_path, db_path=db_path))
