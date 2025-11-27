@@ -1,8 +1,41 @@
-# Graph RAG with Kuzu, DSPy and marimo
+# Enhancing LLM Inference with GraphRAG: Nobel Laureates
 
-Source code for course project to build a Graph RAG with Kuzu, [DSPy](https://dspy.ai/) and [marimo](https://docs.marimo.io/) (open source, reactive notebooks for Python).
+This project implements a robust **Graph Retrieval-Augmented Generation (GraphRAG)** system using **KuzuDB** and **DSPy**. It is designed to answer complex natural language questions about Nobel Laureates by converting them into accurate Cypher queries, executing them against a local knowledge graph, and generating grounded responses.
 
-## Setup
+The system was developed for the **CS-E4780 Scalable Systems and Data Management** course at Aalto University.
+
+## 🚀 Key Features
+
+### Task 1: Robust Text2Cypher Pipeline
+* **Dynamic Schema Pruning:** Reduces token usage and hallucinations by filtering the graph schema to only relevant node/edge types before query generation.
+* **Few-Shot Retrieval (RAG-on-RAG):** Uses **ChromaDB** to retrieve the top-3 most similar valid Cypher examples based on the user's question to guide the LLM.
+* **Self-Refinement Loop:** An iterative repair mechanism that uses Kuzu's `EXPLAIN` output to catch syntax errors and auto-correct queries before execution.
+* **Post-Processing:** Rule-based enforcement of lowercase comparisons and correct property projections.
+
+### Task 2: Performance Optimization
+* **LRU Caching:** Implements a Least Recently Used cache to store question/answer pairs, reducing latency for repeated queries to ~0.02s.
+* **End-to-End Latency Tracking:** Detailed breakdown of execution time per component (Pruning, Generation, Execution, etc.).
+
+## 🛠️ Architecture
+
+The pipeline leverages a separation of concerns:
+1.  **Graph Construction:** Ingests JSON data into KuzuDB.
+2.  **Retrieval:** Embeds user query -> Fetches few-shot examples (ChromaDB).
+3.  **Generation:** DSPy Chain-of-Thought generates Cypher.
+4.  **Validation:** `EXPLAIN` check -> Refinement Loop if error.
+5.  **Execution:** Runs query on Kuzu.
+6.  **Response:** LLM generates natural language answer from graph results.
+
+## 📦 Tech Stack
+
+* **Database:** [Kuzu](https://kuzudb.com/) (Embedded Graph DB)
+* **Orchestration:** [DSPy](https://dspy.ai/)
+* **LLM Provider:** Gemini (via OpenRouter)
+* **Embeddings:** OpenAI `text-embedding-large`
+* **Vector Store:** [ChromaDB](https://www.trychroma.com/)
+* **Frontend/Runtime:** Marimo Notebook
+
+## ⚙️ Setup & Installation
 
 We recommend using the `uv` package manager
 to manage dependencies.
@@ -25,78 +58,46 @@ Go to `localhost:8000` you can check the UI of the database
 ### Create basic graph
 marimo simultaneously serves three functions. You can run Python code as a script, a notebook, or as an app!
 
-#### Run as a notebook
-
-You can manually activate the local uv virtual environment and run marimo as follows:
+### Open and Run the Initial GraphRAG system on a single query
 ```bash
 # Open a marimo notebook in edit mode
-marimo edit eda.py
+marimo edit initial_system.py
+# Run and open a marimo notebook in edit mode
+uv run marimo edit initial_system.py
 ```
-Or, you can simply use uv to run marimo:
+
+### Open and Run the Optimized GraphRAG system on a single query
 ```bash
-uv run marimo edit eda.py
+# Open a marimo notebook in edit mode
+marimo edit graph_rag.py
+# Run and open a marimo notebook in edit mode
+uv run marimo edit graph_rag.py
 ```
 
-#### Run as an app
-
-To run marimo in app mode, use the `run` command.
-
+### Open and Run the Optimized GraphRAG system on the whole dataset
 ```bash
-uv run marimo run eda.py
+# Open a marimo notebook in edit mode
+marimo edit testing_pipeline.py
+# Run and open a marimo notebook in edit mode
+uv run marimo edit testing_pipeline.py
 ```
 
-#### Run as a script
+## 💡 Other relevant files
+[dataset](./data/generate_examples/nobel_questions_queries.csv) - Dataset .csv file.
 
-Each cell block in a marimo notebook is encapsulated into functions, so you can reuse them in other
-parts of your codebase. You can also run the marimo file (which is a `*.py` Python file) as you
-would any other script:
+[result_analysis.ipynb](result_analysis.ipynb) - A notebook that analyses the results of running the pipeline on our dataset : latency evaluation, caching metrics, accuracy computations, list of queries - generated queries and their correctness.
 
-```bash
-uv run eda.py
-```
-Returns:
-```
-726 laureate nodes ingested
-399 prize nodes ingested
-739 laureate prize awards ingested
-```
+[testing pipeline notebook output](./data/test_results_with_caching) - A csv file containing the predicted Cypher queries and the generated answers.
 
-Depending on the stage of your project and who is consuming your code and data, each mode can be
-useful in its own right. Have fun using marimo and Kuzu!
 
-### Enrich the graph 
-Create the required graph in Kuzu using the following script:
+## 📊 Evaluation Results
 
-```bash
-uv run create_nobel_api_graph.py
-```
+| Metric | Baseline | **Ours** |
+| :--- | :--- | :--- |
+| **Accuracy** (N=40) | 30% (12/40) | **90% (36/40)** |
 
-Alternatively, you can open/edit the script as a marimo notebook and run each cell individually to
-go through the entire workflow step by step.
+## 👥 Contributors
 
-```bash
-uv run marimo edit create_nobel_api_graph.py
-```
+* **Douae Kabelma** (Aalto University)
+* **Cristiana Cocheci** (Aalto University)
 
-### Run the Graph RAG pipeline as a notebook
-
-To iterate on your ideas and experiment with your approach, you can work through the Graph RAG
-notebook in the following marimo file:
-
-```bash
-$env:PYTHONUTF8=1;uv run marimo run demo_workflow.py
-```
-
-The purpose of this file is to demonstrate the workflow in distinct stages, making it easier to
-understand and modify each part of the process in marimo.
-
-### Run the Graph RAG app
-
-A demo app is provided in `graph_rag.py` for reference. It's very basic (just question-answering), but the
-idea is general and this can be extended to include advanced retrieval workflows (vector + graph),
-interactive graph visualizations via anywidget, and more. More on this in future tutorials!
-
-```bash
-uv run marimo run graph_rag.py
-$env:PYTHONUTF8=1; uv run marimo edit graph_rag.py
-```
